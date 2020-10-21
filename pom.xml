@@ -255,6 +255,19 @@
         </license>
     </licenses>
 
-
+	<developers>
+		<developer>
+			<id>josdurgar1</id>
+			<name>Jose Manuel</name>
+			<email>josdurgar1@alum.us.es</email>
+			<url>http://www.acme.com/josdurgar1</url>
+			<roles>
+				<role>Analyst</role>
+			</roles>
+			<properties>
+				<picUrl>https://cutt.ly/TgxlCbG</picUrl>
+			</properties>
+		</developer>
+	</developers>
 
 </project>
