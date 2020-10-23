@@ -268,6 +268,18 @@
 				<picUrl>https://cutt.ly/TgxlCbG</picUrl>
 			</properties>
 		</developer>
+		<developer>
+			<id>juabuinun</id>
+			<name>Juan</name>
+			<email>juabuinun@alum.us.es</email>
+			<url>http://www.acme.com/juabuinun</url>
+			<roles>
+				<role>Boss Man</role>
+			</roles>
+			<properties>
+				<picUrl>https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSHWZ-Mlb5Hdt0c1sQdXOZCegVfsBP2mj2ieA</picUrl>
+			</properties>
+		</developer>
 	</developers>
 
 </project>
