@@ -6,17 +6,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="owners">
+<petclinic:layout pageName="duenoAdoptivo">
+    <c:if test="${pageContext.request.userPrincipal.name == duenoAdoptivo.user.username}">
     <h2>
         <c:if test="${duenoAdoptivo['new']}">New </c:if> duenoAdoptivo
     </h2>
     <form:form modelAttribute="duenoAdoptivo" class="form-horizontal" id="add-duenoAdoptivo-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="First Name" name="nombre"/>
-            <petclinic:inputField label="Last Name" name="apellidos"/>
-            <petclinic:inputField label="Address" name="direccion"/>
-            <petclinic:inputField label="City" name="dni"/>
-            <petclinic:inputField label="Telephone" name="telefono"/> 
+            <petclinic:inputField label="Nombre" name="nombre"/>
+            <petclinic:inputField label="Apellidos" name="apellidos"/>
+            <petclinic:inputField label="Direccion" name="direccion"/>
+            <petclinic:inputField label="DNI" name="dni"/>
+            <petclinic:inputField label="Telefono" name="telefono"/> 
             <petclinic:inputField label="Email" name="email"/>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>
@@ -34,4 +35,9 @@
             </div>
         </div>
     </form:form>
+    </c:if>
+     <c:if test="${pageContext.request.userPrincipal.name != duenoAdoptivo.user.username}">
+     <jstl:out>No tienes acceso a estos datos</jstl:out><br>
+      <a href="/" class="btn btn-default">Volver a Inicio</a>
+    </c:if>
 </petclinic:layout>

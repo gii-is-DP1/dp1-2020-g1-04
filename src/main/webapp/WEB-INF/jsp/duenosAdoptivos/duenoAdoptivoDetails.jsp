@@ -32,12 +32,12 @@
             <td><c:out value="${duenoAdoptivo.email}"/></td>
         </tr>
     </table>
-    <c:if test="${principal.username == duenoAdoptivo.user.username}">
+    <c:if test="${pageContext.request.userPrincipal.name == duenoAdoptivo.user.username}">
 
     <spring:url value="{duenoAdoptivoId}/edit" var="editUrl">
         <spring:param name="duenoAdoptivoId" value="${duenoAdoptivo.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit Owner</a>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Dueño Adoptivo</a>
 	</c:if>
     
 

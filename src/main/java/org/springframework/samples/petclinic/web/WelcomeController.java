@@ -56,7 +56,7 @@ public class WelcomeController {
 		  
 		  model.put("id", i);
 		  model.put("persons", persons);
-		  model.put("title", "Nuevo Titulo");
+		  model.put("title", "AnimalsAdoption");
 		  model.put("group", "G1-04");
 
 	    return "welcome";
