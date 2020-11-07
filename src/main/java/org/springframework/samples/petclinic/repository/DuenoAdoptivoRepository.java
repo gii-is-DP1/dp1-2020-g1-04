@@ -16,48 +16,46 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.repository.OwnerRepository;
+import org.springframework.samples.petclinic.model.DuenoAdoptivo;
+import org.springframework.samples.petclinic.repository.DuenoAdoptivoRepository;
 
 /**
- * Spring Data JPA OwnerRepository interface
+ * Spring Data JPA DueñoAdoptivoRepository interface
  *
  * @author Michael Isvy
  * @since 15.1.2013
  */
-public interface OwnerRepository extends Repository<Owner, Integer> {
+public interface DuenoAdoptivoRepository extends Repository<DuenoAdoptivo, Integer> {
 
 	/**
-	 * Save an <code>Owner</code> to the data store, either inserting or updating it.
-	 * @param owner the <code>Owner</code> to save
+	 * Save an <code>DueñoAdoptivo</code> to the data store, either inserting or updating it.
+	 * @param dueñoAdoptivo the <code>DueñoAdoptivo</code> to save
 	 * @see BaseEntity#isNew
 	 */
-	void save(Owner owner) throws DataAccessException;
-
-	/**
-	 * Retrieve <code>Owner</code>s from the data store by last name, returning all owners
-	 * whose last name <i>starts</i> with the given name.
-	 * @param lastName Value to search for
-	 * @return a <code>Collection</code> of matching <code>Owner</code>s (or an empty
-	 * <code>Collection</code> if none found)
-	 */	
-	@Query("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName%")
-	public Collection<Owner> findByLastName(@Param("lastName") String lastName);
+	void save(DuenoAdoptivo dueñoAdoptivo) throws DataAccessException;
 
 
 	/**
-	 * Retrieve an <code>Owner</code> from the data store by id.
+	 * Retrieve an <code>DueñoAdoptivo</code> from the data store by id.
 	 * @param id the id to search for
-	 * @return the <code>Owner</code> if found
+	 * @return the <code>DueñoAdoptivo</code> if found
 	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 	 */	
-	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
-	public Owner findById(@Param("id") int id);
+	@Query("SELECT duenoAdoptivo FROM DuenoAdoptivo duenoAdoptivo WHERE duenoAdoptivo.id =:id")
+	public DuenoAdoptivo findById(@Param("id") int id);
+	
+	@Query("SELECT duenoAdoptivo FROM DuenoAdoptivo duenoAdoptivo WHERE duenoAdoptivo.apellidos =:apellidos")
+	public Set<DuenoAdoptivo> findByApellidos(@Param("apellidos") String apellidos);
+
+	@Query("SELECT d FROM DuenoAdoptivo d")
+	public Set<DuenoAdoptivo> findAll();
+
 
 }

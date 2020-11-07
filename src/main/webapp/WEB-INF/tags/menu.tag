@@ -28,16 +28,16 @@
 					<span>Home</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
+				<petclinic:menuItem active="${name eq 'owners'}" url="/duenosAdoptivos/find"
 					title="find owners">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>Find owners</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
+				<petclinic:menuItem active="${name eq 'vets'}" url="/duenosAdoptivos/findAll"
 					title="veterinarians">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Veterinarians</span>
+					<span>Dueños Adoptivos</span>
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
@@ -84,21 +84,22 @@
 								</div>
 							</li>
 							<li class="divider"></li>
-<!-- 							
+							
                             <li> 
 								<div class="navbar-login navbar-login-session">
 									<div class="row">
 										<div class="col-lg-12">
 											<p>
-												<a href="#" class="btn btn-primary btn-block">My Profile</a>
-												<a href="#" class="btn btn-danger btn-block">Change
-													Password</a>
+											<sec:authentication var="principal" property="principal" />
+											<a href="<c:url value="/duenosAdoptivos/${principal.username}/edit/"/>" class="btn btn-primary btn-block">My Profile</a>
+												<!--  <a href="#" class="btn btn-danger btn-block">Change
+													Password</a>-->
 											</p>
 										</div>
 									</div>
 								</div>
 							</li>
--->
+
 						</ul></li>
 				</sec:authorize>
 			</ul>

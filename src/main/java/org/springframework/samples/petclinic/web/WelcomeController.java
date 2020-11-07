@@ -21,37 +21,40 @@ public class WelcomeController {
 	  @GetMapping({"/","/welcome"})
 	  public String welcome(Map<String, Object> model) {	
 		  
+		  Integer i=12;
+		  
 		  List<Person> persons=new ArrayList<Person>();
 		  Person person1= new Person();
-		  person1.setFirstName("JUAN");
-		  person1.setLastName("BUIZA NUÑEZ");
+		  person1.setNombre("JUAN");
+		  person1.setApellidos("BUIZA NUÑEZ");
 		  persons.add(person1);
 		  
 		  Person person2= new Person();
-		  person2.setFirstName("EDUARDO");
-		  person2.setLastName("CIEZAR LANZA");
+		  person2.setNombre("EDUARDO");
+		  person2.setApellidos("CIEZAR LANZA");
 		  persons.add(person2);
 		  
 		  Person person3= new Person();
-		  person3.setFirstName("RAFAEL");
-		  person3.setLastName("DIAZ GARCIA");
+		  person3.setNombre("RAFAEL");
+		  person3.setApellidos("DIAZ GARCIA");
 		  persons.add(person3);
 		  
 		  Person person4= new Person();
-		  person4.setFirstName("JOSE MANUEL");
-		  person4.setLastName("DURAN GARCIA");
+		  person4.setNombre("JOSE MANUEL");
+		  person4.setApellidos("DURAN GARCIA");
 		  persons.add(person4);
 		  
 		  Person person5= new Person();
-		  person5.setFirstName("YESICA LEYDI");
-		  person5.setLastName("GARATE FUENTES");
+		  person5.setNombre("YESICA LEYDI");
+		  person5.setApellidos("GARATE FUENTES");
 		  persons.add(person5);
 		  
 		  Person person6= new Person();
-		  person6.setFirstName("CARLOS");
-		  person6.setLastName("RUIZ BRIONES");
+		  person6.setNombre("CARLOS");
+		  person6.setApellidos("RUIZ BRIONES");
 		  persons.add(person6);
 		  
+		  model.put("id", i);
 		  model.put("persons", persons);
 		  model.put("title", "Nuevo Titulo");
 		  model.put("group", "G1-04");
