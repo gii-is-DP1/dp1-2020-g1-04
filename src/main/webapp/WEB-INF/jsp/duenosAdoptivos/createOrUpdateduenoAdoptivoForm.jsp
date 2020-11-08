@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="duenoAdoptivo">
+<petclinic:layout pageName="duenosAdoptivos">
     <c:if test="${pageContext.request.userPrincipal.name == duenoAdoptivo.user.username}">
     <h2>
         <c:if test="${duenoAdoptivo['new']}">New </c:if> duenoAdoptivo
@@ -37,7 +37,7 @@
     </form:form>
     </c:if>
      <c:if test="${pageContext.request.userPrincipal.name != duenoAdoptivo.user.username}">
-     <jstl:out>No tienes acceso a estos datos</jstl:out><br>
+     <c:out value = "No tienes acceso a estos datos"/><br>
       <a href="/" class="btn btn-default">Volver a Inicio</a>
     </c:if>
 </petclinic:layout>

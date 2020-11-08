@@ -71,6 +71,7 @@ public class DuenoAdoptivoService {
 		authoritiesService.saveAuthorities(duenoAdoptivo.getUser().getUsername(), "duenoAdoptivo");
 	}
 
+	@Transactional
 	public Set<DuenoAdoptivo> findAllDuenosAdoptivos() {
 		Set<DuenoAdoptivo> result;
 		result=duenoAdoptivoRepository.findAll();
