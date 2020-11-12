@@ -31,6 +31,7 @@
             <th>Email</th>
             <td><c:out value="${duenoAdoptivo.email}"/></td>
         </tr>
+        
     </table>
     <c:if test="${pageContext.request.userPrincipal.name == duenoAdoptivo.user.username}">
 

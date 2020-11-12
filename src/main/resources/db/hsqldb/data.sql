@@ -4,13 +4,13 @@ INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 -- One owner user, named owner1 with passwor 0wn3r
 INSERT INTO users(username,password,enabled) VALUES ('owner1','0wn3r',TRUE);
 INSERT INTO users(username,password,enabled) VALUES ('educielan','1111',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (4,'educielan','duenoAdoptivo');
-INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','duenoAdoptivo');
+INSERT INTO authorities(id,username,authority) VALUES (4,'educielan','duenoadoptivo');
+INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','duenoadoptivo');
 
 --Añadir josdurgar1 como owner
 -- One owner user, named owner1 with passwor 0wn3r
 INSERT INTO users(username,password,enabled) VALUES ('josdurgar1','j0$durg4r1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (5,'josdurgar1','duenoAdoptivo');
+INSERT INTO authorities(id,username,authority) VALUES (5,'josdurgar1','duenoadoptivo');
 
 
 

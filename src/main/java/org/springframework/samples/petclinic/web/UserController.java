@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
-	private static final String VIEWS_OWNER_CREATE_FORM = "users/createDuenoAdoptivoForm";
+	private static final String VIEWS_DUENOADOPTIVO_CREATE_FORM = "users/createDuenoAdoptivoForm";
 
 	private final DuenoAdoptivoService duenoAdoptivoService;
 
@@ -56,13 +56,13 @@ public class UserController {
 	public String initCreationForm(Map<String, Object> model) {
 		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
 		model.put("duenoAdoptivo", duenoAdoptivo);
-		return VIEWS_OWNER_CREATE_FORM;
+		return VIEWS_DUENOADOPTIVO_CREATE_FORM;
 	}
 
 	@PostMapping(value = "/users/new")
 	public String processCreationForm(@Valid DuenoAdoptivo duenoAdoptivo, BindingResult result) {
 		if (result.hasErrors()) {
-			return VIEWS_OWNER_CREATE_FORM;
+			return VIEWS_DUENOADOPTIVO_CREATE_FORM;
 		}
 		else {
 			//creating duenoAdoptivo, user, and authority

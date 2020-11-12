@@ -15,13 +15,18 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.DuenoAdoptivoRepository;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
@@ -64,11 +69,11 @@ public class DuenoAdoptivoService {
 	@Transactional
 	public void saveDuenoAdoptivo(DuenoAdoptivo duenoAdoptivo) throws DataAccessException {
 		//creating duenoAdoptivo
-		duenoAdoptivoRepository.save(duenoAdoptivo);		
+		duenoAdoptivoRepository.save(duenoAdoptivo);	
 		//creating user
 		userService.saveUser(duenoAdoptivo.getUser());
 		//creating authorities
-		authoritiesService.saveAuthorities(duenoAdoptivo.getUser().getUsername(), "duenoAdoptivo");
+		authoritiesService.saveAuthorities(duenoAdoptivo.getUser().getUsername(), "duenoadoptivo");
 	}
 
 	@Transactional

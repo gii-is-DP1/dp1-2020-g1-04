@@ -11,13 +11,13 @@
     <h2>
         <c:if test="${duenoAdoptivo['new']}">New </c:if> duenoAdoptivo
     </h2>
-    <form:form modelAttribute="duenoAdoptivo" class="form-horizontal" id="add-duenoAdoptivo-form">
+   <form:form modelAttribute="duenoAdoptivo" class="form-horizontal" id="add-duenoAdoptivo-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Nombre" name="nombre"/>
+             <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Apellidos" name="apellidos"/>
-            <petclinic:inputField label="Direccion" name="direccion"/>
+            <petclinic:inputField label="Dirección" name="direccion"/>
             <petclinic:inputField label="DNI" name="dni"/>
-            <petclinic:inputField label="Telefono" name="telefono"/> 
+            <petclinic:inputField label="Teléfono" name="telefono"/>
             <petclinic:inputField label="Email" name="email"/>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>

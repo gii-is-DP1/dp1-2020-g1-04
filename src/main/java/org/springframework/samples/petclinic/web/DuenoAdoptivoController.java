@@ -18,9 +18,7 @@ package org.springframework.samples.petclinic.web;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
@@ -45,6 +43,8 @@ public class DuenoAdoptivoController {
 	private static final String VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM = "duenosAdoptivos/createOrUpdateduenoAdoptivoForm";
 
 	private final DuenoAdoptivoService duenoAdoptivoService;
+	
+	
 
 	@Autowired
 	public DuenoAdoptivoController(DuenoAdoptivoService duenoAdoptivoService, UserService userService, AuthoritiesService authoritiesService) {
@@ -131,6 +131,8 @@ public class DuenoAdoptivoController {
 		}
 		else {
 			duenoAdoptivo.setId(duenoAdoptivoId);
+			DuenoAdoptivo aux=duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
+			duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
 			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
 			return "redirect:/duenosAdoptivos/{duenoAdoptivoId}";
 		}

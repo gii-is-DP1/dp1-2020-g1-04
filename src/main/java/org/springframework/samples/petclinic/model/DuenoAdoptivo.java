@@ -94,7 +94,7 @@ public class DuenoAdoptivo extends Person {
 
 				.append("id", this.getId()).append("new", this.isNew()).append("apellidos", this.getApellidos())
 				.append("nombre", this.getNombre()).append("direccion", this.direccion).append("dni", this.dni)
-				.toString();
+				.append("",this.getUser().getAuthorities()).toString();
 	}
 
 }
