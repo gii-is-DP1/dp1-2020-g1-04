@@ -28,11 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.model.Visit;
+import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
@@ -54,7 +50,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <li><strong>Dependency Injection</strong> of test fixture instances, meaning that we
  * don't need to perform application context lookups. See the use of
  * {@link Autowired @Autowired} on the <code>{@link
- * ClinicServiceTests#clinicService clinicService}</code> instance variable, which uses
+ * DueñoAdoptivoServiceTests#clinicService clinicService}</code> instance variable, which uses
  * autowiring <em>by type</em>.
  * <li><strong>Transaction management</strong>, meaning each test method is executed in
  * its own transaction, which is automatically rolled back by default. Thus, even if tests
@@ -73,21 +69,61 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-class VetServiceTests {
+class DueñoAdoptivoServiceTests {                
+        @Autowired
+	protected DuenoAdoptivoService dueñoAdoptivoService;
 
-	@Autowired
-	protected VetService vetService;	
+	/*@Test
+	void shouldFindOwnersByLastName() {
+		Collection<DueñoAdoptivo> dueñosAdoptivos = this.dueñoAdoptivoService.findDueñoAdoptivoByApellidos("Davis");
+		assertThat(dueñosAdoptivos.size()).isEqualTo(2);
 
+		dueñosAdoptivos = this.dueñoAdoptivoService.findDueñoAdoptivoByApellidos("Daviss");
+		assertThat(dueñosAdoptivos.isEmpty()).isTrue();
+	}*/
+
+/*
 	@Test
-	void shouldFindVets() {
-		Collection<Vet> vets = this.vetService.findVets();
+	@Transactional
+	public void shouldInsertOwner() {
+		Collection<DueñoAdoptivo> dueñosAdoptivos = this.dueñoAdoptivoService.findDueñoAdoptivoByApellidos("Schultz");
+		int found = dueñosAdoptivos.size();
 
-		Vet vet = EntityUtils.getById(vets, Vet.class, 3);
-		assertThat(vet.getLastName()).isEqualTo("Douglas");
-		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
-		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
-		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
+		DueñoAdoptivo owner = new DueñoAdoptivo();
+		owner.setNombre("Sam");
+		owner.setApellidos("Schultz");
+		owner.setDireccion("4, Evans Street");
+		owner.setDni("Wollongong");
+		owner.setTelefono("4444444444");
+		owner.setEmail("prueba@gmail.com");
+                User user=new User();
+                user.setUsername("Sam");
+                user.setPassword("supersecretpassword");
+                user.setEnabled(true);
+                owner.setUser(user);                
+                
+		this.dueñoAdoptivoService.saveDueñoAdoptivo(owner);
+		assertThat(owner.getId().longValue()).isNotEqualTo(0);
+
+		dueñosAdoptivos = this.dueñoAdoptivoService.findDueñoAdoptivoByApellidos("Schultz");
+		assertThat(dueñosAdoptivos.size()).isEqualTo(found + 1);
 	}
+	*/
+/*
+	@Test
+	@Transactional
+	void shouldUpdateDueñoAdoptivo() {
+		DueñoAdoptivo dueñoAdoptivo = this.dueñoAdoptivoService.findDueñoAdoptivoById(1);
+		String oldApellidos = dueñoAdoptivo.getApellidos();
+		String newApellidos = oldApellidos + "X";
 
+		dueñoAdoptivo.setApellidos(newApellidos);
+		this.dueñoAdoptivoService.saveDueñoAdoptivo(dueñoAdoptivo);
+
+		// retrieving new name from database
+		dueñoAdoptivo = this.dueñoAdoptivoService.findDueñoAdoptivoById(1);
+		assertThat(dueñoAdoptivo.getApellidos()).isEqualTo(newApellidos);
+	}
+*/
 
 }
