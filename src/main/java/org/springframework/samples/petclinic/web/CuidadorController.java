@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class CuiadorController {
+public class CuidadorController {
 	
 	private static final String VIEWS_CUIDADOR_CREATE_OR_UPDATE_FORM = "cuidador/createOrUpdateCuidadorForm";
 
@@ -29,7 +29,7 @@ public class CuiadorController {
 	
 
 	@Autowired
-	public CuiadorController(CuidadorService cuidadorService, UserService userService, AuthoritiesService authoritiesService) {
+	public CuidadorController(CuidadorService cuidadorService, UserService userService, AuthoritiesService authoritiesService) {
 		this.cuidadorService = cuidadorService;
 		this.userService=userService;
 	}
