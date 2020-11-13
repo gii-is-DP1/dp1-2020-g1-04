@@ -11,7 +11,7 @@ import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 
 public interface CuidadorRepository extends Repository<Cuidador, Integer>{
 	
-	void save(DuenoAdoptivo dueñoAdoptivo) throws DataAccessException;
+	void save(Cuidador cuidador) throws DataAccessException;
 
 	@Query("SELECT c FROM Cuidador c")
 	public Set<Cuidador> findAll();

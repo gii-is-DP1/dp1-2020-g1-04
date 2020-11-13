@@ -33,12 +33,20 @@
         
     </table>
     
-	<sec:authorize access="hasAuthority('admin')">
-    <spring:url value="{cuidadorId}/edit" var="editUrl">
+	<sec:authorize access="hasAnyAuthority('director')">
+    <spring:url value="{cuidadorId}/directorEdit" var="editUrl">
         <spring:param name="cuidadorId" value="${cuidador.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cuidador</a>
 	</sec:authorize>
+
+	<c:if test="${pageContext.request.userPrincipal.name == cuidador.user.username}">
+
+    <spring:url value="{cuidadorId}/edit" var="editUrl">
+        <spring:param name="cuidadorId" value="${cuidador.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cuidador</a>
+	</c:if>
 
     <br/>
     <br/>
