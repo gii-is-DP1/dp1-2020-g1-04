@@ -22,8 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.Authentication;
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -49,5 +52,19 @@ public class UserService {
 	
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
+	}
+
+
+	public org.springframework.security.core.userdetails.User findPrincipal() {
+		SecurityContext context;
+		Authentication authentication;
+		org.springframework.security.core.userdetails.User principal;
+		principal=null;
+		context = SecurityContextHolder.getContext();
+		authentication = context.getAuthentication();
+		if(!(authentication.getPrincipal().toString().contains("anonymousUser"))) {
+		principal = (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+		}
+		return principal;
 	}
 }

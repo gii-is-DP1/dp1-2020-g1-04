@@ -40,7 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/duenosAdoptivos").permitAll()
 				.antMatchers("/users/new").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
-				.antMatchers("/duenosAdoptivos/**/edit").hasAnyAuthority("duenoAdoptivo","admin")				
+				.antMatchers("/duenosAdoptivos/**/edit").hasAnyAuthority("duenoAdoptivo","admin")	
+				.antMatchers("/cuidadores/findAll").permitAll()//Hay que cambiarlo solo para director
+				.antMatchers("/cuidadores/**").permitAll()//Hay que cambiarlo solo para el caso oportuno
+				.antMatchers("/cuidadores/**/edit").hasAnyAuthority("cuidador","admin")	//cambiar admin por director
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
