@@ -46,6 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/cuidadores/**/edit").hasAnyAuthority("cuidador","director")	//cambiar admin por director
 				.antMatchers("/cuidadores/nuevo").hasAnyAuthority("cuidador","director")
 				.antMatchers("/cuidador/nuevo").hasAnyAuthority("cuidador","director")
+				.antMatchers("/centros/findAll").hasAnyAuthority("director","cuidador","duenoAdoptivo")
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
