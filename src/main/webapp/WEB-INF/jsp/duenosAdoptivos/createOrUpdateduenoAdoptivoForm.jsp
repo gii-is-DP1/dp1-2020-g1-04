@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,9 +16,9 @@
         <div class="form-group has-feedback">
              <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Apellidos" name="apellidos"/>
-            <petclinic:inputField label="Dirección" name="direccion"/>
+            <petclinic:inputField label="DirecciÃ³n" name="direccion"/>
             <petclinic:inputField label="DNI" name="dni"/>
-            <petclinic:inputField label="Teléfono" name="telefono"/>
+            <petclinic:inputField label="TelÃ©fono" name="telefono"/>
             <petclinic:inputField label="Email" name="email"/>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>
@@ -26,10 +27,10 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${duenoAdoptivo['new']}">
-                        <button class="btn btn-default" type="submit">Add Dueño Adoptivo</button>
+                        <button class="btn btn-default" type="submit">Add DueÃ±o Adoptivo</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update Dueño Adoptivo</button>
+                        <button class="btn btn-default" type="submit">Update DueÃ±o Adoptivo</button>
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -57,5 +57,8 @@ public interface DuenoAdoptivoRepository extends Repository<DuenoAdoptivo, Integ
 	@Query("SELECT d FROM DuenoAdoptivo d")
 	public Set<DuenoAdoptivo> findAll();
 
+	@Query("SELECT d FROM DuenoAdoptivo d WHERE d.user.username=:duenoAdoptivoUserName")
+	DuenoAdoptivo findByUserName(@Param("duenoAdoptivoUserName")String duenoAdoptivoUserName);
+
 
 }
