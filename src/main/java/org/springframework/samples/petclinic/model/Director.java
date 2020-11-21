@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,6 +24,12 @@ public class Director extends Person {
 	
 	//HACER METODO LISTA DE CENTROS
 	
+	public Set<CentroDeAdopcion> getCentros(){
+		return centros;
+	}
+	public void setCentros(Set<CentroDeAdopcion> centros) {
+		this.centros =centros;
+	}
 	
 	public User getUser() {
 		return user;
