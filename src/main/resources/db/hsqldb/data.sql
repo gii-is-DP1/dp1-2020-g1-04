@@ -1,4 +1,4 @@
--- One admin user, named admin1 with passwor 4dm1n and authority admin
+-- One Director user, named Director with passwor director1 and authority director
 INSERT INTO users(username,password,enabled) VALUES ('director1','director1',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'director1','director');
 -- One owner user, named owner1 with passwor 0wn3r
@@ -28,6 +28,7 @@ INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VAL
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (3, 'PILAR',  'MOYANO SIMO', '679 47 21 44', 'cuidador3@mail.com', '81494400H',  'cuidador3');
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (4, 'MARIA NIEVES', 'NOVAS BAREA', '705 74 05 46', 'cuidador4@mail.com', '2538440E',  'cuidador4');
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (5, 'FELIX', 'LOIS ESQUINAS', '663 11 70 08', 'cuidador5@mail.com', '37685775E',  'cuidador5');
+
 --
 
 INSERT INTO duenos VALUES (1, 'Franklin',  'em@mail.com','George', '6085551023','110 W. Liberty St.', '45555678W',  'owner1');
@@ -46,4 +47,16 @@ INSERT INTO duenos VALUES (11, 'Durán',   'em@mail.com','Jose Manuel', '6804646
 INSERT INTO duenos VALUES (12, 'Ciezar',   'em@mail.com','Eduardo','1111111111','Av.Reina Mercedes', '45555678W',  'educielan');
 
 
+--Añadir un director
+INSERT INTO director (id, nombre, apellidos, telefono, email, username) VALUES (13, 'LEO','FERNANDEZ', '222222222', 'Di@mail.com',  'director1');
 
+-- Añadir centro de adopcion
+INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (1, 'CENTRO DE ADOPCIÓN 1', 'Dirección 1', 20);
+INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (2, 'CENTRO DE ADOPCIÓN 2', 'Dirección 2', 40);
+INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (3, 'CENTRO DE ADOPCIÓN 3', 'Dirección 3', 50);
+
+
+--Añadir Adopcion
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision ) VALUES(1, 4, 3, true, true, true, 'Motivo 1', true, 'MotivoDecision 1', '2019-09-01');
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision ) VALUES(2, 3, 2, false, false, false, 'Motivo 2', false, 'MotivoDecision 2','2019-10-01');
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision ) VALUES(3, 2, 2, true, true, false, 'Motivo 3', true, 'MotivoDecision 3', '2020-09-01');

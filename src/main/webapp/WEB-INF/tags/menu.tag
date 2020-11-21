@@ -38,6 +38,20 @@
 					title="veterinarians">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Dueños Adoptivos</span>
+					
+				</petclinic:menuItem>
+				
+				
+				<petclinic:menuItem active="${name eq 'centros'}" url="/centros/findAll"
+					title="centros">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Centros Adoptivos</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'adopciones'}" url="/adopcion/findAll"
+					title="adopciones">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Adopciones</span>
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
