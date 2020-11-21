@@ -39,6 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/duenosAdoptivos/**").permitAll()
 				.antMatchers("/duenosAdoptivos").permitAll()
 				.antMatchers("/users/new").permitAll()
+				.antMatchers("/categorias").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("director")
 				.antMatchers("/duenosAdoptivos/**/edit").hasAnyAuthority("duenoAdoptivo","director")	
 				.antMatchers("/cuidadores/findAll").permitAll()//Hay que cambiarlo solo para director
