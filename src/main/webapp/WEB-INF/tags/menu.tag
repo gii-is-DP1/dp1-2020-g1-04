@@ -105,7 +105,7 @@
 										<div class="col-lg-12">
 											<p>
 											<sec:authentication var="principal" property="principal" />
-											<a href="<c:url value="/duenosAdoptivos/${principal.username}/edit/"/>" class="btn btn-primary btn-block">My Profile</a>
+											<a href="<c:url value="/duenosAdoptivos/${principal.username}/edit2/"/>" class="btn btn-primary btn-block">Mi perfil</a>
 												<!--  <a href="#" class="btn btn-danger btn-block">Change
 													Password</a>-->
 											</p>
