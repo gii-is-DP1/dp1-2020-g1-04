@@ -1,6 +1,9 @@
 package org.springframework.samples.petclinic.model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -24,6 +27,12 @@ public class CentroDeAdopcion extends NamedEntity {
 	@Column(name="cantidadMax")
 	private Integer cantidadMax;
 	
+	//Propiedad Derivada -> Cantidad actual de animales
+//	public List<Animal> getCantidadActual(CentroDeAdopcion c){
+//		List<Animal> r = new ArrayList<Animal>();
+//		
+//		return r
+//	}
 	
 	//cantidad actual -> nº animales en este centro que no estén adoptados
 	
