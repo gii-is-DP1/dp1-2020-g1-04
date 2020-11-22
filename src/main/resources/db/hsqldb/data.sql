@@ -29,7 +29,6 @@ INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VAL
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (4, 'MARIA NIEVES', 'NOVAS BAREA', '705 74 05 46', 'cuidador4@mail.com', '2538440E',  'cuidador4');
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (5, 'FELIX', 'LOIS ESQUINAS', '663 11 70 08', 'cuidador5@mail.com', '37685775E',  'cuidador5');
 --
-
 INSERT INTO duenos VALUES (1, 'Franklin',  'em@mail.com','George', '6085551023','110 W. Liberty St.', '45555678W',  'owner1');
 INSERT INTO duenos VALUES (2, 'Davis',   'em@mail.com','Betty','6085551749','638 Cardinal Ave.', '45555678W',  'owner1');
 INSERT INTO duenos VALUES (3, 'Rodriquez',   'em@mail.com','Eduardo','6085558763','2693 Commerce St.', '45555678W',  'owner1');
@@ -44,6 +43,16 @@ INSERT INTO duenos VALUES (10, 'Estaban',   'em@mail.com','Carlos','6085555487',
 --Añadir josdurgar1 como owner
 INSERT INTO duenos VALUES (11, 'Durán',   'em@mail.com','Jose Manuel', '680464646','123 C/Falsa', '45555678W',  'josdurgar1');
 INSERT INTO duenos VALUES (12, 'Ciezar',   'em@mail.com','Eduardo','1111111111','Av.Reina Mercedes', '45555678W',  'educielan');
+
+--Añadir Categoria
+INSERT INTO categoria(id, tipo, raza) VALUES(1,1, 'husky');
+
+--Añadir animales
+INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia_peligrosidad, licencia_adopcion, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 1, 1);
 
 
 
