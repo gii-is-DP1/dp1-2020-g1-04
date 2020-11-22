@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
@@ -24,11 +25,11 @@ public class AnimalService {
 	public Optional<Animal> findAnimalById(int id) throws DataAccessException{
 		return animalRepository.findById(id);
 	}
-	@Transactional
+	
 	public Collection<Animal> findAll(){
 		return animalRepository.findAll();
 	}
-	@Transactional
+
 	public void save(@Valid Animal animal) {
 		animalRepository.save(animal);
 

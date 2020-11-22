@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
@@ -37,7 +38,7 @@
 				<petclinic:menuItem active="${name eq 'vets'}" url="/duenosAdoptivos/findAll"
 					title="veterinarians">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Dueños Adoptivos</span>
+					<span>DueÃ±os Adoptivos</span>
 				</petclinic:menuItem>
 				
 					<petclinic:menuItem active="${name eq 'vets'}" url="/animales/findAll"
@@ -65,7 +66,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> 
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>Â 
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>

@@ -15,11 +15,7 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,11 +24,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
 
 /**
@@ -56,12 +49,30 @@ public class DuenoAdoptivo extends Person {
 	private String dni;
 
 	
+	
 	//
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	//
 	
+	
+	//Relacion DuenoAdoptivo-Adopcion
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name= "adopciones_dueno")
+	private Collection<Adopcion> adopciones ;
+	
+	
+	//getters and setters
+	
+	
+	public Collection<Adopcion> getAdopciones(){
+		return adopciones;
+	}
+	
+	public void setAdopciones(Collection<Adopcion> adopciones) {
+		this.adopciones = adopciones;
+	}
 	public String getDireccion() {
 		return this.direccion;
 	}
