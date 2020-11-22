@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
@@ -75,6 +77,14 @@ public class DuenoAdoptivoService {
 		//creating authorities
 		authoritiesService.saveAuthorities(duenoAdoptivo.getUser().getUsername(), "duenoadoptivo");
 	}
+	
+	@Transactional
+	public void save2DuenoAdoptivo(DuenoAdoptivo duenoAdoptivo) throws DataAccessException {
+		Integer duenoAdoptivoId=duenoAdoptivo.getId();
+		DuenoAdoptivo aux=findDuenoAdoptivoById(duenoAdoptivoId);
+		duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
+		saveDuenoAdoptivo( duenoAdoptivo);
+	}
 
 	@Transactional
 	public Set<DuenoAdoptivo> findAllDuenosAdoptivos() {
@@ -82,6 +92,24 @@ public class DuenoAdoptivoService {
 		result=duenoAdoptivoRepository.findAll();
 		
 		return result;
+	}
+
+	@Transactional
+	public DuenoAdoptivo findDuenoAdoptivoByUserName(String duenoAdoptivoUserName) {
+		DuenoAdoptivo result;
+		result=duenoAdoptivoRepository.findByUserName(duenoAdoptivoUserName);
+		return result;
+	}
+	@Transactional
+	public void saveDuenoAdoptivoByUserName(@Valid DuenoAdoptivo duenoAdoptivo) throws DataAccessException {
+	
+			
+				String duenoAdoptivoUserName=duenoAdoptivo.getUser().getUsername();
+				DuenoAdoptivo aux=findDuenoAdoptivoByUserName(duenoAdoptivoUserName);
+				duenoAdoptivo.setId(aux.getId());
+				duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
+				saveDuenoAdoptivo( duenoAdoptivo);
+		
 	}
 	
 		

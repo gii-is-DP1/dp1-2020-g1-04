@@ -1,12 +1,13 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.Collection;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -30,10 +31,11 @@ public class Cuidador extends Person {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
-	
-//	@ManyToOne(optional=false)
-//	@JoinColumn(name = "centro_id")
-//	private CentroDeAdopcion centroDeAdopcion;
+
+	/*
+	@OneToMany(mappedBy="cuidador")
+	private Set<Animal> animales;
+	*/
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//Métodos---------------------------------------------------------------------------------------------------------
@@ -52,13 +54,14 @@ public class Cuidador extends Person {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	/*
+	public Set<Animal> getAnimales(){
+		return this.animales;
+	}
 	
-//	public CentroDeAdopcion getCentroDeAdopcion() {
-//		return this.centroDeAdopcion;
-//	}
-//	public void setCentroDeAdopcion(CentroDeAdopcion centroDeAdopcion) {
-//		this.centroDeAdopcion = centroDeAdopcion;
-//	}
+	public void setAnimales(Set<Animal> animales) {
+		this.animales = animales;
+	}*/
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//ToString--------------------------------------------------------------------------------------------------------
@@ -70,5 +73,7 @@ public class Cuidador extends Person {
 				.append("nombre", this.getNombre()).append("dni", this.dni).append("",this.getUser().getAuthorities()).toString();
 	}
 	//-----------------------------------------------------------------------------------------------------------------
+
+	
 
 }

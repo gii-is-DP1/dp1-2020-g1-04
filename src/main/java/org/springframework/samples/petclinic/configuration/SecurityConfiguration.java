@@ -44,6 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/cuidadores/findAll").permitAll()//Hay que cambiarlo solo para director
 				.antMatchers("/cuidadores/**").permitAll()//Hay que cambiarlo solo para el caso oportuno
 				.antMatchers("/cuidadores/**/edit").hasAnyAuthority("cuidador","director")	//cambiar admin por director
+				.antMatchers("/duenosAdoptivos/**/edit2").hasAnyAuthority("duenoAdoptivo","director")
 				.antMatchers("/cuidadores/nuevo").hasAnyAuthority("cuidador","director")
 				.antMatchers("/cuidador/nuevo").hasAnyAuthority("cuidador","director")
 				.antMatchers("/centros/findAll").hasAnyAuthority("director","cuidador","duenoAdoptivo")
