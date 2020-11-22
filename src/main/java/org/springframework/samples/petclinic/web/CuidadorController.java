@@ -86,16 +86,16 @@ public class CuidadorController {
 	}
 	}
 	
-	//No disponible hasta crear entidad centroAdopcion
-	/*
-	@GetMapping(value = "/cuidadores/findAll")
-	public String findAllCuidadoresPorCentro(Map<String, Object> model) {
+	
+	@GetMapping(value = "/cuidadores/findAllByCentro/{centroId}")
+	public ModelAndView findAllCuidadoresPorCentro(@PathVariable("centroId") int centroId) {
 		Set<Cuidador> results;
-		results=cuidadorService.findAllCuidadoresPorCentro();
-		model.put("selections", results);
-		return "cuidadores/listadoCuidadores";
+		results=cuidadorService.findAllCuidadoresPorCentro(centroId);
+		ModelAndView mav = new ModelAndView("cuidadores/listadoCuidadores");
+		mav.addObject(results);
+		return mav;
 	}
-	*/
+	
 
 	
 	@GetMapping(value = "/cuidador/nuevo")

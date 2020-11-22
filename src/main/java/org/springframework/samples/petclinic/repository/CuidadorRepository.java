@@ -20,9 +20,8 @@ public interface CuidadorRepository extends Repository<Cuidador, Integer>{
 	public Cuidador findById(@Param("cuidadorId") int cuidadorId);
 	
 	
-	//No disponible hasta crear entidad centroAdopcion
-		/*
+	
 	@Query("SELECT cuidador FROM Cuidador cuidador WHERE cuidador.centroAdoptivo.id =:centroId")
 	public Set<Cuidador> findAllCuidadoresPorCentro(@Param("centroId") int centroId);
-		 */
+		 
 }
