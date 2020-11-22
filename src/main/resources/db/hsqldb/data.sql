@@ -1,4 +1,4 @@
--- One Director user, named Director with passwor director1 and authority director
+	-- One Director user, named Director with passwor director1 and authority director
 INSERT INTO users(username,password,enabled) VALUES ('director1','director1',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'director1','director');
 -- One owner user, named owner1 with passwor 0wn3r
@@ -57,6 +57,18 @@ INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (3, 'CENTRO DE A
 
 
 --Añadir Adopcion
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision ) VALUES(1, 4, 3, true, true, true, 'Motivo 1', true, 'MotivoDecision 1', '2019-09-01');
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision ) VALUES(2, 3, 2, false, false, false, 'Motivo 2', false, 'MotivoDecision 2','2019-10-01');
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision ) VALUES(3, 2, 2, true, true, false, 'Motivo 3', true, 'MotivoDecision 3', '2020-09-01');
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id ) VALUES(1, 4, 3, true, true, true, 'Motivo 1', true, 'MotivoDecision 1', '2019-09-01',1);
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision,dueno_id ) VALUES(2, 3, 2, false, false, false, 'Motivo 2', false, 'MotivoDecision 2','2019-10-01',2);
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id ) VALUES(3, 2, 2, true, true, false, 'Motivo 3', true, 'MotivoDecision 3', '2020-09-01',3);
+
+--Añadir Categoria
+INSERT INTO categoria(id, tipo, raza) VALUES(1,1, 'husky');
+
+--Añadir animales
+INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licenciap, licencia_adopcion, seguro_obligatorio, sexo, tamanyo, categoria_id,
+	cuidador_id) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 1, 1);
+
+
