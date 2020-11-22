@@ -25,7 +25,7 @@ public class AnimalController {
 	
 	
 	public static final String ANIMAL_LISTING = "animales/AnimalListing";
-	public static final String ANIMAL_FORM = "animales/createOrUpdateForm";
+	public static final String ANIMAL_FORM = "animales/createOrUpdateAnimal";
 
 	
 	@Autowired
@@ -51,7 +51,8 @@ public class AnimalController {
 	@GetMapping(value="/{animalId}/show")
 	public ModelAndView showAnimal(@PathVariable("animalId") int animalId) {
 		ModelAndView mav = new ModelAndView("animales/showAnimal");
-		mav.addObject(this.animalService.findAnimalById(animalId));
+		Optional<Animal> animal=this.animalService.findAnimalById(animalId);
+		mav.addObject(animal.get());
 		return mav;
 	}
 	
