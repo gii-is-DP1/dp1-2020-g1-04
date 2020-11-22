@@ -1,6 +1,10 @@
+
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -25,12 +29,12 @@ public class AnimalController {
 	
 	
 	public static final String ANIMAL_LISTING = "animales/AnimalListing";
-	public static final String ANIMAL_FORM = "animales/createOrUpdateAnimal";
+	public static final String ANIMAL_FORM = "animales/createOrUpdateForm";
 
 	
-	@Autowired
-	AnimalService animalService;
 	
+	AnimalService animalService;
+	@Autowired
 	public AnimalController(AnimalService animalService) {
 		this.animalService = animalService;
 	}
@@ -41,18 +45,20 @@ public class AnimalController {
 	}
 
 	
-	@GetMapping
+	@GetMapping(value="/findAll")
 	public String listAnimales(ModelMap model) {
 		model.addAttribute("animales",animalService.findAll());
 		return ANIMAL_LISTING;
 	}
 	
+
+
+	
 	//
 	@GetMapping(value="/{animalId}/show")
 	public ModelAndView showAnimal(@PathVariable("animalId") int animalId) {
 		ModelAndView mav = new ModelAndView("animales/showAnimal");
-		Optional<Animal> animal=this.animalService.findAnimalById(animalId);
-		mav.addObject(animal.get());
+		mav.addObject(this.animalService.findAnimalById(animalId));
 		return mav;
 	}
 	
@@ -83,3 +89,4 @@ public class AnimalController {
 	
 	
 }
+
