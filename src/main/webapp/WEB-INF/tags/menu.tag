@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
@@ -38,15 +37,28 @@
 				<petclinic:menuItem active="${name eq 'vets'}" url="/duenosAdoptivos/findAll"
 					title="veterinarians">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>DueÃ±os Adoptivos</span>
+					<span>Dueños Adoptivos</span>
+					
 				</petclinic:menuItem>
 				
-					<petclinic:menuItem active="${name eq 'vets'}" url="/animales/findAll"
-					title="veterinarians">
+				
+				<petclinic:menuItem active="${name eq 'centros'}" url="/centros/findAll"
+					title="centros">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Centros Adoptivos</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'adopciones'}" url="/adopcion/findAll"
+					title="adopciones">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Adopciones</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'animales'}" url="/animales/findAll"
+					title="animales">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Animales</span>
 				</petclinic:menuItem>
-				
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
@@ -66,7 +78,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>Â 
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> 
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>

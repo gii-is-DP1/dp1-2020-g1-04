@@ -1,4 +1,3 @@
-
 package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
@@ -77,4 +76,3 @@ public class Animal extends BaseEntity {
 
 
 }
-
