@@ -46,10 +46,10 @@
                     <c:out value="${animal.peligrosidad.grado}"/>
                 </td>
                   <td>
-                    <c:out value="${animal.peligrosidad.licenciaPeligrosidad}"/>
+                    <c:out value="${animal.peligrosidad.licencia}"/>
                 </td>
                 <td>
-                    <c:out value="${animal.requisitos.licenciaAdopcion}"/>
+                    <c:out value="${animal.requisitos.licencia}"/>
                 </td>
                 <td>
                     <c:out value="${animal.requisitos.seguro}"/>

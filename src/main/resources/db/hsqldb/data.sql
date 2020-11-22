@@ -50,9 +50,8 @@ INSERT INTO categoria(id, tipo, raza) VALUES(1,1, 'husky');
 --Añadir animales
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
-	grado, licencia_peligrosidad, licencia_adopcion, seguro, sexo, tamanyo, categoria_id,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
 	cuidador_id) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
 	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 1, 1);
-
 
 

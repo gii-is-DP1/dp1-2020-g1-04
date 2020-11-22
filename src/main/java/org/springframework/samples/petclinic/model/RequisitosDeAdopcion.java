@@ -5,20 +5,20 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class RequisitosDeAdopcion {
 
-	private Boolean licenciaAdopcion;
+	private Boolean licenciarequerida;
 	private Boolean seguro;
 	
 	public RequisitosDeAdopcion() {
 		super();
 	}
 	
-	public RequisitosDeAdopcion(Boolean licenciaAdopcion, Boolean seguro) {
-		this.licenciaAdopcion = licenciaAdopcion;
+	public RequisitosDeAdopcion(Boolean licenciarequerida, Boolean seguro) {
+		this.licenciarequerida = licenciarequerida;
 		this.seguro = seguro;
 	}
 
-	public Boolean getLicenciaAdopcion() {
-		return licenciaAdopcion;
+	public Boolean getLicencia() {
+		return licenciarequerida;
 	}
 
 	public Boolean getSeguro() {

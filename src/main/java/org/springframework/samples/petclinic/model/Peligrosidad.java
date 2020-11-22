@@ -7,16 +7,16 @@ public class Peligrosidad {
 	
 	private Integer grado;
 	
-	private Boolean licenciaPeligrosidad;
+	private Boolean licencia;
 
 	
 	public Peligrosidad() {
 		super();
 	}
 	
-	public Peligrosidad(Integer grado, Boolean licenciaPeligrosidad) {
+	public Peligrosidad(Integer grado, Boolean licencia) {
 		this.grado = grado;
-		this.licenciaPeligrosidad = licenciaPeligrosidad;
+		this.licencia = licencia;
 		
 	}
 
@@ -24,8 +24,8 @@ public class Peligrosidad {
 		return grado;
 	}
 
-	public Boolean getLicenciaPeligrosidad() {
-		return licenciaPeligrosidad;
+	public Boolean getLicencia() {
+		return licencia;
 	}
 	
 	
