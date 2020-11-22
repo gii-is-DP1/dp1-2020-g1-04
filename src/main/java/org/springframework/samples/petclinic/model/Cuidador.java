@@ -32,10 +32,9 @@ public class Cuidador extends Person {
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 
-	/*
+	
 	@OneToMany(mappedBy="cuidador")
 	private Set<Animal> animales;
-	*/
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//Métodos---------------------------------------------------------------------------------------------------------
@@ -54,14 +53,14 @@ public class Cuidador extends Person {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	/*
+	
 	public Set<Animal> getAnimales(){
 		return this.animales;
 	}
 	
 	public void setAnimales(Set<Animal> animales) {
 		this.animales = animales;
-	}*/
+	}
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//ToString--------------------------------------------------------------------------------------------------------
