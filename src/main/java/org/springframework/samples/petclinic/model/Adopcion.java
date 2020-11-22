@@ -1,0 +1,142 @@
+package org.springframework.samples.petclinic.model;
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name="adopciones")
+public class Adopcion extends NamedEntity{
+	
+	//Atributos----------------------------------------------------------------------
+	@NotBlank
+	@Column(name="unidadFamiliar")
+	private Integer unidadFamiliar;
+	
+	@NotBlank
+	@Column(name="mayoresDeEdad")
+	private Integer mayoresDeEdad;
+	
+	@NotNull
+	@Column(name="leidoRequisitos")
+	private boolean leidoRequisitos;
+	
+	@NotNull
+	@Column(name="permisoCmunidadVecinos")
+	private boolean permisoCmunidadVecinos;
+	//private Vivienda vivienda;
+	
+	@NotNull
+	@Column(name="otrosAnimales")
+	private boolean otrosAnimales;
+	
+	@NotBlank
+	@Column(name="motivo")
+	private String motivo;
+	
+	@NotNull
+	@Column(name="aceptada")
+	private boolean aceptada;
+	
+	@NotBlank
+	@Column(name="motivoDecision")
+	private String motivoDecision;
+	
+	@NotNull
+	@Column(name="fechaDecision")
+	private LocalDate fechaDecision;
+
+	//Relación Adopción-DueñoAdoptivo
+	
+	@ManyToOne
+	@JoinColumn(name="dueno_id")
+	private DuenoAdoptivo dueno;
+	
+	//Métodos Getters y Setters---------------------------------------------------------------------
+	
+	public DuenoAdoptivo getDueno() {
+		return dueno;
+	}
+	public void setDueno(DuenoAdoptivo dueno) {
+		this.dueno=dueno;
+	}
+	public Integer getUnidadFamiliar() {
+		return unidadFamiliar;
+	}
+
+	public void setUnidadFamiliar(Integer unidadFamiliar) {
+		this.unidadFamiliar = unidadFamiliar;
+	}
+
+	public Integer getMayoresDeEdad() {
+		return mayoresDeEdad;
+	}
+
+	public void setMayoresDeEdad(Integer mayoresDeEdad) {
+		this.mayoresDeEdad = mayoresDeEdad;
+	}
+
+	public boolean isLeidoRequisitos() {
+		return leidoRequisitos;
+	}
+
+	public void setLeidoRequisitos(boolean leidoRequisitos) {
+		this.leidoRequisitos = leidoRequisitos;
+	}
+
+	public boolean isPermisoCmunidadVecinos() {
+		return permisoCmunidadVecinos;
+	}
+
+	public void setPermisoCmunidadVecinos(boolean permisoCmunidadVecinos) {
+		this.permisoCmunidadVecinos = permisoCmunidadVecinos;
+	}
+
+	public boolean isOtrosAnimales() {
+		return otrosAnimales;
+	}
+
+	public void setOtrosAnimales(boolean otrosAnimales) {
+		this.otrosAnimales = otrosAnimales;
+	}
+
+	public String getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
+	}
+
+	public boolean isAceptada() {
+		return aceptada;
+	}
+
+	public void setAceptada(boolean aceptada) {
+		this.aceptada = aceptada;
+	}
+
+	public String getMotivoDecision() {
+		return motivoDecision;
+	}
+
+	public void setMotivoDecision(String motivoDecision) {
+		this.motivoDecision = motivoDecision;
+	}
+
+	public LocalDate getFechaDecision() {
+		return fechaDecision;
+	}
+
+	public void setFechaDecision(LocalDate fechaDecision) {
+		this.fechaDecision = fechaDecision;
+	}
+	
+
+}
