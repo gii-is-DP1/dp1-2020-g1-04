@@ -35,7 +35,7 @@ public class AnimalController {
 	
 	
 	public static final String ANIMAL_LISTING = "animales/AnimalListing";
-	public static final String ANIMAL_FORM = "animales/createOrUpdateForm";
+	public static final String ANIMAL_FORM = "animales/createOrUpdateAnimal";
 
 	
 
@@ -45,7 +45,6 @@ public class AnimalController {
 	CuidadorService cuidadorService;
 
 	
-	AnimalService animalService;
 	@Autowired
 	public AnimalController(AnimalService animalService) {
 		this.animalService = animalService;
@@ -90,17 +89,11 @@ public class AnimalController {
 	
 	@PostMapping("/{animalId}/edit")
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal, BindingResult binding, ModelMap model) {
-		Optional<Animal> animal=animalService.findAnimalById(animalId);
+		
 		if(binding.hasErrors()) {			
 			return ANIMAL_FORM;
-		}else {
-			
-			Cuidador c=cuidadorService.findDuenoAdoptivoById(modifiedAnimal.getCuidador().getId());
-			//BeanUtils.copyProperties(modifiedAnimal, animal.get(), "animalId");
-			modifiedAnimal.setId(animalId);
-			modifiedAnimal.setCuidador(c);
-			modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
-			animalService.save(modifiedAnimal);
+		}else {			
+			animalService.saveEdicion(modifiedAnimal, animalId);
 			model.addAttribute("message","Animal actualizado con exito!");
 			return listAnimales(model);
 		}

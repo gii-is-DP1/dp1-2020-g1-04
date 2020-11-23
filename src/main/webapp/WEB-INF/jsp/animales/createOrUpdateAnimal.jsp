@@ -20,7 +20,7 @@
              <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Licencia" name="peligrosidad.licencia"/>
             <petclinic:inputField label="Grado de peligrosidad" name="peligrosidad.grado"/>
-            <petclinic:inputField label="Requiere licencia" name="requisitos.licencia"/>
+            <petclinic:inputField label="Requiere licencia" name="requisitos.licenciarequerida"/>
             <petclinic:inputField label="Requiere seguro" name="requisitos.seguro"/>
             <petclinic:inputField label="Grado de Atencion" name="atencion.atencion"/>
             <petclinic:inputField label="Grado de dificultad" name="atencion.dificultad"/>
