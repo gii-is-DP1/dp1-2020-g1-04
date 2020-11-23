@@ -17,6 +17,7 @@ import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
+import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,6 +44,8 @@ public class AnimalController {
 	AnimalService animalService;
 	@Autowired
 	CuidadorService cuidadorService;
+	@Autowired
+	CentroDeAdopcionService centroDeAdopcionService;
 
 	
 	@Autowired
@@ -80,6 +83,7 @@ public class AnimalController {
 			model.addAttribute("animal",animal.get());
 			model.addAttribute("tipos",Tipo.values());
 			model.addAttribute("cuidadores", cuidadorService.findAllCuidadores());
+			model.addAttribute("centros",centroDeAdopcionService.findAllNoEstenLlenos());
 			return ANIMAL_FORM;
 		}else {
 			model.addAttribute("message","No se encuentra el animal que quiere editar!");

@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
@@ -32,6 +32,21 @@ public class CentroDeAdopcionService {
 		result=centroDeAdopcionRepository.findAll();
 		
 		return result;
+	}
+
+
+	public Collection<CentroDeAdopcion> findAllNoEstenLlenos() {
+		Collection<CentroDeAdopcion> result;
+		result=centroDeAdopcionRepository.findAllNoEstenLlenos();
+		
+		return result;
+	}
+
+
+	public CentroDeAdopcion findById(int centroId) {
+		Optional<CentroDeAdopcion> result;
+		result=centroDeAdopcionRepository.findById(centroId);
+		return result.get();
 	}
 
 }

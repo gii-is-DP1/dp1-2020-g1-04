@@ -42,6 +42,16 @@
          		 </c:forEach>
       		  </select>
       		  </div>
+      		  
+      		  <div class="form-group">
+            <label>Centro De Adopcion</label>
+             
+            <select name="centroDeAdopcion">
+        		  <c:forEach var="item" items="${centros}">
+           			 <option value="${item.id}">${item.nombre}</option>
+         		 </c:forEach>
+      		  </select>
+      		  </div>
            
            <div class="form-group">
             <label>Tipo</label>

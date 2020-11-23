@@ -27,7 +27,7 @@ INSERT INTO authorities(id,username,authority) VALUES (10,'cuidador5','cuidador'
 
 -- Añadir centro de adopcion
 INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (1, 'CENTRO DE ADOPCIÓN 1', 'Dirección 1', 20);
-INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (2, 'CENTRO DE ADOPCIÓN 2', 'Dirección 2', 40);
+INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (2, 'CENTRO DE ADOPCIÓN 2', 'Dirección 2', 2);
 INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (3, 'CENTRO DE ADOPCIÓN 3', 'Dirección 3', 50);
 
 --Añadir Cuidadores
@@ -72,7 +72,18 @@ INSERT INTO categoria(id, tipo, raza) VALUES(1,1, 'husky');
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
-	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 1, 1);
+	cuidador_id, centro_id) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 1, 1, 1);
+
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id) VALUES(2, false, 3, 3, 'CHIM123', 5,'2019-10-02', '2020-09-02', '2020-10-02',
+	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 1, 1, 2);
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id) VALUES(3, false, 3, 3, 'CHIM123', 5,'2019-10-02', '2020-09-02', '2020-10-02',
+	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 1, 1, 2);
 
 

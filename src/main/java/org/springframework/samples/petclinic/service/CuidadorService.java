@@ -60,4 +60,14 @@ private CuidadorRepository cuidadorRepository;
 		return result;
 	}
 
+	public void save(@Valid Cuidador cuidador, int cuidadorId) {
+		Cuidador aux=findDuenoAdoptivoById(cuidadorId);
+		cuidador.setAnimales(aux.getAnimales());
+		cuidador.setId(cuidadorId);
+		
+		saveCuidador(cuidador);
+		
+	}
+	
+
 }
