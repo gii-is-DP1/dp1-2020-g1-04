@@ -6,7 +6,7 @@
 
 
 <petclinic:layout pageName="cuidadores">
-    <h2>Cuidadoress</h2>
+    <h2>Cuidadores</h2>
 
     <table id="cuidadoresTable" class="table table-striped">
         <thead>
@@ -16,6 +16,7 @@
             <th style="width: 150px;">Dni</th>
             <th style="width: 120px;">Telefono</th>
             <th style="width: 120px;">Email</th>
+            <th style="width: 120px;">Centro De Adopción</th>
             
         </tr>
         </thead>
@@ -41,12 +42,12 @@
                     <c:out value="${cuidador.email}"/>
                 </td>
       
-<!--
+
                 <td> 
-                    <c:out value="$'quitaresto'{cuidador.centroAdoptivo.nombre}"/> 
+                    <c:out value="${cuidador.centroDeAdopcion.nombre}"/> 
                 </td>
                
--->
+
                 
             </tr>
         </c:forEach>

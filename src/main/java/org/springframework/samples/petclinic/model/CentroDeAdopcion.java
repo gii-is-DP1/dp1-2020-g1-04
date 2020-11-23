@@ -2,12 +2,16 @@ package org.springframework.samples.petclinic.model;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -52,8 +56,9 @@ public class CentroDeAdopcion extends NamedEntity {
 //            joinColumns = @JoinColumn(name = "centro_id", nullable = false),
 //            inverseJoinColumns = @JoinColumn(name="cuidador_id", nullable = false)
 //        )
-//    @ManyToMany(cascade = CascadeType.ALL)
-//	private Collection<Cuidador> cuidadores;
+
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="centroDeAdopcion")
+	private Set<Cuidador> cuidadores;
 	
 	//	MÉTODOS GET-SET
 	///////////

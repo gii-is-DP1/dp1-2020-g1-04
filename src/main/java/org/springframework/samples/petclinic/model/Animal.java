@@ -67,13 +67,14 @@ public class Animal extends BaseEntity {
 	@Column(name = "ultimaIncorporacion")
 	private LocalDate fechaUltimaIncorporacion;
 
-	@ManyToOne
+	@ManyToOne(optional=false)
 	@JoinColumn(name ="cuidador_id")
 	private Cuidador cuidador;
 
 	@OneToOne
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
+	
 
 
 }

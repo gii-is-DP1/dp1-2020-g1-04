@@ -52,13 +52,12 @@ private CuidadorRepository cuidadorRepository;
 		
 	}	
 
-	//No disponible hasta crear entidad centroAdopcion
-	/*
+	
 	@Transactional
 	public Set<Cuidador> findAllCuidadoresPorCentro(int centroId){
 		Set<Cuidador> result;
 		result=cuidadorRepository.findAllCuidadoresPorCentro(centroId);
 		return result;
 	}
-*/
+
 }

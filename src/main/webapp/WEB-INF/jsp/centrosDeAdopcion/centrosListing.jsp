@@ -40,7 +40,7 @@
     	            <a href="<spring:url value="/animal/animalList.jsp" htmlEscape="true" />">Lista de Animales</a>
         	    </td>      
         	    	            <td>
-    	            <a href="<spring:url value="/cuidadores/listadoCuidadores.jsp" htmlEscape="true" />">Lista de Cuidadores</a>
+    	            <a href="<spring:url value="/cuidadores/findAllByCentro/${centro.id }" htmlEscape="true" />">Lista de Cuidadores</a>
         	    </td>        
         	</tr>
     
