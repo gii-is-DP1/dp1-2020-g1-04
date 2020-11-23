@@ -2,7 +2,9 @@
 package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -79,6 +81,9 @@ public class Animal extends BaseEntity {
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "centro_id")
 	private CentroDeAdopcion centroDeAdopcion;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+	private Collection<Adopcion> adopciones;
 	
 
 }

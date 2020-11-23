@@ -72,7 +72,7 @@ public class AnimalController {
 	@GetMapping(value="/{animalId}/show")
 	public ModelAndView showAnimal(@PathVariable("animalId") int animalId) {
 		ModelAndView mav = new ModelAndView("animales/showAnimal");
-		mav.addObject(this.animalService.findAnimalById(animalId));
+		mav.addObject(this.animalService.findAnimalById(animalId).get());
 		return mav;
 	}
 	

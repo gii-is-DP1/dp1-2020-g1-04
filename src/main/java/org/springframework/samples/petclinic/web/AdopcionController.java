@@ -2,7 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.Map;
-
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adopcion;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.service.AdopcionService;
+import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,10 +32,13 @@ public class AdopcionController {
 	
 	private final UserService userService;
 	
+	private final DuenoAdoptivoService duenoAdoptivoService;
+	
 	@Autowired
-	public AdopcionController(AdopcionService adopcionService, UserService userService) {
+	public AdopcionController(AdopcionService adopcionService, UserService userService, DuenoAdoptivoService duenoAdoptivoService) {
 		this.adopcionService = adopcionService;
 		this.userService=userService;
+		this.duenoAdoptivoService=duenoAdoptivoService;
 	}
 
 	@InitBinder
@@ -110,6 +115,22 @@ public class AdopcionController {
 		}
 	}
 	
-
+	@GetMapping(value = "/adopcion/findAllByDuenoAdoptivo/{duenoAdoptivoId}")
+	public String findAll(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId, Map<String, Object> model) {
+		Collection<Adopcion> results;
+		results=adopcionService.findAllByDuenoAdoptivo(duenoAdoptivoId);
+		model.put("adopciones", results);
+		return "adopcion/adopcionList";
+	}
+	
+	@GetMapping(value = "/adopcion/findAllByDuenoAdoptivoAutenticado")
+	public String findAllByDuenoAdoptivo(Map<String, Object> model) {
+		Collection<Adopcion> results;
+		User user=userService.findPrincipal();
+		DuenoAdoptivo duenoAdoptivo=duenoAdoptivoService.findDuenoAdoptivoByUserName(user.getUsername());
+		results=adopcionService.findAllByDuenoAdoptivo(duenoAdoptivo.getId());
+		model.put("adopciones", results);
+		return "adopcion/adopcionList";
+	}
 	
 }
