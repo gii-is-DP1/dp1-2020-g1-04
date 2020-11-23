@@ -27,6 +27,14 @@ public class Peligrosidad {
 	public Boolean getLicencia() {
 		return licencia;
 	}
+
+	public void setGrado(Integer grado) {
+		this.grado = grado;
+	}
+
+	public void setLicencia(Boolean licencia) {
+		this.licencia = licencia;
+	}
 	
 	
 }
