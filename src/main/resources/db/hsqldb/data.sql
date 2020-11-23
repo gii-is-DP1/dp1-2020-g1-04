@@ -1,3 +1,4 @@
+
 	-- One Director user, named Director with passwor director1 and authority director
 INSERT INTO users(username,password,enabled) VALUES ('director1','director1',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'director1','director');

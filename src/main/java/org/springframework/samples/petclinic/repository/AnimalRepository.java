@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
@@ -20,3 +21,4 @@ public interface AnimalRepository extends Repository<Animal, Integer> {
 	void save(Animal animal) throws DataAccessException; 
 
 }
+

@@ -52,7 +52,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> 
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>Â 
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
@@ -91,7 +91,7 @@
 												<!--  <a href="#" class="btn btn-danger btn-block">Change
 													Password</a>-->	
 												<sec:authorize access="hasAnyAuthority('director')">
-												<a href="<c:url value="/cuidador/nuevo"/>" class="btn btn-primary btn-block">Añadir Cuidador</a>
+												<a href="<c:url value="/cuidador/nuevo"/>" class="btn btn-primary btn-block">AÃ±adir Cuidador</a>
 												<a href="<c:url value="/centros/findAll"/>" class="btn btn-primary btn-block">Listado Centros</a>
 												<a href="<c:url value="/adopcion/findAll"/>" class="btn btn-primary btn-block">Listado Adopciones</a>
 												<a href="<c:url value="/cuidadores/findAll"/>" class="btn btn-primary btn-block">Listado de Cuidadores</a>
@@ -113,3 +113,4 @@
 
 	</div>
 </nav>
+
