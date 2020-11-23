@@ -18,6 +18,8 @@ public class AnimalService {
 	
 	@Autowired
 	AnimalRepository animalRepository;
+	@Autowired
+	CategoriaService categoriaService;
 	
 	
 	@Transactional(readOnly = true)
@@ -29,7 +31,9 @@ public class AnimalService {
 		return animalRepository.findAll();
 	}
 
+	@Transactional
 	public void save(@Valid Animal animal) {
+		categoriaService.save(animal.getCategoria());
 		animalRepository.save(animal);
 
 	}

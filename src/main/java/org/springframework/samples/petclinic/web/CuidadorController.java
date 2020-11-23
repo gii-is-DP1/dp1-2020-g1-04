@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -7,10 +8,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
+import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.UserService;
 
@@ -30,13 +33,15 @@ public class CuidadorController {
 
 	private final CuidadorService cuidadorService;
 	private final UserService userService;
+	private final CentroDeAdopcionService centroDeAdopcionService;
 	
 	
 
 	@Autowired
-	public CuidadorController(CuidadorService cuidadorService, UserService userService, AuthoritiesService authoritiesService) {
+	public CuidadorController(CuidadorService cuidadorService, UserService userService, AuthoritiesService authoritiesService, CentroDeAdopcionService centroDeAdopcionService) {
 		this.cuidadorService = cuidadorService;
 		this.userService=userService;
+		this.centroDeAdopcionService=centroDeAdopcionService;
 	}
 
 	@InitBinder
@@ -53,7 +58,7 @@ public class CuidadorController {
 		return "403";
 	}
 		String r=user.getAuthorities().toString();
-		Boolean res= r.contains("admin");
+		Boolean res= r.contains("director");
 		
 	 if(res==true){
 		Set<Cuidador> results;
@@ -66,7 +71,7 @@ public class CuidadorController {
 	}
 	
 	@GetMapping("/cuidadores/{cuidadorId}")
-	public ModelAndView showDuenoAdoptivo(@PathVariable("cuidadorId") int cuidadorId) {
+	public ModelAndView showDuenoAdoptivo(@PathVariable("cuidadorId") int cuidadorId ) {
 		org.springframework.security.core.userdetails.User user = userService.findPrincipal();
 		if(user==null)	{
 			ModelAndView mav = new ModelAndView("403");
@@ -88,12 +93,11 @@ public class CuidadorController {
 	
 	
 	@GetMapping(value = "/cuidadores/findAllByCentro/{centroId}")
-	public ModelAndView findAllCuidadoresPorCentro(@PathVariable("centroId") int centroId) {
-		Set<Cuidador> results;
-		results=cuidadorService.findAllCuidadoresPorCentro(centroId);
-		ModelAndView mav = new ModelAndView("cuidadores/listadoCuidadores");
-		mav.addObject(results);
-		return mav;
+	public String findAllCuidadoresPorCentro(@PathVariable("centroId") int centroId, Map<String, Object> model) {
+		Set<Cuidador> selections;
+		selections=cuidadorService.findAllCuidadoresPorCentro(centroId);
+		model.put("selections", selections);
+		return "cuidadores/listadoCuidadores";
 	}
 	
 
@@ -101,6 +105,8 @@ public class CuidadorController {
 	@GetMapping(value = "/cuidador/nuevo")
 	public String initCreationForm(Map<String, Object> model) {
 		Cuidador cuidador = new Cuidador();
+		Collection<CentroDeAdopcion> centros=centroDeAdopcionService.findAll();
+		model.put("centros",centros);
 		model.put("cuidador", cuidador);
 		return VIEWS_CUIDADOR_CREATE_OR_UPDATE_FORM;
 	}

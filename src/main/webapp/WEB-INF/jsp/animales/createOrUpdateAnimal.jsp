@@ -6,10 +6,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <petclinic:layout pageName="animales">
 
-    <c:if test="${pageContext.request.userPrincipal.name == director.user.username}">
+ 	 <sec:authorize access="hasAnyAuthority('director')">
     <h2>
         <c:if test="${animal['new']}">Nuevo </c:if> animal
     </h2>
@@ -32,8 +33,25 @@
             <petclinic:inputField label="Sexo" name="sexo"/>
             <petclinic:inputField label="Primera incorporacion" name="fechaPrimeraIncorporacion"/>
             <petclinic:inputField label="Ultima incorporacion" name="fechaUltimaIncorporacion"/>
-            <petclinic:inputField label="Cuidador" name="cuidador.nombre"/>
-            <petclinic:inputField label="Tipo" name="categoria.tipo"/>
+            <div class="form-group">
+            <label>Cuidador</label>
+             
+            <select name="cuidador">
+        		  <c:forEach var="item" items="${cuidadores}">
+           			 <option value="${item.id}">${item.nombre}</option>
+         		 </c:forEach>
+      		  </select>
+      		  </div>
+           
+           <div class="form-group">
+            <label>Tipo</label>
+             
+            <select name="categoria.tipo">
+        		  <c:forEach var="item" items="${tipos}">
+           			 <option value="${item}">${item.key}</option>
+         		 </c:forEach>
+      		  </select>
+      		  </div>
             <petclinic:inputField label="Raza" name="categoria.raza"/>
             
         </div>
@@ -50,9 +68,6 @@
             </div>
         </div>
     </form:form>
-    </c:if>
-     <c:if test="${pageContext.request.userPrincipal.name != director.user.username}">
-     <c:out value = "No tienes acceso a estos datos"/><br>
-      <a href="/" class="btn btn-default">Volver a Inicio</a>
-    </c:if>
+    </sec:authorize>
+
 </petclinic:layout>

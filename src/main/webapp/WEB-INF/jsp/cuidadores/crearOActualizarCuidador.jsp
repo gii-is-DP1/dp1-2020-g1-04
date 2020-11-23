@@ -19,6 +19,12 @@
             <petclinic:inputField label="Email" name="email"/>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>
+            <label>Centro De Adopción</label>
+            <select name="centroDeAdopcion">
+        		  <c:forEach var="item" items="${centros}">
+           			 <option value="${item.id}">${item.nombre}</option>
+         		 </c:forEach>
+      		  </select>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

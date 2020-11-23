@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -33,8 +35,20 @@ public class Cuidador extends Person {
 	private User user;
 
 	
-	@OneToMany(mappedBy="cuidador")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="cuidador")
 	private Set<Animal> animales;
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name ="centro_de_adopcion_id")
+	private CentroDeAdopcion centroDeAdopcion;
+	
+	/*
+	@ManyToMany
+	private Set<Evento> eventos;
+	
+	@OneToMany(mappedBy="cuidador")
+	private Set<Visita> visitas;
+	*/
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//Métodos---------------------------------------------------------------------------------------------------------
@@ -61,6 +75,14 @@ public class Cuidador extends Person {
 	public void setAnimales(Set<Animal> animales) {
 		this.animales = animales;
 	}
+	
+	public CentroDeAdopcion getCentroDeAdopcion() {
+		return centroDeAdopcion;
+	}
+
+	public void setCentroDeAdopcion(CentroDeAdopcion centroDeAdopcion) {
+		this.centroDeAdopcion = centroDeAdopcion;
+	}
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//ToString--------------------------------------------------------------------------------------------------------
@@ -72,6 +94,8 @@ public class Cuidador extends Person {
 				.append("nombre", this.getNombre()).append("dni", this.dni).append("",this.getUser().getAuthorities()).toString();
 	}
 	//-----------------------------------------------------------------------------------------------------------------
+
+	
 
 	
 

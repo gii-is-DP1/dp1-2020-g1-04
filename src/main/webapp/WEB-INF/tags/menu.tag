@@ -27,32 +27,8 @@
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>Home</span>
 				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'owners'}" url="/duenosAdoptivos/find"
-					title="find owners">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find owners</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'vets'}" url="/duenosAdoptivos/findAll"
-					title="veterinarians">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Dueños Adoptivos</span>
-					
-				</petclinic:menuItem>
-				
-				
-				<petclinic:menuItem active="${name eq 'centros'}" url="/centros/findAll"
-					title="centros">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Centros Adoptivos</span>
-				</petclinic:menuItem>
-				
-				<petclinic:menuItem active="${name eq 'adopciones'}" url="/adopcion/findAll"
-					title="adopciones">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Adopciones</span>
-				</petclinic:menuItem>
+								
+			
 				
 				<petclinic:menuItem active="${name eq 'animales'}" url="/animales/findAll"
 					title="animales">
@@ -60,17 +36,15 @@
 					<span>Animales</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
+<!--  >				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>
 				</petclinic:menuItem>
-
+%-->
 			</ul>
-
-
-
-
+			
+			
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Login</a></li>
@@ -103,6 +77,8 @@
 									</div>
 								</div>
 							</li>
+							
+							
 							<li class="divider"></li>
 							
                             <li> 
@@ -113,12 +89,20 @@
 											<sec:authentication var="principal" property="principal" />
 											<a href="<c:url value="/duenosAdoptivos/${principal.username}/edit2/"/>" class="btn btn-primary btn-block">Mi perfil</a>
 												<!--  <a href="#" class="btn btn-danger btn-block">Change
-													Password</a>-->
+													Password</a>-->	
+												<sec:authorize access="hasAnyAuthority('director')">
+												<a href="<c:url value="/cuidador/nuevo"/>" class="btn btn-primary btn-block">Añadir Cuidador</a>
+												<a href="<c:url value="/centros/findAll"/>" class="btn btn-primary btn-block">Listado Centros</a>
+												<a href="<c:url value="/adopcion/findAll"/>" class="btn btn-primary btn-block">Listado Adopciones</a>
+												<a href="<c:url value="/cuidadores/findAll"/>" class="btn btn-primary btn-block">Listado de Cuidadores</a>
+													</sec:authorize>	
 											</p>
 										</div>
 									</div>
 								</div>
 							</li>
+							
+							
 
 						</ul></li>
 				</sec:authorize>

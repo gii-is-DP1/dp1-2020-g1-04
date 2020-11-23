@@ -31,6 +31,12 @@
             <td><c:out value="${cuidador.email}"/></td>
         </tr>
         
+         <tr>
+            <th>Centro De Adopcion</th>
+            <td><c:out value="${cuidador.centroDeAdopcion.nombre}"/></td>
+        </tr>
+        
+        
     </table>
     
 	<sec:authorize access="hasAnyAuthority('director')">

@@ -1,13 +1,19 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
+import org.springframework.samples.petclinic.model.Categoria;
+import org.springframework.samples.petclinic.model.Cuidador;
+import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
+import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -30,6 +36,8 @@ public class AnimalController {
 	
 	@Autowired
 	AnimalService animalService;
+	@Autowired
+	CuidadorService cuidadorService;
 	
 	public AnimalController(AnimalService animalService) {
 		this.animalService = animalService;
@@ -60,7 +68,9 @@ public class AnimalController {
 	public String editAnimal(@PathVariable("animalId") int animalId,ModelMap model) {
 		Optional<Animal> animal=animalService.findAnimalById(animalId);
 		if(animal.isPresent()) {
-			model.addAttribute("animales",animal.get());
+			model.addAttribute("animal",animal.get());
+			model.addAttribute("tipos",Tipo.values());
+			model.addAttribute("cuidadores", cuidadorService.findAllCuidadores());
 			return ANIMAL_FORM;
 		}else {
 			model.addAttribute("message","No se encuentra el animal que quiere editar!");
@@ -74,8 +84,13 @@ public class AnimalController {
 		if(binding.hasErrors()) {			
 			return ANIMAL_FORM;
 		}else {
-			BeanUtils.copyProperties(modifiedAnimal, animal.get(), "animalId");
-			animalService.save(animal.get());
+			
+			Cuidador c=cuidadorService.findDuenoAdoptivoById(modifiedAnimal.getCuidador().getId());
+			//BeanUtils.copyProperties(modifiedAnimal, animal.get(), "animalId");
+			modifiedAnimal.setId(animalId);
+			modifiedAnimal.setCuidador(c);
+			modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
+			animalService.save(modifiedAnimal);
 			model.addAttribute("message","Animal actualizado con exito!");
 			return listAnimales(model);
 		}
