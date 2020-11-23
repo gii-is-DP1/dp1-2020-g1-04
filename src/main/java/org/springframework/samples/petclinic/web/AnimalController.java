@@ -45,8 +45,7 @@ public class AnimalController {
 	CuidadorService cuidadorService;
 
 	
-	AnimalService animalService;
-	@Autowired
+
 	public AnimalController(AnimalService animalService) {
 		this.animalService = animalService;
 	}
