@@ -58,6 +58,10 @@ public class Adopcion extends NamedEntity{
 	@JoinColumn(name="dueno_id")
 	private DuenoAdoptivo dueno;
 	
+	@ManyToOne(optional=false)
+	@JoinColumn(name="animal_id")
+	private Animal animal;
+	
 	//Métodos Getters y Setters---------------------------------------------------------------------
 	
 	public DuenoAdoptivo getDueno() {
@@ -136,6 +140,12 @@ public class Adopcion extends NamedEntity{
 
 	public void setFechaDecision(LocalDate fechaDecision) {
 		this.fechaDecision = fechaDecision;
+	}
+	public Animal getAnimal() {
+		return animal;
+	}
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
 	
 

@@ -96,6 +96,10 @@
 												<a href="<c:url value="/adopcion/findAll"/>" class="btn btn-primary btn-block">Listado Adopciones</a>
 												<a href="<c:url value="/cuidadores/findAll"/>" class="btn btn-primary btn-block">Listado de Cuidadores</a>
 													</sec:authorize>	
+													
+													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">
+													<a href="<c:url value="/adopcion/findAllByDuenoAdoptivoAutenticado"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
+														</sec:authorize>
 											</p>
 										</div>
 									</div>

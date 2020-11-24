@@ -46,10 +46,8 @@ public class CentroDeAdopcion extends NamedEntity {
 	private Director director;
 	
 	//HACE FALTA ENTIDAD ANIMAL
-	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "centro", fetch = FetchType.EAGER)
-	//@OneToMany(targetEntity = Animal.class)
-	//@JoinColumn(name = "animales_id")
-	//private List<Animal> animales;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "centroDeAdopcion")
+	private Set<Animal> animales;
 
 //    @JoinTable(
 //            name = "rel_centro_cuidador",
