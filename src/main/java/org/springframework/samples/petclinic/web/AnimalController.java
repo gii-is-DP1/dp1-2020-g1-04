@@ -17,6 +17,7 @@ import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
+import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,7 +36,7 @@ public class AnimalController {
 	
 	
 	public static final String ANIMAL_LISTING = "animales/AnimalListing";
-	public static final String ANIMAL_FORM = "animales/createOrUpdateForm";
+	public static final String ANIMAL_FORM = "animales/createOrUpdateAnimal";
 
 	
 
@@ -43,9 +44,10 @@ public class AnimalController {
 	AnimalService animalService;
 	@Autowired
 	CuidadorService cuidadorService;
-
+	@Autowired
+	CentroDeAdopcionService centroDeAdopcionService;
 	
-
+	
 	public AnimalController(AnimalService animalService) {
 		this.animalService = animalService;
 	}
@@ -69,7 +71,7 @@ public class AnimalController {
 	@GetMapping(value="/{animalId}/show")
 	public ModelAndView showAnimal(@PathVariable("animalId") int animalId) {
 		ModelAndView mav = new ModelAndView("animales/showAnimal");
-		mav.addObject(this.animalService.findAnimalById(animalId));
+		mav.addObject(this.animalService.findAnimalById(animalId).get());
 		return mav;
 	}
 	
@@ -80,6 +82,7 @@ public class AnimalController {
 			model.addAttribute("animal",animal.get());
 			model.addAttribute("tipos",Tipo.values());
 			model.addAttribute("cuidadores", cuidadorService.findAllCuidadores());
+			model.addAttribute("centros",centroDeAdopcionService.findAllNoEstenLlenos());
 			return ANIMAL_FORM;
 		}else {
 			model.addAttribute("message","No se encuentra el animal que quiere editar!");
@@ -89,17 +92,11 @@ public class AnimalController {
 	
 	@PostMapping("/{animalId}/edit")
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal, BindingResult binding, ModelMap model) {
-		Optional<Animal> animal=animalService.findAnimalById(animalId);
+		
 		if(binding.hasErrors()) {			
 			return ANIMAL_FORM;
-		}else {
-			
-			Cuidador c=cuidadorService.findDuenoAdoptivoById(modifiedAnimal.getCuidador().getId());
-			//BeanUtils.copyProperties(modifiedAnimal, animal.get(), "animalId");
-			modifiedAnimal.setId(animalId);
-			modifiedAnimal.setCuidador(c);
-			modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
-			animalService.save(modifiedAnimal);
+		}else {			
+			animalService.saveEdicion(modifiedAnimal, animalId);
 			model.addAttribute("message","Animal actualizado con exito!");
 			return listAnimales(model);
 		}

@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,6 +11,7 @@
         <thead>
         <tr>
             <th style="width: 50%;">Nombre</th>
+            <th style="width: 50%;">Centro</th>
               <th style="width: 50%;">Grado de Dificultad</th>
             <th style="width: 50%;">Grado de Atencion</th>
             <th style="width: 50%;">Grado de peligrosidad</th> 
@@ -36,6 +36,9 @@
             <tr>
                 <td>
                   <c:out value="${animal.nombre}"/>
+                </td>
+                 <td>
+                  <a href="<c:url value="/centros/${animal.centroDeAdopcion.id}"/>" class="btn btn-primary btn-block">Centro ${animal.centroDeAdopcion.id}</a>
                 </td>
                  <td>
                     <c:out value="${animal.atencion.dificultad}"/>

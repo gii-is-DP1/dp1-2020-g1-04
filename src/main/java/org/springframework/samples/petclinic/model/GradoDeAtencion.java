@@ -25,6 +25,14 @@ public class GradoDeAtencion {
 	public Integer getAtencion() {
 		return atencion;
 	}
+
+	public void setDificultad(Integer dificultad) {
+		this.dificultad = dificultad;
+	}
+
+	public void setAtencion(Integer atencion) {
+		this.atencion = atencion;
+	}
 	
 	
 }

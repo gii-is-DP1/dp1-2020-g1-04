@@ -13,6 +13,9 @@ import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 public interface CentroDeAdopcionRepository extends CrudRepository<CentroDeAdopcion, Integer>{
 
 	Collection<CentroDeAdopcion> findAll() throws DataAccessException;
+
+	@Query("SELECT centro FROM CentroDeAdopcion centro WHERE size(centro.animales)<centro.cantidadMax")
+	Collection<CentroDeAdopcion> findAllNoEstenLlenos();
 	
 		
 		
