@@ -56,7 +56,7 @@ public class CentroDeAdopcion extends NamedEntity {
 //        )
 
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="centroDeAdopcion")
-	private Set<Cuidador> cuidadores;
+	private Collection<Cuidador> cuidadores;
 	
 	//	MÉTODOS GET-SET
 	///////////
@@ -100,13 +100,13 @@ public class CentroDeAdopcion extends NamedEntity {
 //		this.animales = animales;
 //	}
 	
-//	public Collection<Cuidador> getCuidadores(){
-//		return cuidadores;
-//	}
+public Collection<Cuidador> getCuidadores(){
+		return cuidadores;
+	}
 //	
-//	public void setCuidadores(Collection<Cuidador> cuidadores) {
-//		this.cuidadores = cuidadores;
-//	}
+	public void setCuidadores(Collection<Cuidador> cuidadores) {
+		this.cuidadores = cuidadores;
+	}
 //	
 	
 	
