@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 public class Adopcion extends NamedEntity{
 	
 	//Atributos----------------------------------------------------------------------
-	@NotBlank
+	@NotNull
 	@Column(name="unidadFamiliar")
 	private Integer unidadFamiliar;
 	
-	@NotBlank
+	@NotNull
 	@Column(name="mayoresDeEdad")
 	private Integer mayoresDeEdad;
 	
