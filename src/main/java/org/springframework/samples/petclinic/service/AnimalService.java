@@ -1,8 +1,9 @@
-
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+//import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.repository.AnimalRepository;
+import org.springframework.samples.petclinic.repository.CuidadorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,22 +30,27 @@ public class AnimalService {
 	@Autowired
 	CentroDeAdopcionService centroDeAdopcionService;
 	
+	@Autowired
+	public AnimalService(AnimalRepository animalRepository) {
+		this.animalRepository = animalRepository;
+	}
+	
+	@Transactional
+	public Collection<Animal> findAll() {
+		Collection<Animal> result;
+		result = animalRepository.findAll();
+		return result;
+	}
 	
 	@Transactional(readOnly = true)
 	public Optional<Animal> findAnimalById(int id) throws DataAccessException{
 		return animalRepository.findById(id);
 	}
-	
-	public Collection<Animal> findAll(){
-		return animalRepository.findAll();
-	}
 
 	@Transactional
-	public void save(@Valid Animal animal) {
-		
+	public void save(@Valid Animal animal) throws DataAccessException{
 		//categoriaService.save(animal.getCategoria());
 		animalRepository.save(animal);
-
 	}
 	
 	public void saveEdicion(Animal modifiedAnimal, int animalId) {

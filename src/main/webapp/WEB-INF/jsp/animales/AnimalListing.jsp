@@ -92,13 +92,14 @@
                  <td>
                     <c:out value="${animal.categoria.id}"/>
                 </td>
-                
-                
-               
-
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    
+     <br/> 
+    <sec:authorize access="hasAuthority('admin')">
+		<a class="btn btn-default" href='<spring:url value="/animales/new" htmlEscape="true"/>'>Add Nuevo Animal</a>
+	</sec:authorize>
 
 </petclinic:layout> 

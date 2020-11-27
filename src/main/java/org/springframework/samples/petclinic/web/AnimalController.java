@@ -15,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cuidador;
+import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
+import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -31,14 +33,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/animales")
 public class AnimalController {
-	
 	
 	public static final String ANIMAL_LISTING = "animales/AnimalListing";
 	public static final String ANIMAL_FORM = "animales/createOrUpdateAnimal";
-
-	
 
 	@Autowired
 	AnimalService animalService;
@@ -47,7 +45,6 @@ public class AnimalController {
 	@Autowired
 	CentroDeAdopcionService centroDeAdopcionService;
 
-	
 	@Autowired
 	public AnimalController(AnimalService animalService) {
 		this.animalService = animalService;
@@ -58,17 +55,31 @@ public class AnimalController {
 		dataBinder.setDisallowedFields("id");
 	}
 
+	@GetMapping(value = "/animales/new")
+	public String initCreationForm(Map<String, Object> model) {
+		Animal animalNew = new Animal();
+		model.put("animalNew", animalNew);
+		return ANIMAL_FORM;
+	}
 	
-	@GetMapping(value="/findAll")
+	@PostMapping(value = "/animales/new")
+	public String processCreationForm(@Valid Animal animalNew, BindingResult result) {
+		if (result.hasErrors()) {
+			return ANIMAL_FORM;
+		}
+		else {
+			//creating animal new
+			this.animalService.save(animalNew);
+			return ANIMAL_LISTING;
+		}
+	}	
+	////////////////////////////////////////////////////////
+	@GetMapping(value="animales/findAll")
 	public String listAnimales(ModelMap model) {
 		model.addAttribute("animales",animalService.findAll());
 		return ANIMAL_LISTING;
 	}
-	
 
-
-	
-	//
 	@GetMapping(value="/{animalId}/show")
 	public ModelAndView showAnimal(@PathVariable("animalId") int animalId) {
 		ModelAndView mav = new ModelAndView("animales/showAnimal");
