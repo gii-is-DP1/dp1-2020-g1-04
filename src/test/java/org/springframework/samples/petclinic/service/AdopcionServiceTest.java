@@ -17,13 +17,17 @@ package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Adopcion;
+import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
@@ -38,16 +42,38 @@ class AdopcionServiceTests {
 	protected AdopcionService adopcionService;
 	@Autowired
 	protected DuenoAdoptivoService duenoAdoptivoService;
+	@Autowired
+	protected AnimalService animalService;
 	
 	 @Test
 	 @Transactional
 	 public void findAll() {
 		
 		 Collection<Adopcion> adopciones=adopcionService.findAll();
+		 assertThat(adopciones.size()).isEqualTo(3);
+		 int found = adopciones.size();
 		 
+		 Optional<Animal> animal=animalService.findAnimalById(1);
+		 DuenoAdoptivo dueno=duenoAdoptivoService.findDuenoAdoptivoById(1);
+		 LocalDate fechaDecision=LocalDate.now();
+		 
+		 Adopcion adopcion= new Adopcion();
+		 adopcion.setAceptada(true);
+		 adopcion.setAnimal(animal.get());
+		 adopcion.setDueno(dueno);
+		 adopcion.setFechaDecision(fechaDecision);
+		 adopcion.setLeidoRequisitos(true);
+		 adopcion.setMayoresDeEdad(2);
+		 adopcion.setMotivo("motivo");
+		 adopcion.setMotivoDecision("decision");
+		 adopcion.setOtrosAnimales(false);
+		 adopcion.setPermisoCmunidadVecinos(true);
+		 adopcion.setUnidadFamiliar(1);
+		 
+		 adopcionService.saveAdopcion(adopcion);
 		
-		
-		assertThat(adopciones.size()).isEqualTo(3);
+		 Collection<Adopcion> adopciones2=adopcionService.findAll();
+		 assertThat(adopciones2.size()).isEqualTo(found + 1);
 		
 		 
 	 }
