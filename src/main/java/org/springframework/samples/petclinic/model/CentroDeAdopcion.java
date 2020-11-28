@@ -1,10 +1,8 @@
 package org.springframework.samples.petclinic.model;
 
 
-import java.util.ArrayList;
+
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,15 +29,7 @@ public class CentroDeAdopcion extends NamedEntity {
 	@Column(name="cantidadMax")
 	private Integer cantidadMax;
 	
-	//Propiedad Derivada -> Cantidad actual de animales
-//	public List<Animal> getCantidadActual(CentroDeAdopcion c){
-//		List<Animal> r = new ArrayList<Animal>();
-//		
-//		return r
-//	}
-	
-	//cantidad actual -> nº animales en este centro que no estén adoptados
-	
+
 	//Relacion Centro-Director
 	@ManyToOne
 	@JoinColumn(name="director_id")
@@ -47,18 +37,29 @@ public class CentroDeAdopcion extends NamedEntity {
 	
 	//HACE FALTA ENTIDAD ANIMAL
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "centroDeAdopcion")
-	private Set<Animal> animales;
+	private Collection<Animal> animales;
 
-//    @JoinTable(
-//            name = "rel_centro_cuidador",
-//            joinColumns = @JoinColumn(name = "centro_id", nullable = false),
-//            inverseJoinColumns = @JoinColumn(name="cuidador_id", nullable = false)
-//        )
 
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="centroDeAdopcion")
 	private Collection<Cuidador> cuidadores;
 	
 	//	MÉTODOS GET-SET
+	
+
+	////////
+	
+	
+	public int getCantidadActual(){
+		int cantidadActual=0;
+		for(Animal a:this.animales) {
+			if(a.getAdoptado()==false) {
+				cantidadActual++;
+			}
+		}
+		return cantidadActual;
+	}
+	
+
 	///////////
 	public String getNombre() {
 		return nombre;
@@ -84,6 +85,8 @@ public class CentroDeAdopcion extends NamedEntity {
 		this.cantidadMax = cantidadMax;
 	}
 	
+
+	
 	public Director getDirector() {
 		return director;
 	}
@@ -92,22 +95,23 @@ public class CentroDeAdopcion extends NamedEntity {
 		this.director=director;
 	}
 
-//	public List<Animal> getAnimales() {
-//		return animales;
-//	}
-//	
-//	public void setAnimales(List<Animal> animales) {
-//		this.animales = animales;
-//	}
+
+	public Collection<Animal> getAnimales() {
+		return animales;
+	}
 	
-public Collection<Cuidador> getCuidadores(){
+	public void setAnimales(Collection<Animal> animales) {
+		this.animales = animales;
+	}
+	
+	public Collection<Cuidador> getCuidadores(){
 		return cuidadores;
 	}
-//	
+	
 	public void setCuidadores(Collection<Cuidador> cuidadores) {
 		this.cuidadores = cuidadores;
 	}
-//	
+	
 	
 	
 	

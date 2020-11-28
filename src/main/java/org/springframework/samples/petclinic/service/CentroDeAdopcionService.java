@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 
 import org.springframework.samples.petclinic.repository.CentroDeAdopcionRepository;
@@ -48,5 +50,8 @@ public class CentroDeAdopcionService {
 		result=centroDeAdopcionRepository.findById(centroId);
 		return result.get();
 	}
+	
+	
+
 
 }

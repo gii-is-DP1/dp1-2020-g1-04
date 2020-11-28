@@ -13,7 +13,6 @@
             <th style="width: 20%;">Nombre</th>
             <th style="width: 40%;">Dirección</th>
             <th style="width: 40%;">Cantidad máxima de animales</th>           
-            <th style="width: 40%;">Cantidad Actual</th>
             <th style="width: 40%;">Lista de animales</th>
             <th style="width: 40%;">Lista de cuidadores</th>
             
