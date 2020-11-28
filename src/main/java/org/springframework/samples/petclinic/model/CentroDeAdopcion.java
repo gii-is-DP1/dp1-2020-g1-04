@@ -95,6 +95,7 @@ public class CentroDeAdopcion extends NamedEntity {
 		this.director=director;
 	}
 
+
 	public Collection<Animal> getAnimales() {
 		return animales;
 	}

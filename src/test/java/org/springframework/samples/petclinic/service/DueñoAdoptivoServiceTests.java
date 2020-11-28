@@ -50,7 +50,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <li><strong>Dependency Injection</strong> of test fixture instances, meaning that we
  * don't need to perform application context lookups. See the use of
  * {@link Autowired @Autowired} on the <code>{@link
- * DueñoAdoptivoServiceTests#clinicService clinicService}</code> instance variable, which uses
+ * DuenoAdoptivoServiceTests#clinicService clinicService}</code> instance variable, which uses
  * autowiring <em>by type</em>.
  * <li><strong>Transaction management</strong>, meaning each test method is executed in
  * its own transaction, which is automatically rolled back by default. Thus, even if tests
@@ -69,61 +69,112 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-class DueñoAdoptivoServiceTests {                
+class DuenoAdoptivoServiceTests {                
         @Autowired
-	protected DuenoAdoptivoService dueñoAdoptivoService;
+	protected DuenoAdoptivoService duenoAdoptivoService;
 
-	/*@Test
-	void shouldFindOwnersByLastName() {
-		Collection<DueñoAdoptivo> dueñosAdoptivos = this.dueñoAdoptivoService.findDueñoAdoptivoByApellidos("Davis");
-		assertThat(dueñosAdoptivos.size()).isEqualTo(2);
+	@Test
+	void shouldFindDuenosAdoptivosByLastName() {
+		Collection<DuenoAdoptivo> duenosAdoptivos = this.duenoAdoptivoService.findDuenoAdoptivoByApellidos("Durán");
+		assertThat(duenosAdoptivos.size()).isEqualTo(1);
 
-		dueñosAdoptivos = this.dueñoAdoptivoService.findDueñoAdoptivoByApellidos("Daviss");
-		assertThat(dueñosAdoptivos.isEmpty()).isTrue();
-	}*/
+		duenosAdoptivos = this.duenoAdoptivoService.findDuenoAdoptivoByApellidos("Duránnn");
+		assertThat(duenosAdoptivos.isEmpty()).isTrue();
+	}
 
-/*
+
 	@Test
 	@Transactional
-	public void shouldInsertOwner() {
-		Collection<DueñoAdoptivo> dueñosAdoptivos = this.dueñoAdoptivoService.findDueñoAdoptivoByApellidos("Schultz");
-		int found = dueñosAdoptivos.size();
+	public void shouldInsertDuenoAdoptivo() {
+		Collection<DuenoAdoptivo> duenosAdoptivos = this.duenoAdoptivoService.findDuenoAdoptivoByApellidos("Durán");
+		int found = duenosAdoptivos.size();
 
-		DueñoAdoptivo owner = new DueñoAdoptivo();
-		owner.setNombre("Sam");
-		owner.setApellidos("Schultz");
-		owner.setDireccion("4, Evans Street");
-		owner.setDni("Wollongong");
-		owner.setTelefono("4444444444");
-		owner.setEmail("prueba@gmail.com");
+		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
+		duenoAdoptivo.setNombre("Sam");
+		duenoAdoptivo.setApellidos("Durán");
+		duenoAdoptivo.setDireccion("4, Evans Street");
+		duenoAdoptivo.setDni("Wollongong");
+		duenoAdoptivo.setTelefono("4444444444");
+		duenoAdoptivo.setEmail("prueba@gmail.com");
                 User user=new User();
                 user.setUsername("Sam");
                 user.setPassword("supersecretpassword");
                 user.setEnabled(true);
-                owner.setUser(user);                
+                duenoAdoptivo.setUser(user);                
                 
-		this.dueñoAdoptivoService.saveDueñoAdoptivo(owner);
-		assertThat(owner.getId().longValue()).isNotEqualTo(0);
+		this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
+		assertThat(duenoAdoptivo.getId().longValue()).isNotEqualTo(0);
 
-		dueñosAdoptivos = this.dueñoAdoptivoService.findDueñoAdoptivoByApellidos("Schultz");
-		assertThat(dueñosAdoptivos.size()).isEqualTo(found + 1);
+		duenosAdoptivos = this.duenoAdoptivoService.findDuenoAdoptivoByApellidos("Durán");
+		assertThat(duenosAdoptivos.size()).isEqualTo(found + 1);
 	}
-	*/
-/*
+	
+	
 	@Test
 	@Transactional
-	void shouldUpdateDueñoAdoptivo() {
-		DueñoAdoptivo dueñoAdoptivo = this.dueñoAdoptivoService.findDueñoAdoptivoById(1);
-		String oldApellidos = dueñoAdoptivo.getApellidos();
+	public void findAll() {
+		Collection<DuenoAdoptivo> duenosAdoptivos = this.duenoAdoptivoService.findAllDuenosAdoptivos();
+		int found = duenosAdoptivos.size();
+
+		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
+		duenoAdoptivo.setNombre("Sam");
+		duenoAdoptivo.setApellidos("Durán");
+		duenoAdoptivo.setDireccion("4, Evans Street");
+		duenoAdoptivo.setDni("Wollongong");
+		duenoAdoptivo.setTelefono("4444444444");
+		duenoAdoptivo.setEmail("prueba@gmail.com");
+                User user=new User();
+                user.setUsername("Sam");
+                user.setPassword("supersecretpassword");
+                user.setEnabled(true);
+                duenoAdoptivo.setUser(user);          
+         
+                this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
+
+		duenosAdoptivos = this.duenoAdoptivoService.findAllDuenosAdoptivos();
+		assertThat(duenosAdoptivos.size()).isEqualTo(found + 1);
+	}
+	
+
+	@Test
+	@Transactional
+	void shouldUpdateDuenoAdoptivo() {
+		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(1);
+		String oldApellidos = duenoAdoptivo.getApellidos();
 		String newApellidos = oldApellidos + "X";
 
-		dueñoAdoptivo.setApellidos(newApellidos);
-		this.dueñoAdoptivoService.saveDueñoAdoptivo(dueñoAdoptivo);
+		duenoAdoptivo.setApellidos(newApellidos);
+		this.duenoAdoptivoService.save2DuenoAdoptivo(duenoAdoptivo);
 
 		// retrieving new name from database
-		dueñoAdoptivo = this.dueñoAdoptivoService.findDueñoAdoptivoById(1);
-		assertThat(dueñoAdoptivo.getApellidos()).isEqualTo(newApellidos);
+		duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(1);
+		assertThat(duenoAdoptivo.getApellidos()).isEqualTo(newApellidos);
 	}
-*/
+	
+	@Test
+	@Transactional
+	public void busquedaByUsername() {
+		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoByUserName("josdurgar1");
+		DuenoAdoptivo aux=this.duenoAdoptivoService.findDuenoAdoptivoById(11);
+		
+		assertThat(duenoAdoptivo).isEqualTo(aux);
+	}
+
+	@Test
+	@Transactional
+	public void editarDuenoDesdeUserName() {
+		DuenoAdoptivo duenoAdoptivo=this.duenoAdoptivoService.findDuenoAdoptivoById(11);
+		
+		
+		duenoAdoptivo.setNombre("Sam");
+		duenoAdoptivoService.saveDuenoAdoptivoByUserName(duenoAdoptivo);
+		
+		
+                
+       
+
+		DuenoAdoptivo aux=this.duenoAdoptivoService.findDuenoAdoptivoById(11);
+		assertThat(aux.getNombre()).isEqualTo("Sam");
+	}
 
 }
