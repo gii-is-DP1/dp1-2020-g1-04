@@ -39,4 +39,11 @@ public class AdopcionService {
 		
 	}
 	
+	@Transactional
+	public Collection<Adopcion> findAllByDuenoAdoptivo(int duenoAdoptivoId) {
+		Collection<Adopcion> result;
+		result=adopcionRepository.findAllByDuenoAdoptivo(duenoAdoptivoId);
+		return result;
+	}
+	
 }

@@ -12,7 +12,7 @@ import org.springframework.samples.petclinic.model.Animal;
 
 public interface AnimalRepository extends Repository<Animal, Integer> {
 	
-	@Query("SELECT animal FROM Animal animal WHERE animal.id =:id")
+	@Query("SELECT animal FROM Animal animal JOIN animal.cuidador c WHERE animal.id =:id")
 	public Optional<Animal> findById(@Param("id") int id);
 	
 	@Query("SELECT a FROM Animal a")

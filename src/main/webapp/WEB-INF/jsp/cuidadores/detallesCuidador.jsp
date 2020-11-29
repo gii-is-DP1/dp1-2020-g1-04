@@ -31,13 +31,20 @@
             <td><c:out value="${cuidador.email}"/></td>
         </tr>
         
+         <tr>
+            <th>Centro De Adopcion</th>
+            <td><c:out value="${cuidador.centroDeAdopcion.nombre}"/></td>
+        </tr>
+        
+        
     </table>
     
 	<sec:authorize access="hasAnyAuthority('director')">
     <spring:url value="{cuidadorId}/directorEdit" var="editUrl">
         <spring:param name="cuidadorId" value="${cuidador.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cuidador</a>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cuidador </a>
+	
 	</sec:authorize>
 
 	<c:if test="${pageContext.request.userPrincipal.name == cuidador.user.username}">

@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
@@ -28,37 +27,24 @@
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>Home</span>
 				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'owners'}" url="/duenosAdoptivos/find"
-					title="find owners">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find owners</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'vets'}" url="/duenosAdoptivos/findAll"
-					title="veterinarians">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Due√±os Adoptivos</span>
-				</petclinic:menuItem>
+								
+			
 				
-					<petclinic:menuItem active="${name eq 'vets'}" url="/animales/findAll"
-					title="veterinarians">
+				<petclinic:menuItem active="${name eq 'animales'}" url="/animales/findAll"
+					title="animales">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Animales</span>
 				</petclinic:menuItem>
-				
 
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
+<!--  >				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>
 				</petclinic:menuItem>
-
+%-->
 			</ul>
-
-
-
-
+			
+			
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Login</a></li>
@@ -66,7 +52,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>¬†
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>†
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
@@ -91,6 +77,8 @@
 									</div>
 								</div>
 							</li>
+							
+							
 							<li class="divider"></li>
 							
                             <li> 
@@ -101,12 +89,24 @@
 											<sec:authentication var="principal" property="principal" />
 											<a href="<c:url value="/duenosAdoptivos/${principal.username}/edit2/"/>" class="btn btn-primary btn-block">Mi perfil</a>
 												<!--  <a href="#" class="btn btn-danger btn-block">Change
-													Password</a>-->
+													Password</a>-->	
+												<sec:authorize access="hasAnyAuthority('director')">
+												<a href="<c:url value="/cuidador/nuevo"/>" class="btn btn-primary btn-block">AÒadir Cuidador</a>
+												<a href="<c:url value="/centros/findAll"/>" class="btn btn-primary btn-block">Listado Centros</a>
+												<a href="<c:url value="/adopcion/findAll"/>" class="btn btn-primary btn-block">Listado Adopciones</a>
+												<a href="<c:url value="/cuidadores/findAll"/>" class="btn btn-primary btn-block">Listado de Cuidadores</a>
+													</sec:authorize>	
+													
+													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">
+													<a href="<c:url value="/adopcion/findAllByDuenoAdoptivoAutenticado"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
+														</sec:authorize>
 											</p>
 										</div>
 									</div>
 								</div>
 							</li>
+							
+							
 
 						</ul></li>
 				</sec:authorize>
@@ -117,3 +117,4 @@
 
 	</div>
 </nav>
+

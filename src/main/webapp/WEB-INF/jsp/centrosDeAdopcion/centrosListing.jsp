@@ -13,7 +13,6 @@
             <th style="width: 20%;">Nombre</th>
             <th style="width: 40%;">Dirección</th>
             <th style="width: 40%;">Cantidad máxima de animales</th>           
-            <th style="width: 40%;">Cantidad Actual</th>
             <th style="width: 40%;">Lista de animales</th>
             <th style="width: 40%;">Lista de cuidadores</th>
             
@@ -40,7 +39,7 @@
     	            <a href="<spring:url value="/animal/animalList.jsp" htmlEscape="true" />">Lista de Animales</a>
         	    </td>      
         	    	            <td>
-    	            <a href="<spring:url value="/cuidadores/listadoCuidadores.jsp" htmlEscape="true" />">Lista de Cuidadores</a>
+    	            <a href="<spring:url value="/cuidadores/findAllByCentro/${centro.id }" htmlEscape="true" />">Lista de Cuidadores</a>
         	    </td>        
         	</tr>
     

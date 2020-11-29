@@ -21,6 +21,9 @@ public interface AdopcionRepository extends Repository<Adopcion, Integer>{
 	
 	//Guardar adopcion
 	void save(Adopcion adopcion) throws DataAccessException;
+
+	@Query("SELECT adopcion FROM  Adopcion adopcion WHERE adopcion.dueno.id=:duenoAdoptivoId")
+	public Collection<Adopcion> findAllByDuenoAdoptivo(@Param("duenoAdoptivoId") int duenoAdoptivoId);
 	
 	//Listado de Adopciones relacionadaas con X animal-- > Implementar más adelante
 	//List<Adopcion> findByAnimalId(Integer animalId);

@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 public class Adopcion extends NamedEntity{
 	
 	//Atributos----------------------------------------------------------------------
-	@NotBlank
+	@NotNull
 	@Column(name="unidadFamiliar")
 	private Integer unidadFamiliar;
 	
-	@NotBlank
+	@NotNull
 	@Column(name="mayoresDeEdad")
 	private Integer mayoresDeEdad;
 	
@@ -57,6 +57,10 @@ public class Adopcion extends NamedEntity{
 	@ManyToOne
 	@JoinColumn(name="dueno_id")
 	private DuenoAdoptivo dueno;
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name="animal_id")
+	private Animal animal;
 	
 	//Métodos Getters y Setters---------------------------------------------------------------------
 	
@@ -136,6 +140,12 @@ public class Adopcion extends NamedEntity{
 
 	public void setFechaDecision(LocalDate fechaDecision) {
 		this.fechaDecision = fechaDecision;
+	}
+	public Animal getAnimal() {
+		return animal;
+	}
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
 	
 

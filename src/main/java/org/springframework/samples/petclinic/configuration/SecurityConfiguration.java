@@ -41,16 +41,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/new").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("director")
 				.antMatchers("/duenosAdoptivos/**/edit").hasAnyAuthority("duenoAdoptivo","director")	
-				.antMatchers("/cuidadores/findAll").permitAll()//Hay que cambiarlo solo para director
-				.antMatchers("/cuidadores/**").permitAll()//Hay que cambiarlo solo para el caso oportuno
-				.antMatchers("/cuidadores/**/edit").hasAnyAuthority("cuidador","director")	//cambiar admin por director
+				.antMatchers("/cuidadores/**").hasAnyAuthority("director")
+				.antMatchers("/cuidadores/**/edit").hasAnyAuthority("cuidador","director")
 				.antMatchers("/duenosAdoptivos/**/edit2").hasAnyAuthority("duenoAdoptivo","director")
 				.antMatchers("/cuidadores/nuevo").hasAnyAuthority("cuidador","director")
 				.antMatchers("/cuidador/nuevo").hasAnyAuthority("cuidador","director")
 				.antMatchers("/centros/findAll").hasAnyAuthority("director","cuidador","duenoAdoptivo")
 				.antMatchers("/adopcion/findAll").hasAnyAuthority("director")
 				.antMatchers("/animales/{animalId}/show").permitAll()
-        .antMatchers("/animales/findAll").hasAnyAuthority("director")
+				.antMatchers("/cuidadores/**").hasAnyAuthority("cuidador","director")
+				.antMatchers("/animales/**/edit").hasAnyAuthority("director")
+				.antMatchers("/animales/findAll").permitAll()
+				.antMatchers("/adopcion/findAllByDuenoAdoptivoAutenticado").hasAnyAuthority("duenoadoptivo")
+				.antMatchers("/adopcion/findAllByDuenoAdoptivo/**").hasAnyAuthority("director","cuidador")
+				
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -89,5 +93,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 }
-
 

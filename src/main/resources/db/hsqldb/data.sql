@@ -1,4 +1,5 @@
 
+
 	-- One Director user, named Director with passwor director1 and authority director
 INSERT INTO users(username,password,enabled) VALUES ('director1','director1',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'director1','director');
@@ -24,11 +25,18 @@ INSERT INTO users(username,password,enabled) VALUES ('cuidador4','cuidador4',TRU
 INSERT INTO authorities(id,username,authority) VALUES (9,'cuidador4','cuidador');
 INSERT INTO users(username,password,enabled) VALUES ('cuidador5','cuidador5',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (10,'cuidador5','cuidador');
-INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (1, 'JOSE ANTONIO', 'OLTRA GAYA', '754 44 51 11', 'cuiador1@mail.com', '87371991M',  'cuidador1');
-INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (2, 'DAVID', 'CARRANZA ARNAU', '605 38 90 49', 'cuidador2@mail.com', '40257330Q',  'cuidador2');
-INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (3, 'PILAR',  'MOYANO SIMO', '679 47 21 44', 'cuidador3@mail.com', '81494400H',  'cuidador3');
-INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (4, 'MARIA NIEVES', 'NOVAS BAREA', '705 74 05 46', 'cuidador4@mail.com', '2538440E',  'cuidador4');
-INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username) VALUES (5, 'FELIX', 'LOIS ESQUINAS', '663 11 70 08', 'cuidador5@mail.com', '37685775E',  'cuidador5');
+
+-- Añadir centro de adopcion
+INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (1, 'CENTRO DE ADOPCIÓN 1', 'Dirección 1', 20);
+INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (2, 'CENTRO DE ADOPCIÓN 2', 'Dirección 2', 2);
+INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (3, 'CENTRO DE ADOPCIÓN 3', 'Dirección 3', 50);
+
+--Añadir Cuidadores
+INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (1, 'JOSE ANTONIO', 'OLTRA GAYA', '754 44 51 11', 'cuiador1@mail.com', '87371991M',  'cuidador1','1');
+INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (2, 'DAVID', 'CARRANZA ARNAU', '605 38 90 49', 'cuidador2@mail.com', '40257330Q',  'cuidador2','2');
+INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (3, 'PILAR',  'MOYANO SIMO', '679 47 21 44', 'cuidador3@mail.com', '81494400H',  'cuidador3','3');
+INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (4, 'MARIA NIEVES', 'NOVAS BAREA', '705 74 05 46', 'cuidador4@mail.com', '2538440E',  'cuidador4','2');
+INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (5, 'FELIX', 'LOIS ESQUINAS', '663 11 70 08', 'cuidador5@mail.com', '37685775E',  'cuidador5','2');
 
 --
 
@@ -51,19 +59,10 @@ INSERT INTO duenos VALUES (12, 'Ciezar',   'em@mail.com','Eduardo','1111111111',
 --Añadir un director
 INSERT INTO director (id, nombre, apellidos, telefono, email, username) VALUES (13, 'LEO','FERNANDEZ', '222222222', 'Di@mail.com',  'director1');
 
--- Añadir centro de adopcion
-INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (1, 'CENTRO DE ADOPCIÓN 1', 'Dirección 1', 20);
-INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (2, 'CENTRO DE ADOPCIÓN 2', 'Dirección 2', 40);
-INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (3, 'CENTRO DE ADOPCIÓN 3', 'Dirección 3', 50);
-
-
---Añadir Adopcion
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id ) VALUES(1, 4, 3, true, true, true, 'Motivo 1', true, 'MotivoDecision 1', '2019-09-01',1);
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision,dueno_id ) VALUES(2, 3, 2, false, false, false, 'Motivo 2', false, 'MotivoDecision 2','2019-10-01',2);
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id ) VALUES(3, 2, 2, true, true, false, 'Motivo 3', true, 'MotivoDecision 3', '2020-09-01',3);
-
 --Añadir Categoria
 INSERT INTO categoria(id, tipo, raza) VALUES(1,1, 'husky');
+INSERT INTO categoria(id, tipo, raza) VALUES(2,1, 'Agua');
+INSERT INTO categoria(id, tipo, raza) VALUES(3,1, 'pequines');
 
 --Añadir animales
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
@@ -83,4 +82,15 @@ INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacim
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
 	cuidador_id) VALUES(3, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
 	'NombreAnimal3', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1);
+
+
+--Añadir Adopcion
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
+	VALUES(1, 4, 3, true, true, true, 'Motivo 1', true, 'MotivoDecision 1', '2019-09-01',1,2);
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision,dueno_id, animal_id) 
+	VALUES(2, 3, 2, false, false, false, 'Motivo 2', false, 'MotivoDecision 2','2019-10-01',2,2);
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
+	VALUES(3, 2, 2, true, true, false, 'Motivo 3', true, 'MotivoDecision 3', '2020-09-01',11,3);
+
+
 

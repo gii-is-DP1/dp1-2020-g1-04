@@ -24,6 +24,18 @@ public class RequisitosDeAdopcion {
 	public Boolean getSeguro() {
 		return seguro;
 	}
+
+	public Boolean getLicenciarequerida() {
+		return licenciarequerida;
+	}
+
+	public void setLicenciarequerida(Boolean licenciarequerida) {
+		this.licenciarequerida = licenciarequerida;
+	}
+
+	public void setSeguro(Boolean seguro) {
+		this.seguro = seguro;
+	}
 	
 	
 }

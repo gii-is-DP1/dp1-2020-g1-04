@@ -19,6 +19,13 @@
             <petclinic:inputField label="Email" name="email"/>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>
+            <c:out value="Centro De Adopcion Acutal: ${cuidador.centroDeAdopcion.nombre }"></c:out><br>
+            <label>Centro De Adopción Nuevo</label>
+            <select name="centroDeAdopcion">
+        		  <c:forEach var="item" items="${centros}">
+           			 <option value="${item.id}">${item.nombre}</option>
+         		  </c:forEach>
+      		  </select>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -27,7 +34,9 @@
                         <button class="btn btn-default" type="submit">Añadir Cuidador</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Actualizar Cuidador</button>
+                        <button class="btn btn-default" type="submit" value="editar">Actualizar Cuidador</button>
+                       	<a href="/cuidadores/${cuidador.id}/directorEliminar" class="btn btn-default" onclick="alert('You are clicking on me');" >Eliminar Cuidador</a>
+                   
                     </c:otherwise>
                 </c:choose>
             </div>

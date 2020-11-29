@@ -20,8 +20,8 @@
             <th style="width: 40%;">¿Está aceptada?</th> 
             <th style="width: 40%;">Motivo de la decisión</th>
             <th style="width: 40%;">Fecha de la decisión</th>
-            <th style="width: 40%;">Duenño de la adopción</th>
-            
+            <th style="width: 40%;">Cuidador</th>
+            <th style="width: 40%;">Animal</th>
 
         </tr>
         </thead>
@@ -56,7 +56,10 @@
                     <c:out value="${adopcion.fechaDecision}"/>
 				</td>
 				<td>
-					 <a href="<spring:url value="/cuidadores/detallesCuidador.jsp" htmlEscape="true" />">Dueño</a>
+					 <a href="<spring:url value="/cuidadores/${adopcion.dueno.id }" htmlEscape="true" />">Dueño</a>
+				</td>
+				<td>
+					 <a href="<spring:url value="/animales/${adopcion.animal.id}/show" htmlEscape="true" />">Animal</a>
 				</td>
 				
             </tr>

@@ -36,15 +36,15 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @WebMvcTest(controllers=DuenoAdoptivoController.class,
 		excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 		excludeAutoConfiguration= SecurityConfiguration.class)
-class DueñoAdoptivoControllerTests {
+class DuenoAdoptivoControllerTests {
 
 	private static final int TEST_OWNER_ID = 1;
 
 	@Autowired
-	private DuenoAdoptivoController ownerController;
+	private DuenoAdoptivoController duenoAdoptivoController;
 
 	@MockBean
-	private DuenoAdoptivoService clinicService;
+	private DuenoAdoptivoService duenoAdoptivoService;
         
         @MockBean
 	private UserService userService;
@@ -61,7 +61,7 @@ class DueñoAdoptivoControllerTests {
 	@BeforeEach
 	void setup() {
 
-		george = new DueñoAdoptivo();
+		george = new DuenoAdoptivo();
 		george.setId(TEST_OWNER_ID);
 		george.setNombre("George");
 		george.setApellidos("Franklin");
@@ -69,28 +69,29 @@ class DueñoAdoptivoControllerTests {
 		george.setDni("Madison");
 		george.setTelefono("6085551023");
 		george.setEmail("prueba@email.com");
-		given(this.clinicService.findDueñoAdoptivoById(TEST_OWNER_ID)).willReturn(george);
+		given(this.duenoAdoptivoService.findDuenoAdoptivoById(TEST_OWNER_ID)).willReturn(george);
 
 	}
 
 	@WithMockUser(value = "spring")
         @Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/owners/new")).andExpect(status().isOk()).andExpect(model().attributeExists("owner"))
-				.andExpect(view().name("owners/createOrUpdateOwnerForm"));
+		mockMvc.perform(get("/duenoAdoptivo/new")).andExpect(status().isOk()).andExpect(model().attributeExists("duenoAdoptivo"))
+				.andExpect(view().name("duenoAdoptivo/createOrUpdateOwnerForm"));
 	}
 
 	@WithMockUser(value = "spring")
         @Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/owners/new").param("firstName", "Joe").param("lastName", "Bloggs")
+		mockMvc.perform(post("/duenoAdoptivo/new").param("nombre", "Joe").param("apellidos", "Bloggs")
 							.with(csrf())
-							.param("address", "123 Caramel Street")
-							.param("city", "London")
-							.param("telephone", "01316761638"))
+							.param("direccion", "123 Caramel Street")
+							.param("email", "London@mail.com")
+							.param("dni", "423423423G")
+							.param("telefono", "01316761638"))
 				.andExpect(status().is3xxRedirection());
 	}
-
+	
 	@WithMockUser(value = "spring")
         @Test
 	void testProcessCreationFormHasErrors() throws Exception {
@@ -116,7 +117,7 @@ class DueñoAdoptivoControllerTests {
 	@WithMockUser(value = "spring")
         @Test
 	void testProcessFindFormSuccess() throws Exception {
-		given(this.clinicService.findDueñoAdoptivoByApellidos("")).willReturn(Lists.newArrayList(george, new DueñoAdoptivo()));
+		given(this.clinicService.findDuenoAdoptivoByApellidos("")).willReturn(Lists.newArrayList(george, new DuenoAdoptivo()));
 
 		mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/ownersList"));
 	}
@@ -124,7 +125,7 @@ class DueñoAdoptivoControllerTests {
 	@WithMockUser(value = "spring")
         @Test
 	void testProcessFindFormByApellidos() throws Exception {
-		given(this.clinicService.findDueñoAdoptivoByApellidos(george.getApellidos())).willReturn(Lists.newArrayList(george));
+		given(this.clinicService.findDuenoAdoptivoByApellidos(george.getApellidos())).willReturn(Lists.newArrayList(george));
 
 		mockMvc.perform(get("/owners").param("lastName", "Franklin")).andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/owners/" + TEST_OWNER_ID));
