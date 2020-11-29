@@ -85,11 +85,11 @@ INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacim
 
 
 --Añadir Adopcion
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
 	VALUES(1, 4, 3, true, true, true, 'Motivo 1', true, 'MotivoDecision 1', '2019-09-01',1,2);
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision,dueno_id, animal_id) 
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision,dueno_id, animal_id) 
 	VALUES(2, 3, 2, false, false, false, 'Motivo 2', false, 'MotivoDecision 2','2019-10-01',2,2);
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
 	VALUES(3, 2, 2, true, true, false, 'Motivo 3', true, 'MotivoDecision 3', '2020-09-01',11,3);
 
 --Añadir Visitas

@@ -39,6 +39,10 @@ public class AnimalService {
 	public Collection<Animal> findAll(){
 		return animalRepository.findAll();
 	}
+	
+	public Collection<Animal> findAllNoAdopted() {
+		return animalRepository.findAllNoAdopted();
+	}
 
 	@Transactional
 	public void save(@Valid Animal animal) {
