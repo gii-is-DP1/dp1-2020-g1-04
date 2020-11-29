@@ -54,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/animales/findAll").permitAll()
 				.antMatchers("/adopcion/findAllByDuenoAdoptivoAutenticado").hasAnyAuthority("duenoadoptivo")
 				.antMatchers("/adopcion/findAllByDuenoAdoptivo/**").hasAnyAuthority("director","cuidador")
+				.antMatchers("/adopcion/new").hasAnyAuthority("duenoadoptivo")
 				
 				.anyRequest().denyAll()
 				.and()

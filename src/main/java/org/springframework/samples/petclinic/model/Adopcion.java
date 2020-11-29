@@ -28,8 +28,8 @@ public class Adopcion extends NamedEntity{
 	private boolean leidoRequisitos;
 	
 	@NotNull
-	@Column(name="permisoCmunidadVecinos")
-	private boolean permisoCmunidadVecinos;
+	@Column(name="permisoComunidadVecinos")
+	private boolean permisoComunidadVecinos;
 	//private Vivienda vivienda;
 	
 	@NotNull
@@ -86,7 +86,7 @@ public class Adopcion extends NamedEntity{
 		this.mayoresDeEdad = mayoresDeEdad;
 	}
 
-	public boolean isLeidoRequisitos() {
+	public boolean getLeidoRequisitos() {
 		return leidoRequisitos;
 	}
 
@@ -94,15 +94,15 @@ public class Adopcion extends NamedEntity{
 		this.leidoRequisitos = leidoRequisitos;
 	}
 
-	public boolean isPermisoCmunidadVecinos() {
-		return permisoCmunidadVecinos;
+	public boolean getPermisoComunidadVecinos() {
+		return permisoComunidadVecinos;
 	}
 
-	public void setPermisoCmunidadVecinos(boolean permisoCmunidadVecinos) {
-		this.permisoCmunidadVecinos = permisoCmunidadVecinos;
+	public void setPermisoComunidadVecinos(boolean permisoComunidadVecinos) {
+		this.permisoComunidadVecinos = permisoComunidadVecinos;
 	}
 
-	public boolean isOtrosAnimales() {
+	public boolean getOtrosAnimales() {
 		return otrosAnimales;
 	}
 

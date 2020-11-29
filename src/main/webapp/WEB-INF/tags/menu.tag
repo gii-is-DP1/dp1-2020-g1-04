@@ -99,6 +99,7 @@
 													
 													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">
 													<a href="<c:url value="/adopcion/findAllByDuenoAdoptivoAutenticado"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
+													<a href="<c:url value="/adopcion/new"/>" class="btn btn-primary btn-block">Nueva Adopción</a>
 														</sec:authorize>
 											</p>
 										</div>
