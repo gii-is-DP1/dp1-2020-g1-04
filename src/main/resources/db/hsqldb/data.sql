@@ -1,4 +1,5 @@
 
+
 	-- One Director user, named Director with passwor director1 and authority director
 INSERT INTO users(username,password,enabled) VALUES ('director1','director1',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'director1','director');
@@ -67,19 +68,20 @@ INSERT INTO categoria(id, tipo, raza) VALUES(3,1, 'pequines');
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
-	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 1, 1, 1);
+	cuidador_id) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'NombreAnimal', 'Nregistro1', 3, true, true, true, 'Masculino', 'Mediano', 1, 1);
 
-	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id) VALUES(2, false, 3, 3, 'CHIM123', 5,'2019-10-02', '2020-09-02', '2020-10-02',
-	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 2, 1, 2);
-	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+	cuidador_id) VALUES(2, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'NombreAnimal2', 'Nregistro2', 3, true, true, true, 'Masculino', 'Pequeño', 1, 1);
+
+INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id) VALUES(3, false, 3, 3, 'CHIM123', 5,'2019-10-02', '2020-09-02', '2020-10-02',
-	'NombreAnimal', 'Nregistro', 3, true, true, true, 'Masculino', 'Mediano', 3, 1, 2);
+	cuidador_id) VALUES(3, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'NombreAnimal3', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1);
 
 
 --Añadir Adopcion
@@ -89,8 +91,6 @@ INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, p
 	VALUES(2, 3, 2, false, false, false, 'Motivo 2', false, 'MotivoDecision 2','2019-10-01',2,2);
 INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
 	VALUES(3, 2, 2, true, true, false, 'Motivo 3', true, 'MotivoDecision 3', '2020-09-01',11,3);
-
-
 
 
 
