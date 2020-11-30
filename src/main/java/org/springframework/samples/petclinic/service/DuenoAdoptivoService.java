@@ -79,14 +79,6 @@ public class DuenoAdoptivoService {
 	}
 	
 	@Transactional
-	public void save2DuenoAdoptivo(DuenoAdoptivo duenoAdoptivo) throws DataAccessException {
-		Integer duenoAdoptivoId=duenoAdoptivo.getId();
-		DuenoAdoptivo aux=findDuenoAdoptivoById(duenoAdoptivoId);
-		duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
-		saveDuenoAdoptivo( duenoAdoptivo);
-	}
-
-	@Transactional
 	public Set<DuenoAdoptivo> findAllDuenosAdoptivos() {
 		Set<DuenoAdoptivo> result;
 		result=duenoAdoptivoRepository.findAll();
@@ -100,17 +92,7 @@ public class DuenoAdoptivoService {
 		result=duenoAdoptivoRepository.findByUserName(duenoAdoptivoUserName);
 		return result;
 	}
-	@Transactional
-	public void saveDuenoAdoptivoByUserName(@Valid DuenoAdoptivo duenoAdoptivo) throws DataAccessException {
 	
-			
-				String duenoAdoptivoUserName=duenoAdoptivo.getUser().getUsername();
-				DuenoAdoptivo aux=findDuenoAdoptivoByUserName(duenoAdoptivoUserName);
-				duenoAdoptivo.setId(aux.getId());
-				duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
-				saveDuenoAdoptivo( duenoAdoptivo);
-		
-	}
 	
 		
 

@@ -135,21 +135,6 @@ class DuenoAdoptivoServiceTests {
 		assertThat(duenosAdoptivos.size()).isEqualTo(found + 1);
 	}
 	
-
-	@Test
-	@Transactional
-	void shouldUpdateDuenoAdoptivo() {
-		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(1);
-		String oldApellidos = duenoAdoptivo.getApellidos();
-		String newApellidos = oldApellidos + "X";
-
-		duenoAdoptivo.setApellidos(newApellidos);
-		this.duenoAdoptivoService.save2DuenoAdoptivo(duenoAdoptivo);
-
-		// retrieving new name from database
-		duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(1);
-		assertThat(duenoAdoptivo.getApellidos()).isEqualTo(newApellidos);
-	}
 	
 	@Test
 	@Transactional
@@ -160,21 +145,5 @@ class DuenoAdoptivoServiceTests {
 		assertThat(duenoAdoptivo).isEqualTo(aux);
 	}
 
-	@Test
-	@Transactional
-	public void editarDuenoDesdeUserName() {
-		DuenoAdoptivo duenoAdoptivo=this.duenoAdoptivoService.findDuenoAdoptivoById(11);
-		
-		
-		duenoAdoptivo.setNombre("Sam");
-		duenoAdoptivoService.saveDuenoAdoptivoByUserName(duenoAdoptivo);
-		
-		
-                
-       
-
-		DuenoAdoptivo aux=this.duenoAdoptivoService.findDuenoAdoptivoById(11);
-		assertThat(aux.getNombre()).isEqualTo("Sam");
-	}
 
 }

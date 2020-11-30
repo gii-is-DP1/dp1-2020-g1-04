@@ -30,7 +30,7 @@
 								
 			
 				
-				<petclinic:menuItem active="${name eq 'animales'}" url="/animales/findAll"
+				<petclinic:menuItem active="${name eq 'animales'}" url="/animales"
 					title="animales">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Animales</span>
@@ -48,7 +48,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Login</a></li>
-					<li><a href="<c:url value="/users/new" />">Register</a></li>
+					<li><a href="<c:url value="/duenoAdoptivo/new" />">Register</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -87,18 +87,20 @@
 										<div class="col-lg-12">
 											<p>
 											<sec:authentication var="principal" property="principal" />
-											<a href="<c:url value="/duenosAdoptivos/${principal.username}/edit2/"/>" class="btn btn-primary btn-block">Mi perfil</a>
+											
 												<!--  <a href="#" class="btn btn-danger btn-block">Change
 													Password</a>-->	
 												<sec:authorize access="hasAnyAuthority('director')">
+												
 												<a href="<c:url value="/cuidador/nuevo"/>" class="btn btn-primary btn-block">Añadir Cuidador</a>
-												<a href="<c:url value="/centros/findAll"/>" class="btn btn-primary btn-block">Listado Centros</a>
-												<a href="<c:url value="/adopcion/findAll"/>" class="btn btn-primary btn-block">Listado Adopciones</a>
-												<a href="<c:url value="/cuidadores/findAll"/>" class="btn btn-primary btn-block">Listado de Cuidadores</a>
+												<a href="<c:url value="/centros"/>" class="btn btn-primary btn-block">Listado Centros</a>
+												<a href="<c:url value="/adopcion"/>" class="btn btn-primary btn-block">Listado Adopciones</a>
+												<a href="<c:url value="/cuidadores"/>" class="btn btn-primary btn-block">Listado de Cuidadores</a>
 													</sec:authorize>	
 													
 													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">
-													<a href="<c:url value="/adopcion/findAllByDuenoAdoptivoAutenticado"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
+													<a href="<c:url value="/duenosAdoptivos/editByName/${principal.username}"/>" class="btn btn-primary btn-block">Mi perfil</a>
+													<a href="<c:url value="/adopcion/misSolicitudesDeAdopcion"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
 														</sec:authorize>
 											</p>
 										</div>

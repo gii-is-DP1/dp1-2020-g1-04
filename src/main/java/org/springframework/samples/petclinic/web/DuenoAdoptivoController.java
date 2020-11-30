@@ -63,7 +63,7 @@ public class DuenoAdoptivoController {
 		return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/duenosAdoptivos/new")
+	@PostMapping(value = "/duenoAdoptivo/new")
 	public String processCreationForm(@Valid DuenoAdoptivo duenoAdoptivo, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
@@ -82,7 +82,7 @@ public class DuenoAdoptivoController {
 		return "duenosAdoptivos/findDuenosAdoptivos";
 	}
 	
-	@GetMapping(value = "/duenosAdoptivos/findAll")
+	@GetMapping(value = "/duenosAdoptivos")
 	public String findAll(Map<String, Object> model) {
 		Set<DuenoAdoptivo> results;
 		results=duenoAdoptivoService.findAllDuenosAdoptivos();
@@ -90,7 +90,7 @@ public class DuenoAdoptivoController {
 		return "duenosAdoptivos/duenosAdoptivosList";
 	}
 
-	@GetMapping(value = "/duenosAdoptivos")
+	@GetMapping(value = "/duenosAdoptivos/busqueda")
 	public String processFindForm(DuenoAdoptivo duenoAdoptivo, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /duenosAdoptivos to return all records
@@ -116,14 +116,14 @@ public class DuenoAdoptivoController {
 			return "duenosAdoptivos/duenosAdoptivosList";
 		}
 	}
-	@GetMapping(value = "/duenosAdoptivos/{duenoAdoptivoId}/edit")
+	@GetMapping(value = "/duenosAdoptivos/edit/{duenoAdoptivoId}")
 	public String initUpdateDuenoAdoptivoForm(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId, Model model) {
 		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
 		model.addAttribute(duenoAdoptivo);
 		return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/duenosAdoptivos/{duenoAdoptivoId}/edit")
+	@PostMapping(value = "/duenosAdoptivos/edit/{duenoAdoptivoId}")
 	public String processUpdateDuenoAdoptivoForm(@Valid DuenoAdoptivo duenoAdoptivo, BindingResult result,
 			@PathVariable("duenoAdoptivoId") int duenoAdoptivoId) {
 		if (result.hasErrors()) {
@@ -131,8 +131,9 @@ public class DuenoAdoptivoController {
 		}
 		else {
 			duenoAdoptivo.setId(duenoAdoptivoId);
-			
-			this.duenoAdoptivoService.save2DuenoAdoptivo(duenoAdoptivo);
+			DuenoAdoptivo aux=duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
+			duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
+			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
 			return "redirect:/duenosAdoptivos/{duenoAdoptivoId}";
 		}
 	}
@@ -150,14 +151,14 @@ public class DuenoAdoptivoController {
 	}
 	
 	//Eitar dueño adoptivo desde el username
-	@GetMapping(value = "/duenosAdoptivos/{duenoAdoptivoUserName}/edit2")
+	@GetMapping(value = "/duenosAdoptivos/editByName/{duenoAdoptivoUserName}")
 	public String initUpdateDuenoAdoptivoForm2(@PathVariable("duenoAdoptivoUserName") String duenoAdoptivoUserName, Model model) {
 		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoByUserName(duenoAdoptivoUserName);
 		model.addAttribute(duenoAdoptivo);
 		return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/duenosAdoptivos/{duenoAdoptivoUserName}/edit2")
+	@PostMapping(value = "/duenosAdoptivos/editByName/{duenoAdoptivoUserName}")
 	public String processUpdateDuenoAdoptivoForm2(@Valid DuenoAdoptivo duenoAdoptivo, BindingResult result,
 			@PathVariable("duenoAdoptivoUserName") String duenoAdoptivoUserName) {
 		if (result.hasErrors()) {
@@ -165,7 +166,10 @@ public class DuenoAdoptivoController {
 		}
 		else {			
 			duenoAdoptivo.getUser().setUsername(duenoAdoptivoUserName);
-			this.duenoAdoptivoService.saveDuenoAdoptivoByUserName(duenoAdoptivo);
+			DuenoAdoptivo aux=duenoAdoptivoService.findDuenoAdoptivoByUserName(duenoAdoptivoUserName);
+			duenoAdoptivo.setId(aux.getId());
+			duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
+			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
 			int duenoAdoptivoId=duenoAdoptivo.getId();
 			return "redirect:/duenosAdoptivos/"+duenoAdoptivoId;
 		}

@@ -23,12 +23,10 @@ class ValidatorTests {
 		localValidatorFactoryBean.afterPropertiesSet();
 		return localValidatorFactoryBean;
 	}
-
-	@Test
-	void shouldNotValidateDuenoAdoptivoWhenNombreEmpty() {
-
+	
+	private DuenoAdoptivo crearDuenoAdoptivo() {
 		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
-		duenoAdoptivo.setNombre("");
+		duenoAdoptivo.setNombre("Juan");
 		duenoAdoptivo.setApellidos("perez");
 		duenoAdoptivo.setDireccion("calle falsa");
 		duenoAdoptivo.setDni("1234567H");
@@ -38,7 +36,16 @@ class ValidatorTests {
                 user.setUsername("Sam");
                 user.setPassword("supersecretpassword");
                 user.setEnabled(true);
-                duenoAdoptivo.setUser(user);   
+                duenoAdoptivo.setUser(user); 
+                
+                return duenoAdoptivo;
+	}
+
+	@Test
+	void shouldNotValidateDuenoAdoptivoWhenNombreEmpty() {
+
+		DuenoAdoptivo duenoAdoptivo=crearDuenoAdoptivo();
+		duenoAdoptivo.setNombre("");
 
 		Validator validator = createValidator();
 		Set<ConstraintViolation<DuenoAdoptivo>> constraintViolations = validator.validate(duenoAdoptivo);
@@ -53,18 +60,8 @@ class ValidatorTests {
 	@Test
 	void shouldNotValidateWhenApellidosEmpty() {
 
-		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
-		duenoAdoptivo.setNombre("Simon");
+		DuenoAdoptivo duenoAdoptivo=crearDuenoAdoptivo();
 		duenoAdoptivo.setApellidos("");
-		duenoAdoptivo.setDireccion("calle falsa");
-		duenoAdoptivo.setDni("1234567H");
-		duenoAdoptivo.setTelefono("666777888");
-		duenoAdoptivo.setEmail("fsfd@dfs.com");
-                User user=new User();
-                user.setUsername("Sam");
-                user.setPassword("supersecretpassword");
-                user.setEnabled(true);
-                duenoAdoptivo.setUser(user);   
 
 		Validator validator = createValidator();
 		Set<ConstraintViolation<DuenoAdoptivo>> constraintViolations = validator.validate(duenoAdoptivo);
@@ -79,18 +76,9 @@ class ValidatorTests {
 	@Test
 	void shouldNotValidateWhenDireccionEmpty() {
 
-		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
-		duenoAdoptivo.setNombre("Simon");
-		duenoAdoptivo.setApellidos("Alcaraz");
+		DuenoAdoptivo duenoAdoptivo=crearDuenoAdoptivo();
 		duenoAdoptivo.setDireccion("");
-		duenoAdoptivo.setDni("1234567H");
-		duenoAdoptivo.setTelefono("666777888");
-		duenoAdoptivo.setEmail("fsfd@dfs.com");
-                User user=new User();
-                user.setUsername("Sam");
-                user.setPassword("supersecretpassword");
-                user.setEnabled(true);
-                duenoAdoptivo.setUser(user);   
+		
 
 		Validator validator = createValidator();
 		Set<ConstraintViolation<DuenoAdoptivo>> constraintViolations = validator.validate(duenoAdoptivo);
@@ -105,18 +93,8 @@ class ValidatorTests {
 	@Test
 	void shouldNotValidateWhenTelefonoEmpty() {
 
-		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
-		duenoAdoptivo.setNombre("Simon");
-		duenoAdoptivo.setApellidos("Alcaraz");
-		duenoAdoptivo.setDireccion("Falsa 123");
-		duenoAdoptivo.setDni("1234567H");
-		duenoAdoptivo.setTelefono("");
-		duenoAdoptivo.setEmail("fsfd@dfs.com");
-                User user=new User();
-                user.setUsername("Sam");
-                user.setPassword("supersecretpassword");
-                user.setEnabled(true);
-                duenoAdoptivo.setUser(user);   
+		DuenoAdoptivo duenoAdoptivo=crearDuenoAdoptivo();
+		duenoAdoptivo.setTelefono("");  
 
 		Validator validator = createValidator();
 		Set<ConstraintViolation<DuenoAdoptivo>> constraintViolations = validator.validate(duenoAdoptivo);
@@ -131,19 +109,9 @@ class ValidatorTests {
 	@Test
 	void shouldNotValidateWhendniEmpty() {
 
-		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
-		duenoAdoptivo.setNombre("Simon");
-		duenoAdoptivo.setApellidos("Alcaraz");
-		duenoAdoptivo.setDireccion("Falsa 123");
+		DuenoAdoptivo duenoAdoptivo=crearDuenoAdoptivo();
 		duenoAdoptivo.setDni("");
-		duenoAdoptivo.setTelefono("666777888");
-		duenoAdoptivo.setEmail("fsfd@dfs.com");
-                User user=new User();
-                user.setUsername("Sam");
-                user.setPassword("supersecretpassword");
-                user.setEnabled(true);
-                duenoAdoptivo.setUser(user);   
-
+		
 		Validator validator = createValidator();
 		Set<ConstraintViolation<DuenoAdoptivo>> constraintViolations = validator.validate(duenoAdoptivo);
 
@@ -157,19 +125,9 @@ class ValidatorTests {
 	@Test
 	void shouldNotValidateWhenEmailEmpty() {
 
-		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
-		duenoAdoptivo.setNombre("Simon");
-		duenoAdoptivo.setApellidos("Alcaraz");
-		duenoAdoptivo.setDireccion("Calle Falsa");
-		duenoAdoptivo.setDni("1234567H");
-		duenoAdoptivo.setTelefono("666777888");
+		DuenoAdoptivo duenoAdoptivo=crearDuenoAdoptivo();
 		duenoAdoptivo.setEmail("");
-                User user=new User();
-                user.setUsername("Sam");
-                user.setPassword("supersecretpassword");
-                user.setEnabled(true);
-                duenoAdoptivo.setUser(user);   
-
+               
 		Validator validator = createValidator();
 		Set<ConstraintViolation<DuenoAdoptivo>> constraintViolations = validator.validate(duenoAdoptivo);
 
@@ -183,19 +141,9 @@ class ValidatorTests {
 	@Test
 	void shouldNotValidateWhenEmailNotEmail() {
 
-		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
-		duenoAdoptivo.setNombre("Simon");
-		duenoAdoptivo.setApellidos("Alcaraz");
-		duenoAdoptivo.setDireccion("Calle Falsa");
-		duenoAdoptivo.setDni("1234567H");
-		duenoAdoptivo.setTelefono("666777888");
+		DuenoAdoptivo duenoAdoptivo=crearDuenoAdoptivo();
 		duenoAdoptivo.setEmail("sdfsd");
-                User user=new User();
-                user.setUsername("Sam");
-                user.setPassword("supersecretpassword");
-                user.setEnabled(true);
-                duenoAdoptivo.setUser(user);   
-
+                
 		Validator validator = createValidator();
 		Set<ConstraintViolation<DuenoAdoptivo>> constraintViolations = validator.validate(duenoAdoptivo);
 

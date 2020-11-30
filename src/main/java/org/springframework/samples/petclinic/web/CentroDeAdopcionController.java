@@ -38,7 +38,7 @@ public class CentroDeAdopcionController {
 	
 	
 	//LISTADO DE CENTROS DE ADOPCION
-	@GetMapping(value="/findAll")
+	@GetMapping(value="")
 	public String findAll(Map<String, Object> model) {
 		Collection<CentroDeAdopcion> results;
 		results = centroDeAdopcionService.findAll();

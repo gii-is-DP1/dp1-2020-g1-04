@@ -19,7 +19,9 @@
             <petclinic:inputField label="Email" name="email"/>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>
+          <c:if test="${!cuidador['new']}">New 
             <c:out value="Centro De Adopcion Acutal: ${cuidador.centroDeAdopcion.nombre }"></c:out><br>
+           </c:if>
             <label>Centro De Adopción Nuevo</label>
             <select name="centroDeAdopcion">
         		  <c:forEach var="item" items="${centros}">

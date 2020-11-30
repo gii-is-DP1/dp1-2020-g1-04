@@ -35,10 +35,10 @@
         <c:forEach items="${animales}" var="animal">
             <tr>
                 <td>
-                  <c:out value="${animal.nombre}"/>
+                 <a href="<c:url value="/animales/show/${animal.id}"/>" class="btn btn-primary btn-block">${animal.nombre }</a>
                 </td>
                  <td>
-                  <a href="<c:url value="/centros/${animal.centroDeAdopcion.id}"/>" class="btn btn-primary btn-block">Centro ${animal.centroDeAdopcion.id}</a>
+                  <a href="<c:url value="/centros/show/${animal.centroDeAdopcion.id}"/>" class="btn btn-primary btn-block">Centro ${animal.centroDeAdopcion.id}</a>
                 </td>
                  <td>
                     <c:out value="${animal.atencion.dificultad}"/>

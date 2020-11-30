@@ -54,7 +54,7 @@ public class CuidadorController {
 	}
 	
 	
-	@GetMapping(value = "/cuidadores/findAll")
+	@GetMapping(value = "/cuidadores")
 	public String findAll(Map<String, Object> model) {
 	
 		org.springframework.security.core.userdetails.User user = userService.findPrincipal();
@@ -86,7 +86,7 @@ public class CuidadorController {
 			
 		 if(res==true){
 		ModelAndView mav = new ModelAndView("cuidadores/detallesCuidador");
-		Cuidador cuidador=this.cuidadorService.findDuenoAdoptivoById(cuidadorId);
+		Cuidador cuidador=this.cuidadorService.findCuidadorById(cuidadorId);
 		mav.addObject(cuidador);
 		return mav;
 	}else {
@@ -130,7 +130,7 @@ public class CuidadorController {
 	
 	@GetMapping(value = "/cuidadores/{cuidadorId}/directorEdit")
 	public String processUpdateCuidadorForm(@PathVariable("cuidadorId") int cuidadorId, Model model) {
-		Cuidador cuidador = this.cuidadorService.findDuenoAdoptivoById(cuidadorId);
+		Cuidador cuidador = this.cuidadorService.findCuidadorById(cuidadorId);
 		model.addAttribute(cuidador);
 		
 		Collection<CentroDeAdopcion>centros=centroDeAdopcionService.findAll();
@@ -146,9 +146,11 @@ public class CuidadorController {
 			return VIEWS_CUIDADOR_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			Cuidador aux=cuidadorService.findCuidadorById(cuidadorId);
+			cuidador.setAnimales(aux.getAnimales());
+			cuidador.setId(cuidadorId);
 			
-			
-			this.cuidadorService.save(cuidador,cuidadorId);
+			this.cuidadorService.saveCuidador(cuidador);
 			
 			return "redirect:/cuidadores/{cuidadorId}";
 		}

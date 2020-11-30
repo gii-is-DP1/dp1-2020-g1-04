@@ -80,7 +80,7 @@ INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacim
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id) VALUES(3, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	cuidador_id, centro_id) VALUES(3, false, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
 	'Loki', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,1);
 
 

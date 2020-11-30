@@ -46,15 +46,5 @@ public class AnimalService {
 
 	}
 	
-	public void saveEdicion(Animal modifiedAnimal, int animalId) {
-		Optional<Animal> animal=findAnimalById(animalId);
-		Cuidador c=cuidadorService.findDuenoAdoptivoById(modifiedAnimal.getCuidador().getId());
-		CentroDeAdopcion cda=centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
-		modifiedAnimal.setId(animalId);
-		modifiedAnimal.setCuidador(c);
-		modifiedAnimal.setCentroDeAdopcion(cda);
-		modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
-	save(modifiedAnimal);
-	}
-
+	
 }
