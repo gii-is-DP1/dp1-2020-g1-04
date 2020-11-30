@@ -150,7 +150,7 @@ public class DuenoAdoptivoController {
 		return mav;
 	}
 	
-	//Eitar dueño adoptivo desde el username
+	//Eitar dueño adoptivo desde el username(esto se debe que desde el Menú no tiene la posibilidad de utilizar el id)
 	@GetMapping(value = "/duenosAdoptivos/editByName/{duenoAdoptivoUserName}")
 	public String initUpdateDuenoAdoptivoForm2(@PathVariable("duenoAdoptivoUserName") String duenoAdoptivoUserName, Model model) {
 		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoByUserName(duenoAdoptivoUserName);
