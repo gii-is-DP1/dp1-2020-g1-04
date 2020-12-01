@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,8 +119,8 @@ public class DuenoAdoptivoController {
 	}
 	@GetMapping(value = "/duenosAdoptivos/edit/{duenoAdoptivoId}")
 	public String initUpdateDuenoAdoptivoForm(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId, Model model) {
-		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
-		model.addAttribute(duenoAdoptivo);
+		Optional<DuenoAdoptivo> duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
+		model.addAttribute(duenoAdoptivo.get());
 		return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 	}
 
@@ -131,8 +132,8 @@ public class DuenoAdoptivoController {
 		}
 		else {
 			duenoAdoptivo.setId(duenoAdoptivoId);
-			DuenoAdoptivo aux=duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
-			duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
+			Optional<DuenoAdoptivo> aux=duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
+			duenoAdoptivo.getUser().setAuthorities(aux.get().getUser().getAuthorities());
 			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
 			return "redirect:/duenosAdoptivos/{duenoAdoptivoId}";
 		}

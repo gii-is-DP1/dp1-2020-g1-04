@@ -94,8 +94,8 @@ public class AdopcionController {
 	//Editar adopcion
 	@GetMapping(value = "/adopcion/edit/{adopcionId}")
 	public String initUpdateDuenoAdoptivoForm(@PathVariable("adopcionId") int adopcionId, Model model) {
-		Adopcion adopcion = this.adopcionService.findAdopcionById(adopcionId);
-		model.addAttribute(adopcion);
+		Optional<Adopcion> adopcion = this.adopcionService.findAdopcionById(adopcionId);
+		model.addAttribute(adopcion.get());
 		if(!userService.findPrincipal().getAuthorities().toString().contentEquals("director")) {
 			return "redirect: /403";
 		}

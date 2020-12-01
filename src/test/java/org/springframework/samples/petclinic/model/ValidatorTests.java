@@ -153,5 +153,119 @@ class ValidatorTests {
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("email");
 		assertThat(violation.getMessage()).isEqualTo("no es una dirección de correo bien formada");
 	}
+	
+	private Cuidador crearCuidador() {
+		Cuidador cuidador = new Cuidador();
+		cuidador.setNombre("Juan");
+		cuidador.setApellidos("perez");
+		cuidador.setDni("1234567H");
+		cuidador.setTelefono("666777888");
+		cuidador.setEmail("fsfd@dfs.com");
+                User user=new User();
+                user.setUsername("Sam");
+                user.setPassword("supersecretpassword");
+                user.setEnabled(true);
+                cuidador.setUser(user); 
+                
+                return cuidador;
+	}
+	
+	@Test
+	void shouldNotValidateDuenoAdoptivoWhenNombreEmptyCuidador() {
+
+		Cuidador cuidador=crearCuidador();
+		cuidador.setNombre("");
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Cuidador>> constraintViolations = validator.validate(cuidador);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Cuidador> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("nombre");
+		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+	}
+	
+	@Test
+	void shouldNotValidateWhenApellidosEmptyCuidador() {
+
+		Cuidador cuidador=crearCuidador();
+		cuidador.setApellidos("");
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Cuidador>> constraintViolations = validator.validate(cuidador);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Cuidador> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("apellidos");
+		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+	}
+	
+		
+	@Test
+	void shouldNotValidateWhenTelefonoEmptyCuidador() {
+
+		Cuidador cuidador=crearCuidador();
+		cuidador.setTelefono("");  
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Cuidador>> constraintViolations = validator.validate(cuidador);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Cuidador> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("telefono");
+		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+	}
+	
+	@Test
+	void shouldNotValidateWhendniEmptyCuidador() {
+
+		Cuidador cuidador=crearCuidador();
+		cuidador.setDni("");
+		
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Cuidador>> constraintViolations = validator.validate(cuidador);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Cuidador> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("dni");
+		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+	}
+
+	@Test
+	void shouldNotValidateWhenEmailEmptyCuidador() {
+
+		Cuidador cuidador=crearCuidador();
+		cuidador.setEmail("");
+               
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Cuidador>> constraintViolations = validator.validate(cuidador);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Cuidador> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("email");
+		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+	}
+	
+	@Test
+	void shouldNotValidateWhenEmailNotEmailCuidador() {
+
+		Cuidador cuidador=crearCuidador();
+		cuidador.setEmail("sdfsd");
+                
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Cuidador>> constraintViolations = validator.validate(cuidador);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Cuidador> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("email");
+		assertThat(violation.getMessage()).isEqualTo("no es una dirección de correo bien formada");
+	}
+
 
 }

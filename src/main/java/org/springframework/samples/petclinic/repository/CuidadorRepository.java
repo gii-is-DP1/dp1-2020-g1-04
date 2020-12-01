@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.dao.DataAccessException;
@@ -17,7 +18,7 @@ public interface CuidadorRepository extends Repository<Cuidador, Integer>{
 	public Set<Cuidador> findAll();
 
 	@Query("SELECT cuidador FROM Cuidador cuidador WHERE cuidador.id =:cuidadorId")
-	public Cuidador findById(@Param("cuidadorId") int cuidadorId);
+	public Optional<Cuidador> findById(@Param("cuidadorId") int cuidadorId);
 	
 	
 	

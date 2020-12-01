@@ -95,10 +95,10 @@ public class AnimalController {
 			return ANIMAL_FORM;
 		}else {			
 			Optional<Animal> animal=animalService.findAnimalById(animalId);
-			Cuidador c=cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
+			Optional<Cuidador> c=cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
 			CentroDeAdopcion cda=centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
 			modifiedAnimal.setId(animalId);
-			modifiedAnimal.setCuidador(c);
+			modifiedAnimal.setCuidador(c.get());
 			modifiedAnimal.setCentroDeAdopcion(cda);
 			modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
 			animalService.save(modifiedAnimal);

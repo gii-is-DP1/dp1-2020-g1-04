@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +18,7 @@ public interface AdopcionRepository extends Repository<Adopcion, Integer>{
 	
 	//Encontrar adopcion
 	@Query("SELECT adopcion FROM  Adopcion adopcion WHERE adopcion.id =:id")
-	public Adopcion findById(@Param("id") int id);
+	public Optional<Adopcion> findById(@Param("id") int id);
 	
 	//Guardar adopcion
 	void save(Adopcion adopcion) throws DataAccessException;

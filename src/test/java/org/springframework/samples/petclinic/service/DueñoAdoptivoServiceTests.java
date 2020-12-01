@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +32,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
@@ -140,10 +142,31 @@ class DuenoAdoptivoServiceTests {
 	@Transactional
 	public void busquedaByUsername() {
 		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoByUserName("josdurgar1");
-		DuenoAdoptivo aux=this.duenoAdoptivoService.findDuenoAdoptivoById(11);
+		Optional<DuenoAdoptivo> aux=this.duenoAdoptivoService.findDuenoAdoptivoById(11);
 		
-		assertThat(duenoAdoptivo).isEqualTo(aux);
+		assertThat(duenoAdoptivo).isEqualTo(aux.get());
 	}
 
+	@Test
+	@Transactional
+	public void noBusquedaByUsername() throws Exception {
+		DuenoAdoptivo res = this.duenoAdoptivoService.findDuenoAdoptivoByUserName("noExisto");
+		
+		assertThat(res).isEqualTo(null);
+		
+		
+	}
+	
+	@Test
+	@Transactional
+	public void noShouldListDuenoAdoptivoNoExist() throws Exception {
+		Optional<DuenoAdoptivo> res=duenoAdoptivoService.findDuenoAdoptivoById(23);
+		
+		assertThat(res).isEmpty();
+		
+		
+	}
+	
+	
 
 }

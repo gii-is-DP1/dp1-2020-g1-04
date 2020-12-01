@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -21,7 +22,7 @@ public class AdopcionService {
 	}
 	
 	@Transactional(readOnly=true)
-	public Adopcion findAdopcionById(int id) throws DataAccessException{
+	public Optional<Adopcion> findAdopcionById(int id) throws DataAccessException{
 		return adopcionRepository.findById(id);
 	}
 	

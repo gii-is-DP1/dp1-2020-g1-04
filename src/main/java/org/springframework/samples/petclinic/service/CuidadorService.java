@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -36,7 +37,7 @@ private CuidadorRepository cuidadorRepository;
 	}
 	
 	@Transactional(readOnly = true)
-	public Cuidador findCuidadorById(int cuidadorId) {
+	public Optional<Cuidador> findCuidadorById(int cuidadorId) {
 		return cuidadorRepository.findById(cuidadorId);
 	}
 	

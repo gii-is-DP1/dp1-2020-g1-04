@@ -58,7 +58,7 @@ public class DuenoAdoptivoService {
 	}	
 
 	@Transactional(readOnly = true)
-	public DuenoAdoptivo findDuenoAdoptivoById(int id) throws DataAccessException {
+	public Optional<DuenoAdoptivo> findDuenoAdoptivoById(int id) throws DataAccessException {
 		return duenoAdoptivoRepository.findById(id);
 	}
 	
