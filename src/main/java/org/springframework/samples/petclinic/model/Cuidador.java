@@ -45,10 +45,10 @@ public class Cuidador extends Person {
 	/*
 	@ManyToMany
 	private Set<Evento> eventos;
-	
-	@OneToMany(mappedBy="cuidador")
-	private Set<Visita> visitas;
 	*/
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="cuidador")
+	private Set<Visita> visitas;
+	
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//Métodos---------------------------------------------------------------------------------------------------------

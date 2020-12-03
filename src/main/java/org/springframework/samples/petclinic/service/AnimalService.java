@@ -1,6 +1,8 @@
 
 package org.springframework.samples.petclinic.service;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -40,21 +42,20 @@ public class AnimalService {
 
 	@Transactional
 	public void save(@Valid Animal animal) {
-		
 		//categoriaService.save(animal.getCategoria());
 		animalRepository.save(animal);
-
+		
+		
+		
 	}
 	
-	public void saveEdicion(Animal modifiedAnimal, int animalId) {
-		Optional<Animal> animal=findAnimalById(animalId);
-		Cuidador c=cuidadorService.findDuenoAdoptivoById(modifiedAnimal.getCuidador().getId());
-		CentroDeAdopcion cda=centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
-		modifiedAnimal.setId(animalId);
-		modifiedAnimal.setCuidador(c);
-		modifiedAnimal.setCentroDeAdopcion(cda);
-		modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
-	save(modifiedAnimal);
+	public void comprobarRatioCuidador(@Valid Animal animal) throws DataAccessException{
+		CentroDeAdopcion centro=animal.getCentroDeAdopcion();
+		Integer cantidadAnimales=centro.getCantidadActual();
+		Integer cantidadCuidadores=centro.getCuidadores().size();
+		assertTrue("El ratio de Cuidadores es inferior a 15",(cantidadAnimales/cantidadCuidadores<15));
+		save(animal);
+		
 	}
-
+	
 }

@@ -54,13 +54,13 @@ class AdopcionServiceTests {
 		 int found = adopciones.size();
 		 
 		 Optional<Animal> animal=animalService.findAnimalById(1);
-		 DuenoAdoptivo dueno=duenoAdoptivoService.findDuenoAdoptivoById(1);
+		 Optional<DuenoAdoptivo> dueno=duenoAdoptivoService.findDuenoAdoptivoById(1);
 		 LocalDate fechaDecision=LocalDate.now();
 		 
 		 Adopcion adopcion= new Adopcion();
 		 adopcion.setAceptada(true);
 		 adopcion.setAnimal(animal.get());
-		 adopcion.setDueno(dueno);
+		 adopcion.setDueno(dueno.get());
 		 adopcion.setFechaDecision(fechaDecision);
 		 adopcion.setLeidoRequisitos(true);
 		 adopcion.setMayoresDeEdad(2);
@@ -89,13 +89,23 @@ class AdopcionServiceTests {
 			assertThat(a.getDueno().getApellidos()).isEqualTo("Durán");
 		}
 		
-		DuenoAdoptivo d2=duenoAdoptivoService.findDuenoAdoptivoById(11);
+		Optional<DuenoAdoptivo> d2=duenoAdoptivoService.findDuenoAdoptivoById(11);
 		
 		for(Adopcion a: adopciones) {
-			assertThat(a.getDueno()).isEqualTo(d2);
+			assertThat(a.getDueno()).isEqualTo(d2.get());
 		}
 		 
 	 }
+	 
+	 @Test
+		@Transactional
+		public void noShouldListAdoptionNoExist() throws Exception {
+			Optional<Adopcion> adopcion=adopcionService.findAdopcionById(23);
+			
+			assertThat(adopcion).isEmpty();
+			
+			
+		}
 	 
 
 }

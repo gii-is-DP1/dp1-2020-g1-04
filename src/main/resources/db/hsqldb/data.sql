@@ -80,7 +80,7 @@ INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacim
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id) VALUES(3, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	cuidador_id, centro_id) VALUES(3, false, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
 	'Loki', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,1);
 
 
@@ -92,5 +92,8 @@ INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, p
 INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_cmunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
 	VALUES(3, 2, 2, true, true, false, 'Motivo 3', true, 'MotivoDecision 3', '2020-09-01',11,3);
 
-
+--Añadir Visitas
+INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (1, 'centroNuevo', '2010-09-07', 3, 1, 11)
+	
 

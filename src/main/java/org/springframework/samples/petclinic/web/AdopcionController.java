@@ -82,7 +82,7 @@ public class AdopcionController {
 		return "adopcion/findAdopciones";
 	}
 	
-	@GetMapping(value = "/adopcion/findAll")
+	@GetMapping(value = "/adopcion")
 	public String findAll(Map<String, Object> model) {
 		Collection<Adopcion> results;
 		results=adopcionService.findAll();
@@ -92,17 +92,17 @@ public class AdopcionController {
 	
 	
 	//Editar adopcion
-	@GetMapping(value = "/adopcion/{adopcionId}/edit")
+	@GetMapping(value = "/adopcion/edit/{adopcionId}")
 	public String initUpdateDuenoAdoptivoForm(@PathVariable("adopcionId") int adopcionId, Model model) {
-		Adopcion adopcion = this.adopcionService.findAdopcionById(adopcionId);
-		model.addAttribute(adopcion);
+		Optional<Adopcion> adopcion = this.adopcionService.findAdopcionById(adopcionId);
+		model.addAttribute(adopcion.get());
 		if(!userService.findPrincipal().getAuthorities().toString().contentEquals("director")) {
-			return "/403";
+			return "redirect: /403";
 		}
 		return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/adopcion/{adopcionId}/edit")
+	@PostMapping(value = "/adopcion/edit/{adopcionId}")
 	public String processUpdateDuenoAdoptivoForm(@Valid Adopcion adopcion, BindingResult result,
 			@PathVariable("adopcionId") int adopcionId) {
 		if (result.hasErrors()) {
@@ -123,7 +123,7 @@ public class AdopcionController {
 		return "adopcion/adopcionList";
 	}
 	
-	@GetMapping(value = "/adopcion/findAllByDuenoAdoptivoAutenticado")
+	@GetMapping(value = "/adopcion/misSolicitudesDeAdopcion")
 	public String findAllByDuenoAdoptivo(Map<String, Object> model) {
 		Collection<Adopcion> results;
 		User user=userService.findPrincipal();

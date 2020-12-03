@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
@@ -23,12 +24,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "visitas")
-public class Visita extends NamedEntity{
+public class Visita extends BaseEntity{
 	
 	@Column(name = "momento")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate momento;
 	
+	@NotBlank
 	@Column(name ="lugar")
 	private String lugar;
 	
@@ -36,12 +38,16 @@ public class Visita extends NamedEntity{
 	@JoinColumn(name = "dueno_id")
 	private DuenoAdoptivo dueno;
 	
-	@ManyToOne
+	@ManyToOne(optional=false)
 	@JoinColumn(name = "cuidador_id")
 	private Cuidador cuidador;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "visita", fetch = FetchType.EAGER)
 	private Set<Comentario> comentarios;
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name = "animal_id")
+	private Animal animal;
 	
 	public LocalDate getMomento() {
 		return momento;
@@ -95,6 +101,18 @@ public class Visita extends NamedEntity{
 	public void addComentario(Comentario comentario) {
 		getComentariosInternal().add(comentario);
 		comentario.setVisita(this);
+	}
+
+	public void setComentarios(Set<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public Animal getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
 	
 }

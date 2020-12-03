@@ -31,10 +31,7 @@
                  <td>
                     <c:out value="${centro.cantidadMax}"/>
 				</td>
-				<td>
-                    
-				</td>
-
+				
 	            <td>
     	            <a href="<spring:url value="/animal/animalList.jsp" htmlEscape="true" />">Lista de Animales</a>
         	    </td>      

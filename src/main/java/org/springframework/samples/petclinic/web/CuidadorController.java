@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.web;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -54,7 +55,7 @@ public class CuidadorController {
 	}
 	
 	
-	@GetMapping(value = "/cuidadores/findAll")
+	@GetMapping(value = "/cuidadores")
 	public String findAll(Map<String, Object> model) {
 	
 		org.springframework.security.core.userdetails.User user = userService.findPrincipal();
@@ -74,25 +75,25 @@ public class CuidadorController {
 	 	}
 	}
 	
-	@GetMapping("/cuidadores/{cuidadorId}")
+	@GetMapping("/cuidadores/show/{cuidadorId}")
 	public ModelAndView showDuenoAdoptivo(@PathVariable("cuidadorId") int cuidadorId ) {
-		org.springframework.security.core.userdetails.User user = userService.findPrincipal();
-		if(user==null)	{
-			ModelAndView mav = new ModelAndView("403");
-			return mav;
-		}
-			String r=user.getAuthorities().toString();
-			Boolean res= r.contains("director") || r.contains("cuidador");
+		//org.springframework.security.core.userdetails.User user = userService.findPrincipal();
+		//if(user==null)	{
+			//ModelAndView mav = new ModelAndView("403");
+			//return mav;
+		//}
+			//String r=user.getAuthorities().toString();
+			//Boolean res= r.contains("director") || r.contains("cuidador");
 			
-		 if(res==true){
+		// if(res==true){
 		ModelAndView mav = new ModelAndView("cuidadores/detallesCuidador");
-		Cuidador cuidador=this.cuidadorService.findDuenoAdoptivoById(cuidadorId);
-		mav.addObject(cuidador);
+		Optional<Cuidador> cuidador=this.cuidadorService.findCuidadorById(cuidadorId);
+		mav.addObject(cuidador.get());
 		return mav;
-	}else {
-		ModelAndView mav = new ModelAndView("403");
-		return mav;
-	}
+	//}else {
+		//ModelAndView mav = new ModelAndView("403");
+		//return mav;
+//	}
 	}
 	
 	
@@ -130,8 +131,8 @@ public class CuidadorController {
 	
 	@GetMapping(value = "/cuidadores/{cuidadorId}/directorEdit")
 	public String processUpdateCuidadorForm(@PathVariable("cuidadorId") int cuidadorId, Model model) {
-		Cuidador cuidador = this.cuidadorService.findDuenoAdoptivoById(cuidadorId);
-		model.addAttribute(cuidador);
+		Optional<Cuidador> cuidador = this.cuidadorService.findCuidadorById(cuidadorId);
+		model.addAttribute(cuidador.get());
 		
 		Collection<CentroDeAdopcion>centros=centroDeAdopcionService.findAll();
 		model.addAttribute("centros",centros);
@@ -146,9 +147,11 @@ public class CuidadorController {
 			return VIEWS_CUIDADOR_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			Optional<Cuidador> aux=cuidadorService.findCuidadorById(cuidadorId);
+			cuidador.setAnimales(aux.get().getAnimales());
+			cuidador.setId(cuidadorId);
 			
-			
-			this.cuidadorService.save(cuidador,cuidadorId);
+			this.cuidadorService.saveCuidador(cuidador);
 			
 			return "redirect:/cuidadores/{cuidadorId}";
 		}

@@ -12,8 +12,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
+import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
@@ -58,24 +60,21 @@ public class AnimalController {
 	}
 
 	
-	@GetMapping(value="/findAll")
+	@GetMapping(value="")
 	public String listAnimales(ModelMap model) {
 		model.addAttribute("animales",animalService.findAll());
 		return ANIMAL_LISTING;
 	}
 	
 
-
-	
-	//
-	@GetMapping(value="/{animalId}/show")
+	@GetMapping(value="/show/{animalId}")
 	public ModelAndView showAnimal(@PathVariable("animalId") int animalId) {
 		ModelAndView mav = new ModelAndView("animales/showAnimal");
 		mav.addObject(this.animalService.findAnimalById(animalId).get());
 		return mav;
 	}
 	
-	@GetMapping("/{animalId}/edit")
+	@GetMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId,ModelMap model) {
 		Optional<Animal> animal=animalService.findAnimalById(animalId);
 		if(animal.isPresent()) {
@@ -90,18 +89,25 @@ public class AnimalController {
 		}
 	}
 	
-	@PostMapping("/{animalId}/edit")
+	@PostMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal, BindingResult binding, ModelMap model) {
+	
+			if(binding.hasErrors()) {			
 		
-		if(binding.hasErrors()) {			
 			return ANIMAL_FORM;
 		}else {			
-			animalService.saveEdicion(modifiedAnimal, animalId);
+			Optional<Animal> animal=animalService.findAnimalById(animalId);
+			Optional<Cuidador> c=cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
+			CentroDeAdopcion cda=centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
+			modifiedAnimal.setId(animalId);
+			modifiedAnimal.setCuidador(c.get());
+			modifiedAnimal.setCentroDeAdopcion(cda);
+			modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
+			//animalService.save(modifiedAnimal);
+			animalService.comprobarRatioCuidador(modifiedAnimal);
 			model.addAttribute("message","Animal actualizado con exito!");
-			return listAnimales(model);
+			return "redirect:/animales/show/"+modifiedAnimal.getId();
 		}
 	}
-	
-	
 }
 

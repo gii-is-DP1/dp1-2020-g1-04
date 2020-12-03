@@ -85,6 +85,7 @@ public class Animal extends BaseEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
 	private Collection<Adopcion> adopciones;
 	
-
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+	private Collection<Visita> visitas;
 }
 

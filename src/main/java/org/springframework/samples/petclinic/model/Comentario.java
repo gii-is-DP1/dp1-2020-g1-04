@@ -13,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "comentarios")
-public class Comentario extends NamedEntity{
+public class Comentario extends BaseEntity{
 	
 	@Column(name= "comentario")
 	@NotEmpty

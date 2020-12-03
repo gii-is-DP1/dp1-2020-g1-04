@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.dao.DataAccessException;
@@ -49,7 +50,7 @@ public interface DuenoAdoptivoRepository extends Repository<DuenoAdoptivo, Integ
 	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 	 */	
 	@Query("SELECT duenoAdoptivo FROM DuenoAdoptivo duenoAdoptivo WHERE duenoAdoptivo.id =:id")
-	public DuenoAdoptivo findById(@Param("id") int id);
+	public Optional<DuenoAdoptivo> findById(@Param("id") int id);
 	
 	@Query("SELECT duenoAdoptivo FROM DuenoAdoptivo duenoAdoptivo WHERE duenoAdoptivo.apellidos =:apellidos")
 	public Set<DuenoAdoptivo> findByApellidos(@Param("apellidos") String apellidos);

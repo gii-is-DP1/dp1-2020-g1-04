@@ -47,8 +47,6 @@ public class DuenoAdoptivo extends Person {
 	@Column(name = "dni")
 	@NotEmpty
 	private String dni;
-
-	
 	
 	//
 	@OneToOne(cascade = CascadeType.ALL)
@@ -58,9 +56,12 @@ public class DuenoAdoptivo extends Person {
 	
 	
 	//Relacion DuenoAdoptivo-Adopcion
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name= "adopciones_dueno")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="dueno")
 	private Collection<Adopcion> adopciones ;
+	
+	//Relación DuenoAdoptivo-Visita
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="dueno")
+	private Collection<Visita> vistitas;
 	
 	
 	//getters and setters
@@ -106,6 +107,14 @@ public class DuenoAdoptivo extends Person {
 				.append("id", this.getId()).append("new", this.isNew()).append("apellidos", this.getApellidos())
 				.append("nombre", this.getNombre()).append("direccion", this.direccion).append("dni", this.dni)
 				.append("",this.getUser().getAuthorities()).toString();
+	}
+
+	public Collection<Visita> getVistitas() {
+		return vistitas;
+	}
+
+	public void setVistitas(Collection<Visita> vistitas) {
+		this.vistitas = vistitas;
 	}
 
 }

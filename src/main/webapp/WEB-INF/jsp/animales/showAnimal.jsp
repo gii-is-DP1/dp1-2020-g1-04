@@ -10,7 +10,7 @@
 
 
 
-    <h2>Detalles Animal</h2>
+    <h2>${animal.nombre} al detalle</h2>
 
 
     <table class="table table-striped">
@@ -21,8 +21,15 @@
         
  
             	<tr>
-            		<th>Licencia</th>
-            		<td><b><c:out value="${animal.peligrosidad.licencia}"/></b></td>
+            		<th>Necesita Licencia</th>
+            		<td><b><c:choose>
+   					 <c:when test="${animal.peligrosidad.licencia}">
+      					 <c:out value="Si"/> 
+    				</c:when>    
+    				<c:otherwise>
+     			<c:out value="No"/> 
+   				 </c:otherwise>
+				</c:choose></b></td>
            		 </tr>
              	<tr>
             		<th>Grado De Peligrosidad</th>
@@ -31,11 +38,29 @@
         
         <tr>
        <th>Requiere Licencia</th>
-            		<td><b><c:out value="${animal.requisitos.licencia}"/></b></td>
+            		<td><b>
+            		<c:choose>
+   					 <c:when test="${animal.requisitos.licencia}">
+      					 <c:out value="Si"/> 
+    				</c:when>    
+    				<c:otherwise>
+     			<c:out value="No"/> 
+   				 </c:otherwise>
+				</c:choose>
+				</b>
         </tr>
         <tr>
        <th>Requiere Seguro</th>
-            		<td><b><c:out value="${animal.requisitos.seguro}"/></b></td>
+            		<td><b>            		
+            		<c:choose>
+   					 <c:when test="${animal.requisitos.seguro}">
+      					 <c:out value="Si"/> 
+    				</c:when>    
+    				<c:otherwise>
+     			<c:out value="No"/> 
+   				 </c:otherwise>
+				</c:choose>
+            		</b></td>
         </tr>
         
          <tr>
@@ -64,7 +89,17 @@
         
         <tr>
        <th>Adoptado</th>
-            		<td><b><c:out value="${animal.adoptado}"/></b></td>
+            		<td><b>
+            		
+            		<c:choose>
+   					 <c:when test="${animal.adoptado}">
+      					 <c:out value="Si"/> 
+    				</c:when>    
+    				<c:otherwise>
+     			<c:out value="No"/> 
+   				 </c:otherwise>
+				</c:choose>
+            		</b></td>
         </tr>
         
          <tr>
@@ -108,9 +143,17 @@
         
       </table>
       
- 
+ <sec:authorize access="hasAnyAuthority('duenoadoptivo')">
+ <c:if test="${!animal.adoptado}">
+  <spring:url value="/adopcion/new/{animalId}" var="editUrl">
+        <spring:param name="animalId" value="${animal.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Solicitar su adopción</a>
+ </c:if>
+ </sec:authorize>
+	
 	<sec:authorize access="hasAnyAuthority('director')">
-    <spring:url value="{animalId}/edit" var="editUrl">
+    <spring:url value="/animales/edit/{animalId}" var="editUrl">
         <spring:param name="animalId" value="${animal.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Animal</a>

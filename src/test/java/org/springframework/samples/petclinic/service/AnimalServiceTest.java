@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThat;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -40,6 +41,16 @@ public class AnimalServiceTest {
 		animal1 = this.animalService.findAnimalById(1).get();
 		
 		assertThat(animal1.getNombre()).isEqualTo(nuevoNombre);
+		
+	}
+	
+	@Test
+	@Transactional
+	public void noShouldUpdateAnimalNoExist() throws Exception {
+		Optional<Animal> animal=animalService.findAnimalById(23);
+		
+		assertThat(animal).isEmpty();
+		
 		
 	}
 

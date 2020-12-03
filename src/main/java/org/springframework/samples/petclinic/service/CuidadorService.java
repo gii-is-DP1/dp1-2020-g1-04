@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -7,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.repository.CuidadorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +37,7 @@ private CuidadorRepository cuidadorRepository;
 	}
 	
 	@Transactional(readOnly = true)
-	public Cuidador findDuenoAdoptivoById(int cuidadorId) {
+	public Optional<Cuidador> findCuidadorById(int cuidadorId) {
 		return cuidadorRepository.findById(cuidadorId);
 	}
 	
@@ -58,15 +58,6 @@ private CuidadorRepository cuidadorRepository;
 		Set<Cuidador> result;
 		result=cuidadorRepository.findAllCuidadoresPorCentro(centroId);
 		return result;
-	}
-
-	public void save(@Valid Cuidador cuidador, int cuidadorId) {
-		Cuidador aux=findDuenoAdoptivoById(cuidadorId);
-		cuidador.setAnimales(aux.getAnimales());
-		cuidador.setId(cuidadorId);
-		
-		saveCuidador(cuidador);
-		
 	}
 	
 

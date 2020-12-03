@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 import org.hamcrest.core.Is;
@@ -34,6 +35,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
@@ -103,6 +105,16 @@ class CuidadorServiceTests {
 
 			cuidadores = this.cuidadorService.findAllCuidadores();
 			assertThat(cuidadores.size()).isEqualTo(found + 1);
+		}
+	 	
+	 	@Test
+		@Transactional
+		public void noShouldListCuidadorNoExist() throws Exception {
+			Optional<Cuidador> res=cuidadorService.findCuidadorById(23);
+			
+			assertThat(res).isEmpty();
+			
+			
 		}
 
 }
