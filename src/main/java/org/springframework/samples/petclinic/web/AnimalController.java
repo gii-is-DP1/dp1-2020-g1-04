@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
@@ -90,8 +91,9 @@ public class AnimalController {
 	
 	@PostMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal, BindingResult binding, ModelMap model) {
+	
+			if(binding.hasErrors()) {			
 		
-		if(binding.hasErrors()) {			
 			return ANIMAL_FORM;
 		}else {			
 			Optional<Animal> animal=animalService.findAnimalById(animalId);
@@ -101,12 +103,11 @@ public class AnimalController {
 			modifiedAnimal.setCuidador(c.get());
 			modifiedAnimal.setCentroDeAdopcion(cda);
 			modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
-			animalService.save(modifiedAnimal);
+			//animalService.save(modifiedAnimal);
+			animalService.comprobarRatioCuidador(modifiedAnimal);
 			model.addAttribute("message","Animal actualizado con exito!");
 			return "redirect:/animales/show/"+modifiedAnimal.getId();
 		}
 	}
-	
-	
 }
 

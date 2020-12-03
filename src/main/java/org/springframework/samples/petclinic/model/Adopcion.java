@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="adopciones")
-public class Adopcion extends NamedEntity{
+public class Adopcion extends BaseEntity{
 	
 	//Atributos----------------------------------------------------------------------
 	@NotNull

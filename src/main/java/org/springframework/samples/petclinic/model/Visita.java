@@ -24,7 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "visitas")
-public class Visita extends NamedEntity{
+public class Visita extends BaseEntity{
 	
 	@Column(name = "momento")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")

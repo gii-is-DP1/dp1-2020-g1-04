@@ -56,8 +56,7 @@ public class DuenoAdoptivo extends Person {
 	
 	
 	//Relacion DuenoAdoptivo-Adopcion
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name= "adopciones_dueno")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="dueno")
 	private Collection<Adopcion> adopciones ;
 	
 	//Relación DuenoAdoptivo-Visita

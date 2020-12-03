@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="centros")
-public class CentroDeAdopcion extends NamedEntity {
+public class CentroDeAdopcion extends BaseEntity {
 	
 	@NotEmpty
 	@Column(name="nombre")
