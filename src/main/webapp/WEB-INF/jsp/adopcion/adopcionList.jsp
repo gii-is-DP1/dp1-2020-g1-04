@@ -56,7 +56,7 @@
                     <c:out value="${adopcion.fechaDecision}"/>
 				</td>
 				<td>
-					 <a href="<spring:url value="/cuidadores/${adopcion.dueno.id }" htmlEscape="true" />">Dueño</a>
+					 <a href="<spring:url value="/cuidadores/show/${adopcion.animal.cuidador.id }" htmlEscape="true" />">Cuidador</a>
 				</td>
 				<td>
 					 <a href="<spring:url value="/animales/show/${adopcion.animal.id}" htmlEscape="true" />">Animal</a>

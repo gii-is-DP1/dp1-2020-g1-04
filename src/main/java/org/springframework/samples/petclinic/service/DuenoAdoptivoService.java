@@ -44,6 +44,7 @@ import org.springframework.util.StringUtils;
 @Service
 public class DuenoAdoptivoService {
 
+	
 	private DuenoAdoptivoRepository duenoAdoptivoRepository;	
 	
 	@Autowired
@@ -93,6 +94,17 @@ public class DuenoAdoptivoService {
 		return result;
 	}
 	
+	
+	@Transactional
+	public DuenoAdoptivo findDuenoAdoptivoByPrincipal() {
+		DuenoAdoptivo result;
+		org.springframework.security.core.userdetails.User user;
+		user=userService.findPrincipal();
+		result=findDuenoAdoptivoByUserName(user.getUsername());
+		
+		return result;
+		
+	}
 	
 		
 

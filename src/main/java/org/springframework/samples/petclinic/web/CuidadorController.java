@@ -75,25 +75,25 @@ public class CuidadorController {
 	 	}
 	}
 	
-	@GetMapping("/cuidadores/{cuidadorId}")
+	@GetMapping("/cuidadores/show/{cuidadorId}")
 	public ModelAndView showDuenoAdoptivo(@PathVariable("cuidadorId") int cuidadorId ) {
-		org.springframework.security.core.userdetails.User user = userService.findPrincipal();
-		if(user==null)	{
-			ModelAndView mav = new ModelAndView("403");
-			return mav;
-		}
-			String r=user.getAuthorities().toString();
-			Boolean res= r.contains("director") || r.contains("cuidador");
+		//org.springframework.security.core.userdetails.User user = userService.findPrincipal();
+		//if(user==null)	{
+			//ModelAndView mav = new ModelAndView("403");
+			//return mav;
+		//}
+			//String r=user.getAuthorities().toString();
+			//Boolean res= r.contains("director") || r.contains("cuidador");
 			
-		 if(res==true){
+		// if(res==true){
 		ModelAndView mav = new ModelAndView("cuidadores/detallesCuidador");
 		Optional<Cuidador> cuidador=this.cuidadorService.findCuidadorById(cuidadorId);
 		mav.addObject(cuidador.get());
 		return mav;
-	}else {
-		ModelAndView mav = new ModelAndView("403");
-		return mav;
-	}
+	//}else {
+		//ModelAndView mav = new ModelAndView("403");
+		//return mav;
+//	}
 	}
 	
 	

@@ -18,6 +18,7 @@
             <th>Nombre Completo</th>
             <td><b><c:out value="${cuidador.nombre} ${cuidador.apellidos}"/></b></td>
         </tr>
+        <sec:authorize access="hasAnyAuthority('director')">
         <tr>
             <th>DNI</th>
             <td><c:out value="${cuidador.dni}"/></td>
@@ -26,6 +27,7 @@
             <th>Teléfono</th>
             <td><c:out value="${cuidador.telefono}"/></td>
         </tr>
+        </sec:authorize>
         <tr>
             <th>Email</th>
             <td><c:out value="${cuidador.email}"/></td>

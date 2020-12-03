@@ -101,6 +101,7 @@
 													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">
 													<a href="<c:url value="/duenosAdoptivos/editByName/${principal.username}"/>" class="btn btn-primary btn-block">Mi perfil</a>
 													<a href="<c:url value="/adopcion/misSolicitudesDeAdopcion"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
+													<a href="<c:url value="/visitas/misVisitas"/>" class="btn btn-primary btn-block">Mis Visitas</a>
 														</sec:authorize>
 											</p>
 										</div>
