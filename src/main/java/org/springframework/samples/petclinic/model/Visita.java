@@ -45,6 +45,10 @@ public class Visita extends NamedEntity{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "visita", fetch = FetchType.EAGER)
 	private Set<Comentario> comentarios;
 	
+	@ManyToOne(optional=false)
+	@JoinColumn(name = "animal_id")
+	private Animal animal;
+	
 	public LocalDate getMomento() {
 		return momento;
 	}
@@ -101,6 +105,14 @@ public class Visita extends NamedEntity{
 
 	public void setComentarios(Set<Comentario> comentarios) {
 		this.comentarios = comentarios;
+	}
+
+	public Animal getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
 	
 }
