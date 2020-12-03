@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
@@ -29,6 +30,7 @@ public class Visita extends NamedEntity{
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate momento;
 	
+	@NotBlank
 	@Column(name ="lugar")
 	private String lugar;
 	
@@ -36,7 +38,7 @@ public class Visita extends NamedEntity{
 	@JoinColumn(name = "dueno_id")
 	private DuenoAdoptivo dueno;
 	
-	@ManyToOne
+	@ManyToOne(optional=false)
 	@JoinColumn(name = "cuidador_id")
 	private Cuidador cuidador;
 
@@ -95,6 +97,10 @@ public class Visita extends NamedEntity{
 	public void addComentario(Comentario comentario) {
 		getComentariosInternal().add(comentario);
 		comentario.setVisita(this);
+	}
+
+	public void setComentarios(Set<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 	
 }
