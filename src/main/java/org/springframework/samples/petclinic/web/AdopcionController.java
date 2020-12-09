@@ -8,10 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adopcion;
-import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.service.AdopcionService;
-import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.userdetails.User;
@@ -28,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdopcionController {
 	
-	private static final String VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM="adopcion/createOrUpdateAdopcionForm";
+	private static final String VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM="adopcion/createOrUpdateadopcionForm";
 	
 	private final AdopcionService adopcionService;
 	
@@ -36,14 +34,11 @@ public class AdopcionController {
 	
 	private final DuenoAdoptivoService duenoAdoptivoService;
 	
-	private final AnimalService animalService;
-	
 	@Autowired
-	public AdopcionController(AdopcionService adopcionService, UserService userService, DuenoAdoptivoService duenoAdoptivoService, AnimalService animalService) {
+	public AdopcionController(AdopcionService adopcionService, UserService userService, DuenoAdoptivoService duenoAdoptivoService) {
 		this.adopcionService = adopcionService;
 		this.userService=userService;
 		this.duenoAdoptivoService=duenoAdoptivoService;
-		this.animalService = animalService;
 	}
 
 	@InitBinder
@@ -55,9 +50,7 @@ public class AdopcionController {
 	@GetMapping(value="/adopcion/new")
 	public String initCreationForm(Map<String, Object> model) {
 		Adopcion adopcion = new Adopcion();
-		Collection<Animal> noAdoptados = animalService.findAllNoAdopted();
 		model.put("adopcion", adopcion);
-		model.put("animales", noAdoptados);
 		return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
 	}
 	

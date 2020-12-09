@@ -16,13 +16,11 @@
 package org.springframework.samples.petclinic.model;
 
 import java.util.Collection;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -64,9 +62,6 @@ public class DuenoAdoptivo extends Person {
 	//Relación DuenoAdoptivo-Visita
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="dueno")
 	private Collection<Visita> vistitas;
-	
-	@ManyToMany(mappedBy = "duenos")
-	private Set<Evento> eventos;
 	
 	
 	//getters and setters

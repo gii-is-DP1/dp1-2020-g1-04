@@ -28,8 +28,8 @@ public class Adopcion extends BaseEntity{
 	private boolean leidoRequisitos;
 	
 	@NotNull
-	@Column(name="permisoComunidadVecinos")
-	private boolean permisoComunidadVecinos;
+	@Column(name="permisoCmunidadVecinos")
+	private boolean permisoCmunidadVecinos;
 	//private Vivienda vivienda;
 	
 	@NotNull
@@ -86,7 +86,7 @@ public class Adopcion extends BaseEntity{
 		this.mayoresDeEdad = mayoresDeEdad;
 	}
 
-	public boolean getLeidoRequisitos() {
+	public boolean isLeidoRequisitos() {
 		return leidoRequisitos;
 	}
 
@@ -94,15 +94,15 @@ public class Adopcion extends BaseEntity{
 		this.leidoRequisitos = leidoRequisitos;
 	}
 
-	public boolean getPermisoComunidadVecinos() {
-		return permisoComunidadVecinos;
+	public boolean isPermisoCmunidadVecinos() {
+		return permisoCmunidadVecinos;
 	}
 
-	public void setPermisoComunidadVecinos(boolean permisoComunidadVecinos) {
-		this.permisoComunidadVecinos = permisoComunidadVecinos;
+	public void setPermisoCmunidadVecinos(boolean permisoCmunidadVecinos) {
+		this.permisoCmunidadVecinos = permisoCmunidadVecinos;
 	}
 
-	public boolean getOtrosAnimales() {
+	public boolean isOtrosAnimales() {
 		return otrosAnimales;
 	}
 

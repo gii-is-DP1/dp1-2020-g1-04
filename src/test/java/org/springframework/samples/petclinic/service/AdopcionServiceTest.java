@@ -67,7 +67,7 @@ class AdopcionServiceTests {
 		 adopcion.setMotivo("motivo");
 		 adopcion.setMotivoDecision("decision");
 		 adopcion.setOtrosAnimales(false);
-		 adopcion.setPermisoComunidadVecinos(true);
+		 adopcion.setPermisoCmunidadVecinos(true);
 		 adopcion.setUnidadFamiliar(1);
 		 
 		 adopcionService.saveAdopcion(adopcion);
