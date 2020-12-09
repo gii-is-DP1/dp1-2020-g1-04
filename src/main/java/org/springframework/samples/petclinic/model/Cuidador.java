@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -42,10 +43,14 @@ public class Cuidador extends Person {
 	@JoinColumn(name ="centro_de_adopcion_id")
 	private CentroDeAdopcion centroDeAdopcion;
 	
-	/*
-	@ManyToMany
+
+	@ManyToMany(mappedBy = "cuidadores")
 	private Set<Evento> eventos;
-	*/
+	
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="cuidador")
+	private Collection<Curso> cursos ;
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="cuidador")
 	private Set<Visita> visitas;
 	

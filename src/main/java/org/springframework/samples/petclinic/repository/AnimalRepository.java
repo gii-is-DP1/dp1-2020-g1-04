@@ -18,6 +18,9 @@ public interface AnimalRepository extends Repository<Animal, Integer> {
 	@Query("SELECT a FROM Animal a")
 	public Collection<Animal> findAll();
 	
+	@Query("SELECT a FROM Animal a WHERE a.adoptado = false")
+	public Collection<Animal> findAllNoAdopted();
+	
 	void save(Animal animal) throws DataAccessException; 
 
 }
