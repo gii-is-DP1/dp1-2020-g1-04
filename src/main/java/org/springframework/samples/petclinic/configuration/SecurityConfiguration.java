@@ -55,14 +55,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/adopcion/misSolicitudesDeAdopcion").hasAnyAuthority("duenoadoptivo")
 				.antMatchers("/adopcion/findAllByDuenoAdoptivo/**").hasAnyAuthority("director","cuidador")
 				.antMatchers("/adopcion/new").hasAnyAuthority("duenoadoptivo")
-<<<<<<< HEAD
 				.antMatchers("/visitas/misVisitas").hasAnyAuthority("duenoadoptivo")
 				.antMatchers("/cuidadores/show/**").hasAnyAuthority("director","cuidador","duenoadoptivo")
 				.antMatchers("/cuidadores/findAllByCentro/**").hasAnyAuthority("director")
 				.antMatchers("/cuidadores").hasAnyAuthority("director")
-=======
 				
->>>>>>> carruibri
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
