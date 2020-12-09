@@ -122,4 +122,12 @@ public class DuenoAdoptivo extends Person {
 		this.vistitas = vistitas;
 	}
 
+	public Set<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(Set<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
 }

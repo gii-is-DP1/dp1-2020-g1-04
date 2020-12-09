@@ -88,6 +88,30 @@ public class Cuidador extends Person {
 	public void setCentroDeAdopcion(CentroDeAdopcion centroDeAdopcion) {
 		this.centroDeAdopcion = centroDeAdopcion;
 	}
+	
+	public Set<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(Set<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
+	public Collection<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(Collection<Curso> cursos) {
+		this.cursos = cursos;
+	}
+
+	public Set<Visita> getVisitas() {
+		return visitas;
+	}
+
+	public void setVisitas(Set<Visita> visitas) {
+		this.visitas = visitas;
+	}
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//ToString--------------------------------------------------------------------------------------------------------
@@ -99,6 +123,8 @@ public class Cuidador extends Person {
 				.append("nombre", this.getNombre()).append("dni", this.dni).append("",this.getUser().getAuthorities()).toString();
 	}
 	//-----------------------------------------------------------------------------------------------------------------
+
+	
 
 	
 
