@@ -48,7 +48,7 @@ public class AdopcionController {
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setAllowedFields("id");
+		dataBinder.setDisallowedFields("id");
 	}
 	
 	//Crear nuevo formulario de adopcion

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,19 +24,24 @@ import lombok.Data;
 public class Evento extends BaseEntity {
 	
 	@NotBlank
+	@Column(name = "titulo")
 	private String titulo;
 	
 	@NotBlank
+	@Column(name = "direccion")
 	private String direccion;
 	
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "fecha")
 	private LocalDate fecha;
 	
 	@NotNull
+	@Column(name = "aforo")
 	private Integer aforo;
 	
 	@NotBlank
+	@Column(name = "descripcion")
 	private String descripcion;
 	
 	@ManyToOne

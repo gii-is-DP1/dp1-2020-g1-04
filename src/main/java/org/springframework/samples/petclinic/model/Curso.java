@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,9 +15,11 @@ import lombok.Data;
 public class Curso extends BaseEntity {
 	
 	@NotBlank
+	@Column(name = "titulo")
 	private String titulo;
 	
 	@NotBlank
+	@Column(name = "animal")
 	private String animal;
 	
 	@ManyToOne
