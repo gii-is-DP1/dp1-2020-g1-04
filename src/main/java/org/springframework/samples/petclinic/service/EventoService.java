@@ -1,5 +1,8 @@
 package org.springframework.samples.petclinic.service;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
@@ -15,12 +18,14 @@ import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Evento;
+
 import org.springframework.samples.petclinic.repository.AdopcionRepository;
 import org.springframework.samples.petclinic.repository.EventoRepository;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import junit.framework.Assert;
+
 
 @Service
 public class EventoService {
@@ -38,7 +43,8 @@ public class EventoService {
 	private CuidadorService cuidadorService;
 	@Autowired
 	private DuenoAdoptivoService duenoAdoptivoService;
-	
+	@Autowired
+	private UserService userService;
 
 	@Transactional
 	public void saveEvento(@Valid Evento evento) {	
@@ -64,6 +70,9 @@ public class EventoService {
 
 
 	public void quitarCuidadorEvento(int eventoId, int cuidadorId) {
+		User user=userService.findPrincipal();
+		String role=user.getAuthorities().toString();
+		assertTrue("Terreno del Director",role.contains("director"));
 		Evento e=eventoRepository.findEventoById(eventoId).get();
 		Cuidador c=cuidadorService.findCuidadorById(cuidadorId).get();
 		e.getCuidadores().remove(c);
@@ -73,6 +82,9 @@ public class EventoService {
 
 
 	public void añadirCuidadorEvento(int eventoId, int cuidadorId) {
+		User user=userService.findPrincipal();
+		String role=user.getAuthorities().toString();
+		assertTrue("Terreno del Director",role.contains("director"));
 		Evento e=eventoRepository.findEventoById(eventoId).get();
 		Cuidador c=cuidadorService.findCuidadorById(cuidadorId).get();
 		e.getCuidadores().add(c);
@@ -97,6 +109,7 @@ public class EventoService {
 	public void añadirDuenoAdoptivoEvento(int eventoId) {
 		
 		Evento e=eventoRepository.findEventoById(eventoId).get();
+		assertFalse("Sin cuidadores Asignados",e.getCuidadores().size()==0);
 		assertTrue("Aforo Completo", e.getAforo()>e.getDuenos().size());
 		DuenoAdoptivo d=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		

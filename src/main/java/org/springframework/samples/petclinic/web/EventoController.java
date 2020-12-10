@@ -16,6 +16,9 @@ import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.EventoService;
+import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -38,13 +41,15 @@ public class EventoController {
 	private final CuidadorService cuidadorService;
 	private final DirectorService directorService;
 	private final DuenoAdoptivoService duenoAdoptivoService;
+	private final UserService userService;
 	
 	@Autowired
-	public EventoController(EventoService eventoService, CuidadorService cuidadorService, DirectorService directorService, DuenoAdoptivoService duenoAdoptivoService) {
+	public EventoController(EventoService eventoService, CuidadorService cuidadorService, DirectorService directorService, DuenoAdoptivoService duenoAdoptivoService, UserService userService) {
 		this.eventoService=eventoService;
 		this.cuidadorService=cuidadorService;
 		this.directorService=directorService;
 		this.duenoAdoptivoService=duenoAdoptivoService;
+		this.userService=userService;
 	}
 	
 	@InitBinder
@@ -93,8 +98,11 @@ public class EventoController {
 		if(duenos.contains(duenoAdoptivoService.findDuenoAdoptivoByPrincipal())){
 			inscrito=1;
 		}
+		User user=userService.findPrincipal();
 		Integer plazasDisponibles=evento.getAforo()-evento.getDuenos().size();
 		cuidadores.removeAll(evento.getCuidadores());
+		String role=user.getAuthorities().toString();
+		mav.addObject("role",role);
 		mav.addObject("plazasDisponibles", plazasDisponibles);
 		mav.addObject(evento);
 		mav.addObject("inscrito",inscrito);
