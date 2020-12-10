@@ -28,7 +28,7 @@ public class VisitaController {
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setAllowedFields("id");
+		dataBinder.setDisallowedFields("id");
 	}
 
 	@GetMapping(value="/misVisitas")

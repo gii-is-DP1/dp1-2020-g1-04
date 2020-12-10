@@ -35,7 +35,13 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Animales</span>
 				</petclinic:menuItem>
-
+				<sec:authorize access="isAuthenticated()">
+				<petclinic:menuItem active="${name eq 'eventos'}" url="/eventos"
+					title="eventos">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Eventos</span>
+				</petclinic:menuItem>
+				</sec:authorize>
 <!--  >				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
@@ -52,7 +58,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>ï¿½
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
@@ -92,10 +98,13 @@
 													Password</a>-->	
 												<sec:authorize access="hasAnyAuthority('director')">
 												
-												<a href="<c:url value="/cuidador/nuevo"/>" class="btn btn-primary btn-block">Aï¿½adir Cuidador</a>
+												<a href="<c:url value="/cuidador/nuevo"/>" class="btn btn-primary btn-block">Añadir Cuidador</a>
 												<a href="<c:url value="/centros"/>" class="btn btn-primary btn-block">Listado Centros</a>
 												<a href="<c:url value="/adopcion"/>" class="btn btn-primary btn-block">Listado Adopciones</a>
 												<a href="<c:url value="/cuidadores"/>" class="btn btn-primary btn-block">Listado de Cuidadores</a>
+												<a href="<c:url value="/eventos/nuevo"/>" class="btn btn-primary btn-block">Nuevo Evento</a>
+												<a href="<c:url value="/eventos/director/misEventos"/>" class="btn btn-primary btn-block">Mis Eventos</a>
+												
 													</sec:authorize>	
 													
 													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">

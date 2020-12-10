@@ -22,6 +22,9 @@ public class Director extends Person {
 	@JoinColumn(name="centros_director")
 	private Set<CentroDeAdopcion> centros;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="director")
+	private Set<Evento> eventos;
+	
 	//HACER METODO LISTA DE CENTROS
 	
 	public Set<CentroDeAdopcion> getCentros(){
@@ -37,5 +40,11 @@ public class Director extends Person {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Set<Evento> getEventos() {
+		return eventos;
+	}
+	public void setEventos(Set<Evento> eventos) {
+		this.eventos = eventos;
 	}
 }
