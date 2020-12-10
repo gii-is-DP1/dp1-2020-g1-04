@@ -65,18 +65,9 @@ public class EventoController {
 			return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-
-			
-			Director director= directorService.findDirectorByPrincipal();
-			evento.setDirector(director);
-			//evento.setCuidadores(new HashSet<Cuidador>());
-			//evento.setDuenos(new HashSet<DuenoAdoptivo>());
-			//evento.getDuenos().add(duenoAdoptivoService.findDuenoAdoptivoById(1).get());
-			//evento.getCuidadores().add(cuidadorService.findCuidadorById(1).get());
-			//evento.setId(2);
 			this.eventoService.saveEvento(evento);
 			
-			return "redirect:/eventos/show" + evento.getId();
+			return "redirect:/eventos/show/" + evento.getId();
 		}
 	}
 

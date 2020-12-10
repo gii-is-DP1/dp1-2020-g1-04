@@ -44,7 +44,7 @@ public class Evento extends BaseEntity {
 	@Column(name = "descripcion")
 	private String descripcion;
 	
-	@ManyToOne
+	@ManyToOne(optional=false)
 	@JoinColumn(name = "director_id")
 	private Director director;
 	

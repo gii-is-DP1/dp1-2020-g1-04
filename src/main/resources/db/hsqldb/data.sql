@@ -95,6 +95,7 @@ INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, p
 
 --Añadir Visitas
 INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
-	VALUES (1, 'centroNuevo', '2010-09-07', 3, 1, 11)
+	VALUES (1, 'centroNuevo', '2010-09-07', 3, 1, 11);
 	
-
+INSERT INTO eventos(id, titulo, direccion, fecha, aforo, descripcion, DIRECTOR_ID)
+	VALUES (1, 'Evento nuevo', 'C/falsa 4D', '2020-12-11', 2, 'Evento Nuevo predefinido', 13);
