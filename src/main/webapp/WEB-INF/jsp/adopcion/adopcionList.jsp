@@ -38,7 +38,7 @@
                     <c:out value="${adopcion.leidoRequisitos}"/>
 				</td>
 				<td>
-                    <c:out value="${adopcion.permisoCmunidadVecinos}"/>
+                    <c:out value="${adopcion.permisoComunidadVecinos}"/>
 				</td>
 				<td>
                     <c:out value="${adopcion.otrosAnimales}"/>

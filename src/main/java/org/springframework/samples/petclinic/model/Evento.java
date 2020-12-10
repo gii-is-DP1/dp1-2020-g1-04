@@ -11,8 +11,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,6 +33,7 @@ public class Evento extends BaseEntity {
 	@Column(name = "direccion")
 	private String direccion;
 	
+	@Future
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "fecha")
@@ -50,8 +53,8 @@ public class Evento extends BaseEntity {
 	
 	@JoinTable(
 	        name = "rel_eventos_cuidadores",
-	        joinColumns = @JoinColumn(name = "FK_EVENTO", nullable = false),
-	        inverseJoinColumns = @JoinColumn(name="FK_CUIDADOR", nullable = false)
+	        joinColumns = @JoinColumn(name = "evento_id", nullable = false),
+	        inverseJoinColumns = @JoinColumn(name="cuidador_id", nullable = false)
 	    )
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Cuidador> cuidadores;

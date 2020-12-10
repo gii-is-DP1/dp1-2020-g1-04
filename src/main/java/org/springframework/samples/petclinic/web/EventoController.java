@@ -11,17 +11,21 @@ import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Evento;
+import org.springframework.samples.petclinic.model.Visita;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.EventoService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/eventos")
@@ -70,7 +74,78 @@ public class EventoController {
 			return "redirect:/eventos/show/" + evento.getId();
 		}
 	}
-
 	
+	@GetMapping(value="/director/misEventos")
+	public String listadoEventosDirector(ModelMap model) {
+		Collection<Evento> eventos=eventoService.findEventosByDirector();
+		model.addAttribute("eventos",eventos);
+		return EVENTOS_LISTING;
+	}
+
+	//Muestra el evento al detalle
+	@GetMapping(value="/show/{eventoId}")
+	public ModelAndView showEvento(@PathVariable("eventoId") int eventoId) {
+		ModelAndView mav = new ModelAndView("eventos/showEvento");
+		Collection<Cuidador>cuidadores=cuidadorService.findAllCuidadores();
+		Evento evento=this.eventoService.findEventoById(eventoId).get();
+		Collection<DuenoAdoptivo>duenos=evento.getDuenos();
+		Integer inscrito=0;
+		if(duenos.contains(duenoAdoptivoService.findDuenoAdoptivoByPrincipal())){
+			inscrito=1;
+		}
+		Integer plazasDisponibles=evento.getAforo()-evento.getDuenos().size();
+		cuidadores.removeAll(evento.getCuidadores());
+		mav.addObject("plazasDisponibles", plazasDisponibles);
+		mav.addObject(evento);
+		mav.addObject("inscrito",inscrito);
+		mav.addObject("cuidadores",cuidadores);
+		return mav;
+	}
+	
+	//Quita un cuidador x al evento y
+	@GetMapping(value="/{eventoId}/quitarCuidador/{cuidadorId}")
+	public String quitarCuidadorEvento(@PathVariable("eventoId") int eventoId, @PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
+		eventoService.quitarCuidadorEvento(eventoId, cuidadorId);
+		return "redirect:/eventos/show/"+ eventoId;
+	}
+	
+	//Añade un cuidador x al evento y
+	@GetMapping(value="/{eventoId}/añadirCuidador/{cuidadorId}")
+	public String añadirCuidadorEvento(@PathVariable("eventoId") int eventoId, @PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
+		eventoService.añadirCuidadorEvento(eventoId, cuidadorId);
+		return "redirect:/eventos/show/"+ eventoId;
+	}
+	
+	
+	//Carga los eventos del principal(duenoAdoptivo)
+	@GetMapping(value="/misEventos")
+	public String listadoEventosDueno(ModelMap model) {
+		Collection<Evento> eventos=eventoService.findEventosByDueno();
+		model.addAttribute("eventos",eventos);
+		return EVENTOS_LISTING;
+	}
+	
+	
+	//Carga todos los eventos que tienen asignado algún Cuidador
+	@GetMapping(value="")
+	public String listadoEventosDisponibles(ModelMap model) {
+		Collection<Evento> eventos=eventoService.findEventosDisponibles();
+		model.addAttribute("eventos",eventos);
+		return EVENTOS_LISTING;
+	}
+	
+	//Añade al principal(duenoAdoptivo) al evento x
+	@GetMapping(value="/{eventoId}/inscribirse")
+	public String añadirDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId,  ModelMap model) {
+		eventoService.añadirDuenoAdoptivoEvento(eventoId);
+		return "redirect:/eventos/show/"+ eventoId;
+	}
+		
+	//Quita al principal(duenoAdoptivo) al evento x
+	@GetMapping(value="/{eventoId}/borrarse")
+	public String quitarDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId,  ModelMap model) {
+		eventoService.quitarDuenoAdoptivoEvento(eventoId);
+		return "redirect:/eventos/show/"+ eventoId;
+		}
 	
 }
