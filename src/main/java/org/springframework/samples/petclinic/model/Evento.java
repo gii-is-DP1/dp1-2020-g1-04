@@ -61,8 +61,8 @@ public class Evento extends BaseEntity {
 	
 	@JoinTable(
 	        name = "rel_eventos_duenos",
-	        joinColumns = @JoinColumn(name = "FK_EVENTO", nullable = false),
-	        inverseJoinColumns = @JoinColumn(name="FK_DUENO", nullable = false)
+	        joinColumns = @JoinColumn(name = "evento_id", nullable = false),
+	        inverseJoinColumns = @JoinColumn(name="dueno_id", nullable = false)
 	    )
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<DuenoAdoptivo> duenos;
