@@ -21,7 +21,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -65,7 +67,11 @@ public class DuenoAdoptivo extends Person {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="dueno")
 	private Collection<Visita> vistitas;
 	
-	@ManyToMany(mappedBy = "duenos")
+	//Relacion DuenoAdoptivo-Evento
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "duenos_eventos",
+				joinColumns = @JoinColumn(name = "dueno_id"),
+				inverseJoinColumns = @JoinColumn(name = "evento_id"))
 	private Set<Evento> eventos;
 	
 	

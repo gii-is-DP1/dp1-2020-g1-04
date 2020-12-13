@@ -87,5 +87,14 @@ public class Animal extends BaseEntity {
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
 	private Collection<Visita> visitas;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+	private Collection<Enfermedad> enfermedades;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+	private Collection<Revision> revisiones;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+	private Collection<Vacunacion> vacunaciones;
 }
 
