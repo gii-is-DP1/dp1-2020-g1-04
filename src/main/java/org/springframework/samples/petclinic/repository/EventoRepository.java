@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -25,8 +26,8 @@ public interface EventoRepository extends Repository<Evento, Integer>{
 	@Query("SELECT evento FROM Evento evento join evento.duenos d WHERE d.id =:duenoAdoptivoid")
 	public Collection<Evento> findEventosByDuenoAdoptivo(@Param("duenoAdoptivoid")int duenoAdoptivoid);
 
-	@Query("SELECT evento FROM Evento evento WHERE size(evento.cuidadores)>0")
-	public Collection<Evento> findEventosDisponibles();
+	@Query("SELECT evento FROM Evento evento WHERE size(evento.cuidadores)>0 and evento.fecha>:now")
+	public Collection<Evento> findEventosDisponibles(@Param("now")LocalDate now);
 
 
 }

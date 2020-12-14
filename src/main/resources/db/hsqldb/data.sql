@@ -99,7 +99,7 @@ INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
 	
 --Añadir Eventos	
 INSERT INTO eventos(id, titulo, direccion, fecha, aforo, descripcion, DIRECTOR_ID)
-	VALUES (1, 'Evento nuevo', 'C/falsa 4D', '2020-12-11', 2, 'Evento Nuevo predefinido', 13);
+	VALUES (1, 'Evento nuevo', 'C/falsa 4D', '2021-12-11', 2, 'Evento Nuevo predefinido', 13);
 INSERT INTO eventos(id, titulo, direccion, fecha, aforo, descripcion, DIRECTOR_ID)
 	VALUES (2, 'Evento nuevo2', 'C/falsa 2x4D', '2020-12-15', 23, 'Evento Nuevo predefinido2', 13);
 	
