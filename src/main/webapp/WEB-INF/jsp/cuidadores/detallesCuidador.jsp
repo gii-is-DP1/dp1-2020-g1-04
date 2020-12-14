@@ -42,10 +42,8 @@
     </table>
     
 	<sec:authorize access="hasAnyAuthority('director')">
-    <spring:url value="{cuidadorId}/directorEdit" var="editUrl">
-        <spring:param name="cuidadorId" value="${cuidador.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cuidador </a>
+          
+        <a href="../${cuidadorId}/directorEdit" class="btn btn-default">Editar Cuidador </a>
 	
 	</sec:authorize>
 
