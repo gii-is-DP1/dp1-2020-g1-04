@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 
@@ -9,7 +11,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
@@ -18,6 +22,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  */
 class ValidatorTests {
 
+	
 	private Validator createValidator() {
 		LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
 		localValidatorFactoryBean.afterPropertiesSet();
@@ -266,6 +271,130 @@ class ValidatorTests {
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("email");
 		assertThat(violation.getMessage()).isEqualTo("no es una dirección de correo bien formada");
 	}
+	
+	private Director crearDirector() {
+		Director director=new Director();
+		director.setNombre("director");
+		director.setApellidos("apellido1 apellido2");
+		director.setEmail("email@us.es");
+		director.setTelefono("666444333");
+		 User user=new User();
+         user.setUsername("Sam");
+         user.setPassword("supersecretpassword");
+         user.setEnabled(true);
+         director.setUser(user);
+		return director; 
+	}
+	
+	private Evento crearEvento() {
+		
+		Evento evento = new Evento();
+		evento.setTitulo("Titulo");
+		LocalDate d=LocalDate.of(2021, 12, 14);
+		evento.setFecha(d);
+		evento.setDireccion("calle falsa");
+		evento.setAforo(1);
+		evento.setDescripcion("descripción");
+		evento.setDirector(crearDirector());
+			return evento;
+	}
+	
+	
+	@Test
+	void shouldNotValidateEventoWhenTituloEmpty() {
 
+		Evento evento=crearEvento();
+		evento.setTitulo("");
 
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Evento>> constraintViolations = validator.validate(evento);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Evento> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("titulo");
+		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+	}
+
+	@Test
+	void shouldNotValidateEventoWhenFechaEmpty() {
+
+		Evento evento=crearEvento();
+		evento.setFecha(null);
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Evento>> constraintViolations = validator.validate(evento);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Evento> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("fecha");
+		assertThat(violation.getMessage()).isEqualTo("no puede ser null");
+	}
+	
+	@Test
+	void shouldNotValidateEventoWhenFechaPast() {
+
+		Evento evento=crearEvento();
+		LocalDate d=LocalDate.of(2019, 12, 14);
+		evento.setFecha(d);
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Evento>> constraintViolations = validator.validate(evento);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Evento> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("fecha");
+		assertThat(violation.getMessage()).isEqualTo("tiene que ser una fecha en el futuro");
+	}
+	
+	@Test
+	void shouldNotValidateEventoWhenDireccionEmpty() {
+
+		Evento evento=crearEvento();
+		evento.setDireccion("");
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Evento>> constraintViolations = validator.validate(evento);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Evento> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("direccion");
+		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+	}
+	
+	@Test
+	void shouldNotValidateEventoWhenAforoEmpty() {
+
+		Evento evento=crearEvento();
+		evento.setAforo(null);
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Evento>> constraintViolations = validator.validate(evento);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Evento> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("aforo");
+		assertThat(violation.getMessage()).isEqualTo("no puede ser null");
+	}
+	
+	@Test
+	void shouldNotValidateEventoWhenDescripcionEmpty() {
+
+		Evento evento=crearEvento();
+		evento.setDescripcion("");
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Evento>> constraintViolations = validator.validate(evento);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Evento> violation = constraintViolations.iterator().next();
+		
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("descripcion");
+		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+	}
+	
 }

@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -69,6 +70,9 @@ public class Animal extends BaseEntity {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "ultimaIncorporacion")
 	private LocalDate fechaUltimaIncorporacion;
+	
+	@URL
+	private String foto;
 
 	@ManyToOne(optional=false)
 	@JoinColumn(name ="cuidador_id")

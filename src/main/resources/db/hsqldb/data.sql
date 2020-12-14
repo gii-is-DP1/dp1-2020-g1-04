@@ -68,21 +68,21 @@ INSERT INTO categoria(id, tipo, raza) VALUES(3,1, 'pequines');
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
-	'Bruno', 'Nregistro1', 3, true, true, true, 'Masculino', 'Mediano', 1, 1,1);
+	cuidador_id, centro_id, foto) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'Bruno', 'Nregistro1', 3, true, true, true, 'Masculino', 'Mediano', 1, 1,1, 'https://cutt.ly/HhSsxwu');
 
 
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id) VALUES(2, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
-	'Pepito', 'Nregistro2', 3, true, true, true, 'Masculino', 'Pequeño', 1, 1,1);
+	cuidador_id, centro_id, foto) VALUES(2, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'Pepito', 'Nregistro2', 3, true, true, true, 'Masculino', 'Pequeño', 1, 1,1, 'https://cutt.ly/ShSfSBE');
 
 INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id) VALUES(3, false, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
-	'Loki', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,1);
+	cuidador_id, centro_id, foto) VALUES(3, false, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	'Loki', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,1, 'https://cutt.ly/DhSfKbv');
 
 
 --Añadir Adopcion
@@ -99,7 +99,7 @@ INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
 	
 --Añadir Eventos	
 INSERT INTO eventos(id, titulo, direccion, fecha, aforo, descripcion, DIRECTOR_ID)
-	VALUES (1, 'Evento nuevo', 'C/falsa 4D', '2020-12-11', 2, 'Evento Nuevo predefinido', 13);
+	VALUES (1, 'Evento nuevo', 'C/falsa 4D', '2021-12-11', 2, 'Evento Nuevo predefinido', 13);
 INSERT INTO eventos(id, titulo, direccion, fecha, aforo, descripcion, DIRECTOR_ID)
 	VALUES (2, 'Evento nuevo2', 'C/falsa 2x4D', '2020-12-15', 23, 'Evento Nuevo predefinido2', 13);
 	

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -99,9 +100,10 @@ public class EventoService {
 		return result;
 	}
 
-
+	//Aquellos con fecha>=now y con algún cuidador asignado
 	public Collection<Evento> findEventosDisponibles() {
-		Collection<Evento>result=eventoRepository.findEventosDisponibles();
+		LocalDate now=LocalDate.now();
+		Collection<Evento>result=eventoRepository.findEventosDisponibles(now);
 		return result;
 	}
 
