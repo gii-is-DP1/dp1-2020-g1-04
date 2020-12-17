@@ -22,6 +22,9 @@ import org.springframework.samples.petclinic.model.Evento;
 
 import org.springframework.samples.petclinic.repository.AdopcionRepository;
 import org.springframework.samples.petclinic.repository.EventoRepository;
+import org.springframework.samples.petclinic.service.exceptions.BusquedaVaciaException;
+import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidadoresAsignadosException;
+import org.springframework.samples.petclinic.service.exceptions.ExcedidoAforoEventoException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,15 +111,28 @@ public class EventoService {
 	}
 
 
-	public void añadirDuenoAdoptivoEvento(int eventoId) {
+	public void añadirDuenoAdoptivoEvento(int eventoId) throws ExcedidoAforoEventoException, EventoSinCuidadoresAsignadosException, BusquedaVaciaException {
 		
-		Evento e=eventoRepository.findEventoById(eventoId).get();
-		assertFalse("Sin cuidadores Asignados",e.getCuidadores().size()==0);
-		assertTrue("Aforo Completo", e.getAforo()>e.getDuenos().size());
+		Optional<Evento> e=eventoRepository.findEventoById(eventoId);
+		//Comprueba que existe un evento con esa id
+		if(!e.isPresent()) {
+			throw new BusquedaVaciaException();
+		}
+		Evento evento=e.get();
+		//Comrpueba que el evento tiene algún Cuidador asignado
+		if(evento.getCuidadores().size()==0) {
+			throw new EventoSinCuidadoresAsignadosException();
+		}
+		//assertFalse("Sin cuidadores Asignados",e.getCuidadores().size()==0);
+		//Comprueba que el aforo no está completo
+		if(evento.getAforo()<=evento.getDuenos().size()) {
+			throw new ExcedidoAforoEventoException("Aforo Completo");
+		}
+		//assertTrue("Aforo Completo", e.getAforo()>e.getDuenos().size());
 		DuenoAdoptivo d=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		
-		e.getDuenos().add(d);
-		eventoRepository.save(e);
+		evento.getDuenos().add(d);
+		eventoRepository.save(evento);
 		
 	}
 	

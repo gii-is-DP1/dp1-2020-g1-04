@@ -7,8 +7,8 @@
     <spring:url value="/resources/images/pets.png" var="petsImage"/>
     <img src="${petsImage}"/>
 
-    <h2>NO TIENES PERMISO PARA VER ESTE ELEMENTO</h2>
+    <h2>NO TIENES PERMISO PARA: </h2>
 
-    <p>${exception.message}</p>
+    <p>${exceptionMessage}</p>
 
 </petclinic:layout>

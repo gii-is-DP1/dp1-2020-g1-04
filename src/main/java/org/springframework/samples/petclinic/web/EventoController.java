@@ -17,6 +17,9 @@ import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.EventoService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.samples.petclinic.service.exceptions.BusquedaVaciaException;
+import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidadoresAsignadosException;
+import org.springframework.samples.petclinic.service.exceptions.ExcedidoAforoEventoException;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -90,6 +93,7 @@ public class EventoController {
 	//Muestra el evento al detalle
 	@GetMapping(value="/show/{eventoId}")
 	public ModelAndView showEvento(@PathVariable("eventoId") int eventoId) {
+	
 		ModelAndView mav = new ModelAndView("eventos/showEvento");
 		Collection<Cuidador>cuidadores=cuidadorService.findAllCuidadores();
 		Evento evento=this.eventoService.findEventoById(eventoId).get();
@@ -144,10 +148,17 @@ public class EventoController {
 	
 	//Añade al principal(duenoAdoptivo) al evento x
 	@GetMapping(value="/{eventoId}/inscribirse")
-	public String añadirDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId,  ModelMap model) {
+	public String añadirDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId,  ModelMap model) throws ExcedidoAforoEventoException, EventoSinCuidadoresAsignadosException, BusquedaVaciaException {
+		 try{
 		eventoService.añadirDuenoAdoptivoEvento(eventoId);
+		 }catch(Exception ex) {
+			 
+			return "redirect:../../403/"+ex.getMessage();
+			
+		 }		 
 		return "redirect:/eventos/show/"+ eventoId;
-	}
+	
+	}	 
 		
 	//Quita al principal(duenoAdoptivo) al evento x
 	@GetMapping(value="/{eventoId}/borrarse")
