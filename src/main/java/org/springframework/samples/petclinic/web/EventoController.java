@@ -20,6 +20,7 @@ import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.samples.petclinic.service.exceptions.BusquedaVaciaException;
 import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidadoresAsignadosException;
 import org.springframework.samples.petclinic.service.exceptions.ExcedidoAforoEventoException;
+import org.springframework.samples.petclinic.service.exceptions.SinPermisoException;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -117,14 +118,24 @@ public class EventoController {
 	//Quita un cuidador x al evento y
 	@GetMapping(value="/{eventoId}/quitarCuidador/{cuidadorId}")
 	public String quitarCuidadorEvento(@PathVariable("eventoId") int eventoId, @PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
-		eventoService.quitarCuidadorEvento(eventoId, cuidadorId);
+		try {
+			eventoService.quitarCuidadorEvento(eventoId, cuidadorId);
+		} catch (BusquedaVaciaException | EventoSinCuidadoresAsignadosException | SinPermisoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "redirect:/eventos/show/"+ eventoId;
 	}
 	
 	//Añade un cuidador x al evento y
 	@GetMapping(value="/{eventoId}/añadirCuidador/{cuidadorId}")
 	public String añadirCuidadorEvento(@PathVariable("eventoId") int eventoId, @PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
-		eventoService.añadirCuidadorEvento(eventoId, cuidadorId);
+		try {
+			eventoService.añadirCuidadorEvento(eventoId, cuidadorId);
+		} catch (SinPermisoException | BusquedaVaciaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "redirect:/eventos/show/"+ eventoId;
 	}
 	
@@ -163,7 +174,12 @@ public class EventoController {
 	//Quita al principal(duenoAdoptivo) al evento x
 	@GetMapping(value="/{eventoId}/borrarse")
 	public String quitarDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId,  ModelMap model) {
-		eventoService.quitarDuenoAdoptivoEvento(eventoId);
+		try {
+			eventoService.quitarDuenoAdoptivoEvento(eventoId);
+		} catch (BusquedaVaciaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "redirect:/eventos/show/"+ eventoId;
 		}
 	

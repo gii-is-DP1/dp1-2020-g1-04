@@ -25,6 +25,7 @@ import org.springframework.samples.petclinic.repository.EventoRepository;
 import org.springframework.samples.petclinic.service.exceptions.BusquedaVaciaException;
 import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidadoresAsignadosException;
 import org.springframework.samples.petclinic.service.exceptions.ExcedidoAforoEventoException;
+import org.springframework.samples.petclinic.service.exceptions.SinPermisoException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,25 +74,54 @@ public class EventoService {
 	}
 
 
-	public void quitarCuidadorEvento(int eventoId, int cuidadorId) {
+	public void quitarCuidadorEvento(int eventoId, int cuidadorId) throws BusquedaVaciaException, EventoSinCuidadoresAsignadosException, SinPermisoException {
+		
+		
+		Optional<Evento> even=eventoRepository.findEventoById(eventoId);
+		Boolean b=even.isPresent();
+		if(!b) {
+			throw new BusquedaVaciaException();
+		}
+		Evento e=even.get();
+		//Evita que un evento con duenos inscritos pueda quedarse sin cuidadores asignados
+		if(e.getDuenos().size()>0 && e.getCuidadores().size()<=1) {
+			throw new EventoSinCuidadoresAsignadosException("Un evento con asistentes no se puede quedar sin cuidadores");
+		}
+		Optional<Cuidador> c=cuidadorService.findCuidadorById(cuidadorId);
+		Boolean c1=c.isPresent();
+		if(!c1) {
+			throw new BusquedaVaciaException();
+		}
+		e.getCuidadores().remove(c.get());
 		User user=userService.findPrincipal();
 		String role=user.getAuthorities().toString();
-		assertTrue("Terreno del Director",role.contains("director"));
-		Evento e=eventoRepository.findEventoById(eventoId).get();
-		Cuidador c=cuidadorService.findCuidadorById(cuidadorId).get();
-		e.getCuidadores().remove(c);
+		if(role.contains("director")) {
+			throw new SinPermisoException("Terreno del Director");
+		}
 		eventoRepository.save(e);
 		
 	}
 
 
-	public void añadirCuidadorEvento(int eventoId, int cuidadorId) {
+	public void añadirCuidadorEvento(int eventoId, int cuidadorId) throws SinPermisoException, BusquedaVaciaException {
+		
+		Optional<Evento> even=eventoRepository.findEventoById(eventoId);
+		Boolean b=even.isPresent();
+		if(!b) {
+			throw new BusquedaVaciaException();
+		}
+		Evento e=even.get();
+		Optional<Cuidador> c=cuidadorService.findCuidadorById(cuidadorId);
+		Boolean c1=c.isPresent();
+		if(!c1) {
+			throw new BusquedaVaciaException();
+		}
+		e.getCuidadores().remove(c.get());
 		User user=userService.findPrincipal();
 		String role=user.getAuthorities().toString();
-		assertTrue("Terreno del Director",role.contains("director"));
-		Evento e=eventoRepository.findEventoById(eventoId).get();
-		Cuidador c=cuidadorService.findCuidadorById(cuidadorId).get();
-		e.getCuidadores().add(c);
+		if(role.contains("director")) {
+			throw new SinPermisoException("Terreno del Director");
+		}
 		eventoRepository.save(e);
 		
 	}
@@ -115,16 +145,21 @@ public class EventoService {
 		
 		Optional<Evento> e=eventoRepository.findEventoById(eventoId);
 		//Comprueba que existe un evento con esa id
-		if(!e.isPresent()) {
+		Boolean b=e.isPresent();
+		if(!b) {
 			throw new BusquedaVaciaException();
 		}
 		Evento evento=e.get();
 		//Comrpueba que el evento tiene algún Cuidador asignado
 		if(evento.getCuidadores().size()==0) {
-			throw new EventoSinCuidadoresAsignadosException();
+			throw new EventoSinCuidadoresAsignadosException("Sin cuidadores Asignados");
 		}
 		//assertFalse("Sin cuidadores Asignados",e.getCuidadores().size()==0);
 		//Comprueba que el aforo no está completo
+		
+		int aforo=evento.getAforo();
+		int duenos=evento.getDuenos().size();
+		int plazasLibres=aforo-duenos;
 		if(evento.getAforo()<=evento.getDuenos().size()) {
 			throw new ExcedidoAforoEventoException("Aforo Completo");
 		}
@@ -136,11 +171,16 @@ public class EventoService {
 		
 	}
 	
-	public void quitarDuenoAdoptivoEvento(int eventoId) {
-		Evento e=eventoRepository.findEventoById(eventoId).get();
+	public void quitarDuenoAdoptivoEvento(int eventoId) throws BusquedaVaciaException {
+		Optional<Evento> e=eventoRepository.findEventoById(eventoId);
+		Boolean b=e.isPresent();
+		if(!b) {
+			throw new BusquedaVaciaException();
+		}
+		Evento evento=e.get();
 		DuenoAdoptivo d=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-		e.getDuenos().remove(d);
-		eventoRepository.save(e);
+		evento.getDuenos().remove(d);
+		eventoRepository.save(evento);
 		
 	}
 }
