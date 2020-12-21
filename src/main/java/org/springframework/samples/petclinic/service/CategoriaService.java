@@ -8,17 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CategoriaService {
 
-	
 	CategoriaRepository categoriaRepository;
-	
-	
-	
+
 	@Transactional
 	public void save(Categoria categoria) {
 		categoriaRepository.save(categoria);
-		
+
 	}
-	
-	
 
 }

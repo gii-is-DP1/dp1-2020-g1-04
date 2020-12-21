@@ -8,10 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 
-public interface CuidadorRepository extends Repository<Cuidador, Integer>{
-	
+public interface CuidadorRepository extends Repository<Cuidador, Integer> {
+
 	void save(Cuidador cuidador) throws DataAccessException;
 
 	@Query("SELECT c FROM Cuidador c")
@@ -19,13 +18,8 @@ public interface CuidadorRepository extends Repository<Cuidador, Integer>{
 
 	@Query("SELECT cuidador FROM Cuidador cuidador WHERE cuidador.id =:cuidadorId")
 	public Optional<Cuidador> findById(@Param("cuidadorId") int cuidadorId);
-	
-	
-	
+
 	@Query("SELECT cuidador FROM Cuidador cuidador WHERE cuidador.centroDeAdopcion.id =:centroId")
 	public Set<Cuidador> findAllCuidadoresPorCentro(@Param("centroId") int centroId);
 
-
-	
-		 
 }

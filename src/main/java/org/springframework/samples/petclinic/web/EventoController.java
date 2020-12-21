@@ -1,23 +1,24 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Evento;
-import org.springframework.samples.petclinic.model.Visita;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.EventoService;
 import org.springframework.samples.petclinic.service.UserService;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.samples.petclinic.service.exceptions.BusquedaVaciaException;
+import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidadoresAsignadosException;
+import org.springframework.samples.petclinic.service.exceptions.ExcedidoAforoEventoException;
+import org.springframework.samples.petclinic.service.exceptions.SinPermisoException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,36 +34,34 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/eventos")
 public class EventoController {
-	
-	private static final String VIEWS_EVENTO_CREATE_OR_UPDATE_FORM="eventos/createOrUpdateEventoForm";
-	private static final String EVENTOS_LISTING="eventos/listadoEventos";
-	
+
+	private static final String VIEWS_EVENTO_CREATE_OR_UPDATE_FORM = "eventos/createOrUpdateEventoForm";
+	private static final String EVENTOS_LISTING = "eventos/listadoEventos";
+
 	private final EventoService eventoService;
 	private final CuidadorService cuidadorService;
-	private final DirectorService directorService;
 	private final DuenoAdoptivoService duenoAdoptivoService;
 	private final UserService userService;
-	
+
 	@Autowired
-	public EventoController(EventoService eventoService, CuidadorService cuidadorService, DirectorService directorService, DuenoAdoptivoService duenoAdoptivoService, UserService userService) {
-		this.eventoService=eventoService;
-		this.cuidadorService=cuidadorService;
-		this.directorService=directorService;
-		this.duenoAdoptivoService=duenoAdoptivoService;
-		this.userService=userService;
+	public EventoController(EventoService eventoService, CuidadorService cuidadorService,
+			DirectorService directorService, DuenoAdoptivoService duenoAdoptivoService, UserService userService) {
+		this.eventoService = eventoService;
+		this.cuidadorService = cuidadorService;
+		this.duenoAdoptivoService = duenoAdoptivoService;
+		this.userService = userService;
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
-	
+
 	@GetMapping(value = "/nuevo")
 	public String initCreationForm(Map<String, Object> model) {
 		Evento evento = new Evento();
 		Collection<Cuidador> cuidadores;
-		cuidadores=cuidadorService.findAllCuidadores();
+		cuidadores = cuidadorService.findAllCuidadores();
 		model.put("evento", evento);
 		model.put("cuidadores", cuidadores);
 		return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
@@ -72,88 +71,158 @@ public class EventoController {
 	public String processCreationForm(@Valid Evento evento, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			this.eventoService.saveEvento(evento);
-			
+
 			return "redirect:/eventos/show/" + evento.getId();
 		}
 	}
-	
-	@GetMapping(value="/director/misEventos")
+
+	@GetMapping(value = "/director/misEventos")
 	public String listadoEventosDirector(ModelMap model) {
-		Collection<Evento> eventos=eventoService.findEventosByDirector();
-		model.addAttribute("eventos",eventos);
+		Collection<Evento> eventos = eventoService.findEventosByDirector();
+		model.addAttribute("eventos", eventos);
 		return EVENTOS_LISTING;
 	}
 
-	//Muestra el evento al detalle
-	@GetMapping(value="/show/{eventoId}")
+	// Muestra el evento al detalle
+	@GetMapping(value = "/show/{eventoId}")
 	public ModelAndView showEvento(@PathVariable("eventoId") int eventoId) {
+
 		ModelAndView mav = new ModelAndView("eventos/showEvento");
-		Collection<Cuidador>cuidadores=cuidadorService.findAllCuidadores();
-		Evento evento=this.eventoService.findEventoById(eventoId).get();
-		Collection<DuenoAdoptivo>duenos=evento.getDuenos();
-		Integer inscrito=0;
-		if(duenos.contains(duenoAdoptivoService.findDuenoAdoptivoByPrincipal())){
-			inscrito=1;
+		Collection<Cuidador> cuidadores = cuidadorService.findAllCuidadores();
+		Evento evento = this.eventoService.findEventoById(eventoId).get();
+		Collection<DuenoAdoptivo> duenos = evento.getDuenos();
+		Integer inscrito = 0;
+		if (duenos.contains(duenoAdoptivoService.findDuenoAdoptivoByPrincipal())) {
+			inscrito = 1;
 		}
-		User user=userService.findPrincipal();
-		Integer plazasDisponibles=evento.getAforo()-evento.getDuenos().size();
+		User user = userService.findPrincipal();
+		Integer plazasDisponibles = evento.getAforo() - evento.getDuenos().size();
 		cuidadores.removeAll(evento.getCuidadores());
-		String role=user.getAuthorities().toString();
-		mav.addObject("role",role);
+		String role = user.getAuthorities().toString();
+		mav.addObject("role", role);
 		mav.addObject("plazasDisponibles", plazasDisponibles);
 		mav.addObject(evento);
-		mav.addObject("inscrito",inscrito);
-		mav.addObject("cuidadores",cuidadores);
+		mav.addObject("inscrito", inscrito);
+		mav.addObject("cuidadores", cuidadores);
 		return mav;
 	}
-	
-	//Quita un cuidador x al evento y
-	@GetMapping(value="/{eventoId}/quitarCuidador/{cuidadorId}")
-	public String quitarCuidadorEvento(@PathVariable("eventoId") int eventoId, @PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
-		eventoService.quitarCuidadorEvento(eventoId, cuidadorId);
-		return "redirect:/eventos/show/"+ eventoId;
-	}
-	
-	//Añade un cuidador x al evento y
-	@GetMapping(value="/{eventoId}/añadirCuidador/{cuidadorId}")
-	public String añadirCuidadorEvento(@PathVariable("eventoId") int eventoId, @PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
-		eventoService.añadirCuidadorEvento(eventoId, cuidadorId);
-		return "redirect:/eventos/show/"+ eventoId;
-	}
-	
-	
-	//Carga los eventos del principal(duenoAdoptivo)
-	@GetMapping(value="/misEventos")
-	public String listadoEventosDueno(ModelMap model) {
-		Collection<Evento> eventos=eventoService.findEventosByDueno();
-		model.addAttribute("eventos",eventos);
-		return EVENTOS_LISTING;
-	}
-	
-	
-	//Carga todos los eventos que tienen asignado algún Cuidador
-	@GetMapping(value="")
-	public String listadoEventosDisponibles(ModelMap model) {
-		Collection<Evento> eventos=eventoService.findEventosDisponibles();
-		model.addAttribute("eventos",eventos);
-		return EVENTOS_LISTING;
-	}
-	
-	//Añade al principal(duenoAdoptivo) al evento x
-	@GetMapping(value="/{eventoId}/inscribirse")
-	public String añadirDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId,  ModelMap model) {
-		eventoService.añadirDuenoAdoptivoEvento(eventoId);
-		return "redirect:/eventos/show/"+ eventoId;
-	}
-		
-	//Quita al principal(duenoAdoptivo) al evento x
-	@GetMapping(value="/{eventoId}/borrarse")
-	public String quitarDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId,  ModelMap model) {
-		eventoService.quitarDuenoAdoptivoEvento(eventoId);
-		return "redirect:/eventos/show/"+ eventoId;
+
+	// Quita un cuidador x al evento y
+	@GetMapping(value = "/{eventoId}/quitarCuidador/{cuidadorId}")
+	public String quitarCuidadorEvento(@PathVariable("eventoId") int eventoId,
+			@PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
+		try {
+			Optional<Evento> even = eventoService.findEventoById(eventoId);
+			Boolean b = even.isPresent();
+			if (!b) {
+				throw new BusquedaVaciaException("No Existe");
+			}
+			Evento evento = even.get();
+			Optional<Cuidador> c = cuidadorService.findCuidadorById(cuidadorId);
+			Boolean c1 = c.isPresent();
+			if (!c1) {
+				throw new BusquedaVaciaException("No Existe");
+			}
+			evento.getCuidadores().remove(c.get());
+			Cuidador cuidador = c.get();
+			eventoService.quitarCuidadorEvento(evento, cuidador);
+		} catch (BusquedaVaciaException | EventoSinCuidadoresAsignadosException | SinPermisoException e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
 		}
-	
+		return "redirect:/eventos/show/" + eventoId;
+	}
+
+	// Añade un cuidador x al evento y
+	@GetMapping(value = "/{eventoId}/añadirCuidador/{cuidadorId}")
+	public String añadirCuidadorEvento(@PathVariable("eventoId") int eventoId,
+			@PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
+		try {
+			Optional<Evento> even = eventoService.findEventoById(eventoId);
+			Boolean b = even.isPresent();
+			if (!b) {
+				throw new BusquedaVaciaException("No existe");
+			}
+			Evento evento = even.get();
+			Optional<Cuidador> c = cuidadorService.findCuidadorById(cuidadorId);
+			Boolean c1 = c.isPresent();
+			if (!c1) {
+				throw new BusquedaVaciaException("No existe");
+			}
+			Cuidador cuidador = c.get();
+			eventoService.añadirCuidadorEvento(evento, cuidador);
+		} catch (SinPermisoException | BusquedaVaciaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/eventos/show/" + eventoId;
+	}
+
+	// Carga los eventos del principal(duenoAdoptivo)
+	@GetMapping(value = "/misEventos")
+	public String listadoEventosDueno(ModelMap model) {
+		Collection<Evento> eventos = eventoService.findEventosByDueno();
+		model.addAttribute("eventos", eventos);
+		return EVENTOS_LISTING;
+	}
+
+	// Carga todos los eventos que tienen asignado algún Cuidador
+	@GetMapping(value = "")
+	public String listadoEventosDisponibles(ModelMap model) {
+		Collection<Evento> eventos = eventoService.findEventosDisponibles();
+		model.addAttribute("eventos", eventos);
+		return EVENTOS_LISTING;
+	}
+
+	// Añade al principal(duenoAdoptivo) al evento x
+	@GetMapping(value = "/{eventoId}/inscribirse")
+	public ModelAndView añadirDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId, ModelMap model)
+			throws ExcedidoAforoEventoException, EventoSinCuidadoresAsignadosException, BusquedaVaciaException {
+		ModelAndView mav;
+		try {
+			Optional<Evento> e = eventoService.findEventoById(eventoId);
+			// Comprueba que existe un evento con esa id
+			Boolean b = e.isPresent();
+			if (!b) {
+				throw new BusquedaVaciaException("No existe");
+			}
+			Evento evento = e.get();
+			eventoService.añadirDuenoAdoptivoEvento(evento);
+
+		} catch (Exception ex) {
+			mav = new ModelAndView("/403");
+			mav.addObject("exceptionMessage", ex.getMessage());
+			return mav;
+
+		}
+		mav = new ModelAndView("redirect:/eventos/show/" + eventoId);
+
+		return mav;
+
+	}
+
+	// Quita al principal(duenoAdoptivo) al evento x
+	@GetMapping(value = "/{eventoId}/borrarse")
+	public ModelAndView quitarDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
+		ModelAndView mav;
+		try {
+			Optional<Evento> e = eventoService.findEventoById(eventoId);
+			Boolean b = e.isPresent();
+			if (!b) {
+				throw new BusquedaVaciaException("No existe");
+			}
+			Evento evento = e.get();
+			eventoService.quitarDuenoAdoptivoEvento(evento);
+		} catch (Exception ex) {
+			mav = new ModelAndView("/403");
+			mav.addObject("exceptionMessage", ex.getMessage());
+			return mav;
+
+		}
+		mav = new ModelAndView("redirect:/eventos/show/" + eventoId);
+		return mav;
+	}
+
 }

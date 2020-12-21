@@ -7,7 +7,7 @@
     <spring:url value="/resources/images/pets.png" var="petsImage"/>
     <img src="${petsImage}"/>
 
-    <h2>NO TIENES PERMISO PARA: </h2>
+    <h2>NO TIENES PERMISO PARA ESO </h2>
 
     <p>${exceptionMessage}</p>
 

@@ -14,37 +14,36 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdopcionService {
 
 	private AdopcionRepository adopcionRepository;
-	
-	
+
 	@Autowired
 	public AdopcionService(AdopcionRepository adopcionRepository) {
 		this.adopcionRepository = adopcionRepository;
 	}
-	
-	@Transactional(readOnly=true)
-	public Optional<Adopcion> findAdopcionById(int id) throws DataAccessException{
+
+	@Transactional(readOnly = true)
+	public Optional<Adopcion> findAdopcionById(int id) throws DataAccessException {
 		return adopcionRepository.findById(id);
 	}
-	
+
 	@Transactional
-	public Collection<Adopcion> findAll(){
+	public Collection<Adopcion> findAll() {
 		Collection<Adopcion> result;
 		result = adopcionRepository.findAll();
 		return result;
 	}
-	
+
 	@Transactional
-	public void saveAdopcion(Adopcion adopcion) throws DataAccessException{
-		
-		adopcionRepository.save(adopcion);	
-		
+	public void saveAdopcion(Adopcion adopcion) throws DataAccessException {
+
+		adopcionRepository.save(adopcion);
+
 	}
-	
+
 	@Transactional
 	public Collection<Adopcion> findAllByDuenoAdoptivo(int duenoAdoptivoId) {
 		Collection<Adopcion> result;
-		result=adopcionRepository.findAllByDuenoAdoptivo(duenoAdoptivoId);
+		result = adopcionRepository.findAllByDuenoAdoptivo(duenoAdoptivoId);
 		return result;
 	}
-	
+
 }

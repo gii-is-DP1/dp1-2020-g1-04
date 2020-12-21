@@ -11,13 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VisitaService {
-	
-private VisitaRepository visitaRepository;
 
-@Autowired
-private DuenoAdoptivoService duenoAdoptivoService;
+	private VisitaRepository visitaRepository;
 
-	
+	@Autowired
+	private DuenoAdoptivoService duenoAdoptivoService;
+
 	@Autowired
 	public VisitaService(VisitaRepository visitaRepository) {
 		this.visitaRepository = visitaRepository;
@@ -25,9 +24,9 @@ private DuenoAdoptivoService duenoAdoptivoService;
 
 	@Transactional
 	public Collection<Visita> findVisitasByPrincipal() {
-		DuenoAdoptivo dueno=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-				
-		Collection<Visita> result= visitaRepository.findVisitaByDuenoAdoptivoId(dueno.getId());
+		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+
+		Collection<Visita> result = visitaRepository.findVisitaByDuenoAdoptivoId(dueno.getId());
 		return result;
 	}
 

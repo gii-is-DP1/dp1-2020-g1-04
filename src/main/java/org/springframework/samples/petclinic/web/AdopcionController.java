@@ -27,22 +27,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AdopcionController {
-	
-	private static final String VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM="adopcion/createOrUpdateAdopcionForm";
-	
+
+	private static final String VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM = "adopcion/createOrUpdateAdopcionForm";
+
 	private final AdopcionService adopcionService;
-	
+
 	private final UserService userService;
-	
+
 	private final DuenoAdoptivoService duenoAdoptivoService;
-	
+
 	private final AnimalService animalService;
-	
+
 	@Autowired
-	public AdopcionController(AdopcionService adopcionService, UserService userService, DuenoAdoptivoService duenoAdoptivoService, AnimalService animalService) {
+	public AdopcionController(AdopcionService adopcionService, UserService userService,
+			DuenoAdoptivoService duenoAdoptivoService, AnimalService animalService) {
 		this.adopcionService = adopcionService;
-		this.userService=userService;
-		this.duenoAdoptivoService=duenoAdoptivoService;
+		this.userService = userService;
+		this.duenoAdoptivoService = duenoAdoptivoService;
 		this.animalService = animalService;
 	}
 
@@ -50,9 +51,9 @@ public class AdopcionController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
-	//Crear nuevo formulario de adopcion
-	@GetMapping(value="/adopcion/new")
+
+	// Crear nuevo formulario de adopcion
+	@GetMapping(value = "/adopcion/new")
 	public String initCreationForm(Map<String, Object> model) {
 		Adopcion adopcion = new Adopcion();
 		Collection<Animal> noAdoptados = animalService.findAllNoAdopted();
@@ -60,50 +61,48 @@ public class AdopcionController {
 		model.put("animales", noAdoptados);
 		return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
 	}
-	
-	@PostMapping(value="/adopcion/new")
+
+	@PostMapping(value = "/adopcion/new")
 	public String processCreationForm(@Valid Adopcion adopcion, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-		
+		} else {
+
 			this.adopcionService.saveAdopcion(adopcion);
-			
-			return "redirect:/adopcion/show/"+ adopcion.getId();
+
+			return "redirect:/adopcion/show/" + adopcion.getId();
 		}
 	}
-	
-	//Mostrar adopcion
+
+	// Mostrar adopcion
 	@GetMapping(value = "/adopcion/{adopcionId}")
 	public ModelAndView showAdopcion(@PathVariable("adopcionId") int adopcionId) {
 		ModelAndView mav = new ModelAndView("adopcion/showAdopcion");
 		mav.addObject(this.adopcionService.findAdopcionById(adopcionId));
 		return mav;
 	}
-	
-	//Listar adopcion
+
+	// Listar adopcion
 	@GetMapping(value = "/adopcion/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("adopcion", new Adopcion());
 		return "adopcion/findAdopciones";
 	}
-	
+
 	@GetMapping(value = "/adopcion")
 	public String findAll(Map<String, Object> model) {
 		Collection<Adopcion> results;
-		results=adopcionService.findAll();
+		results = adopcionService.findAll();
 		model.put("adopciones", results);
 		return "adopcion/adopcionList";
 	}
-	
-	
-	//Editar adopcion
+
+	// Editar adopcion
 	@GetMapping(value = "/adopcion/edit/{adopcionId}")
 	public String initUpdateDuenoAdoptivoForm(@PathVariable("adopcionId") int adopcionId, Model model) {
 		Optional<Adopcion> adopcion = this.adopcionService.findAdopcionById(adopcionId);
 		model.addAttribute(adopcion.get());
-		if(!userService.findPrincipal().getAuthorities().toString().contentEquals("director")) {
+		if (!userService.findPrincipal().getAuthorities().toString().contentEquals("director")) {
 			return "redirect: /403";
 		}
 		return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
@@ -114,30 +113,29 @@ public class AdopcionController {
 			@PathVariable("adopcionId") int adopcionId) {
 		if (result.hasErrors()) {
 			return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			adopcion.setId(adopcionId);
 
 			return "redirect:/adopcion/{adopcionId}";
 		}
 	}
-	
+
 	@GetMapping(value = "/adopcion/findAllByDuenoAdoptivo/{duenoAdoptivoId}")
 	public String findAll(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId, Map<String, Object> model) {
 		Collection<Adopcion> results;
-		results=adopcionService.findAllByDuenoAdoptivo(duenoAdoptivoId);
+		results = adopcionService.findAllByDuenoAdoptivo(duenoAdoptivoId);
 		model.put("adopciones", results);
 		return "adopcion/adopcionList";
 	}
-	
+
 	@GetMapping(value = "/adopcion/misSolicitudesDeAdopcion")
 	public String findAllByDuenoAdoptivo(Map<String, Object> model) {
 		Collection<Adopcion> results;
-		User user=userService.findPrincipal();
-		DuenoAdoptivo duenoAdoptivo=duenoAdoptivoService.findDuenoAdoptivoByUserName(user.getUsername());
-		results=adopcionService.findAllByDuenoAdoptivo(duenoAdoptivo.getId());
+		User user = userService.findPrincipal();
+		DuenoAdoptivo duenoAdoptivo = duenoAdoptivoService.findDuenoAdoptivoByUserName(user.getUsername());
+		results = adopcionService.findAllByDuenoAdoptivo(duenoAdoptivo.getId());
 		model.put("adopciones", results);
 		return "adopcion/adopcionList";
 	}
-	
+
 }

@@ -8,6 +8,9 @@
 
 
 <petclinic:layout pageName="eventos">
+
+<c:out value="${confirmacion}"/>
+
 <c:if test = "${evento.cuidadores.size()>0 || role.equals('[director]')}">
     <h2>${evento.titulo} al detalle</h2>
 

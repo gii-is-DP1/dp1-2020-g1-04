@@ -15,25 +15,15 @@
  */
 package org.springframework.samples.petclinic.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.DuenoAdoptivoRepository;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -44,68 +34,63 @@ import org.springframework.util.StringUtils;
 @Service
 public class DuenoAdoptivoService {
 
-	
-	private DuenoAdoptivoRepository duenoAdoptivoRepository;	
-	
+	private DuenoAdoptivoRepository duenoAdoptivoRepository;
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AuthoritiesService authoritiesService;
 
 	@Autowired
 	public DuenoAdoptivoService(DuenoAdoptivoRepository duenoAdoptivoRepository) {
 		this.duenoAdoptivoRepository = duenoAdoptivoRepository;
-	}	
+	}
 
 	@Transactional(readOnly = true)
 	public Optional<DuenoAdoptivo> findDuenoAdoptivoById(int id) throws DataAccessException {
 		return duenoAdoptivoRepository.findById(id);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Set<DuenoAdoptivo> findDuenoAdoptivoByApellidos(String apellidos) throws DataAccessException {
 		return duenoAdoptivoRepository.findByApellidos(apellidos);
 	}
 
-
 	@Transactional
 	public void saveDuenoAdoptivo(DuenoAdoptivo duenoAdoptivo) throws DataAccessException {
-		//creating duenoAdoptivo
-		duenoAdoptivoRepository.save(duenoAdoptivo);	
-		//creating user
+		// creating duenoAdoptivo
+		duenoAdoptivoRepository.save(duenoAdoptivo);
+		// creating user
 		userService.saveUser(duenoAdoptivo.getUser());
-		//creating authorities
+		// creating authorities
 		authoritiesService.saveAuthorities(duenoAdoptivo.getUser().getUsername(), "duenoadoptivo");
 	}
-	
+
 	@Transactional
 	public Set<DuenoAdoptivo> findAllDuenosAdoptivos() {
 		Set<DuenoAdoptivo> result;
-		result=duenoAdoptivoRepository.findAll();
-		
+		result = duenoAdoptivoRepository.findAll();
+
 		return result;
 	}
 
 	@Transactional
 	public DuenoAdoptivo findDuenoAdoptivoByUserName(String duenoAdoptivoUserName) {
 		DuenoAdoptivo result;
-		result=duenoAdoptivoRepository.findByUserName(duenoAdoptivoUserName);
+		result = duenoAdoptivoRepository.findByUserName(duenoAdoptivoUserName);
 		return result;
 	}
-	
-	
+
 	@Transactional
 	public DuenoAdoptivo findDuenoAdoptivoByPrincipal() {
 		DuenoAdoptivo result;
 		org.springframework.security.core.userdetails.User user;
-		user=userService.findPrincipal();
-		result=findDuenoAdoptivoByUserName(user.getUsername());
-		
+		user = userService.findPrincipal();
+		result = findDuenoAdoptivoByUserName(user.getUsername());
+
 		return result;
-		
+
 	}
-	
-		
 
 }
