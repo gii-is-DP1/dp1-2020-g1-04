@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.repository;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,7 +24,6 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
-import org.springframework.samples.petclinic.repository.DuenoAdoptivoRepository;
 
 /**
  * Spring Data JPA DueñoAdoptivoRepository interface
@@ -36,22 +34,24 @@ import org.springframework.samples.petclinic.repository.DuenoAdoptivoRepository;
 public interface DuenoAdoptivoRepository extends Repository<DuenoAdoptivo, Integer> {
 
 	/**
-	 * Save an <code>DueñoAdoptivo</code> to the data store, either inserting or updating it.
+	 * Save an <code>DueñoAdoptivo</code> to the data store, either inserting or
+	 * updating it.
+	 * 
 	 * @param dueñoAdoptivo the <code>DueñoAdoptivo</code> to save
 	 * @see BaseEntity#isNew
 	 */
 	void save(DuenoAdoptivo dueñoAdoptivo) throws DataAccessException;
 
-
 	/**
 	 * Retrieve an <code>DueñoAdoptivo</code> from the data store by id.
+	 * 
 	 * @param id the id to search for
 	 * @return the <code>DueñoAdoptivo</code> if found
 	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
-	 */	
+	 */
 	@Query("SELECT duenoAdoptivo FROM DuenoAdoptivo duenoAdoptivo WHERE duenoAdoptivo.id =:id")
 	public Optional<DuenoAdoptivo> findById(@Param("id") int id);
-	
+
 	@Query("SELECT duenoAdoptivo FROM DuenoAdoptivo duenoAdoptivo WHERE duenoAdoptivo.apellidos =:apellidos")
 	public Set<DuenoAdoptivo> findByApellidos(@Param("apellidos") String apellidos);
 
@@ -59,7 +59,6 @@ public interface DuenoAdoptivoRepository extends Repository<DuenoAdoptivo, Integ
 	public Set<DuenoAdoptivo> findAll();
 
 	@Query("SELECT d FROM DuenoAdoptivo d WHERE d.user.username=:duenoAdoptivoUserName")
-	DuenoAdoptivo findByUserName(@Param("duenoAdoptivoUserName")String duenoAdoptivoUserName);
-
+	DuenoAdoptivo findByUserName(@Param("duenoAdoptivoUserName") String duenoAdoptivoUserName);
 
 }

@@ -12,15 +12,14 @@ import org.springframework.samples.petclinic.repository.CuidadorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service	
+@Service
 public class CuidadorService {
-	
 
-private CuidadorRepository cuidadorRepository;	
-	
+	private CuidadorRepository cuidadorRepository;
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AuthoritiesService authoritiesService;
 
@@ -32,33 +31,31 @@ private CuidadorRepository cuidadorRepository;
 	@Transactional
 	public Set<Cuidador> findAllCuidadores() {
 		Set<Cuidador> result;
-		result=cuidadorRepository.findAll();
+		result = cuidadorRepository.findAll();
 		return result;
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Optional<Cuidador> findCuidadorById(int cuidadorId) {
 		return cuidadorRepository.findById(cuidadorId);
 	}
-	
-	@Transactional
-	public void saveCuidador(@Valid Cuidador cuidador)  throws DataAccessException{
-		//creating duenoAdoptivo
-		cuidadorRepository.save(cuidador);	
-		//creating user
-		userService.saveUser(cuidador.getUser());
-		//creating authorities
-		authoritiesService.saveAuthorities(cuidador.getUser().getUsername(), "cuidador");
-		
-	}	
 
-	
 	@Transactional
-	public Set<Cuidador> findAllCuidadoresPorCentro(int centroId){
+	public void saveCuidador(@Valid Cuidador cuidador) throws DataAccessException {
+		// creating duenoAdoptivo
+		cuidadorRepository.save(cuidador);
+		// creating user
+		userService.saveUser(cuidador.getUser());
+		// creating authorities
+		authoritiesService.saveAuthorities(cuidador.getUser().getUsername(), "cuidador");
+
+	}
+
+	@Transactional
+	public Set<Cuidador> findAllCuidadoresPorCentro(int centroId) {
 		Set<Cuidador> result;
-		result=cuidadorRepository.findAllCuidadoresPorCentro(centroId);
+		result = cuidadorRepository.findAllCuidadoresPorCentro(centroId);
 		return result;
 	}
-	
 
 }

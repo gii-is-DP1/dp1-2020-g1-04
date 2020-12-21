@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/visitas")
 public class VisitaController {
-	
-	private static final String VIEWS_VISITA_CREATE_OR_UPDATE_FORM="/visitas/createOrUpdateVisitaForm";
-	private static final String VISITAS_LISTING="/visitas/listadoVisitas";
-	
+
+	private static final String VIEWS_VISITA_CREATE_OR_UPDATE_FORM = "/visitas/createOrUpdateVisitaForm";
+	private static final String VISITAS_LISTING = "/visitas/listadoVisitas";
+
 	private final VisitaService visitaService;
-	
+
 	@Autowired
 	public VisitaController(VisitaService visitaService) {
-		this.visitaService=visitaService;
+		this.visitaService = visitaService;
 	}
 
 	@InitBinder
@@ -31,11 +31,11 @@ public class VisitaController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	@GetMapping(value="/misVisitas")
+	@GetMapping(value = "/misVisitas")
 	public String listadoVisistasByPrincipal(ModelMap model) {
-		Collection<Visita> visitas=visitaService.findVisitasByPrincipal();
-		model.addAttribute("visitas",visitas);
+		Collection<Visita> visitas = visitaService.findVisitasByPrincipal();
+		model.addAttribute("visitas", visitas);
 		return VISITAS_LISTING;
 	}
-	
+
 }

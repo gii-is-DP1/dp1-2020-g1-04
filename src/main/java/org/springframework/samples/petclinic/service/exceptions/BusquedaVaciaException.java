@@ -2,7 +2,7 @@ package org.springframework.samples.petclinic.service.exceptions;
 
 public class BusquedaVaciaException extends Exception {
 
-	public BusquedaVaciaException() {
-		
+	public BusquedaVaciaException(String message) {
+		super(message);
 	}
 }

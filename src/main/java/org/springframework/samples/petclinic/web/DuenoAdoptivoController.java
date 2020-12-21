@@ -19,17 +19,20 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -48,7 +51,7 @@ public class DuenoAdoptivoController {
 	
 
 	@Autowired
-	public DuenoAdoptivoController(DuenoAdoptivoService duenoAdoptivoService, UserService userService, AuthoritiesService authoritiesService) {
+	public DuenoAdoptivoController(DuenoAdoptivoService duenoAdoptivoService) {
 		this.duenoAdoptivoService = duenoAdoptivoService;
 	}
 
