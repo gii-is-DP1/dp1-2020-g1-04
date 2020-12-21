@@ -17,16 +17,14 @@ package org.springframework.samples.petclinic.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller used to showcase what happens when an exception is thrown
  *
  * @author Michael Isvy
- * <p/>
- * Also see how the bean of type 'SimpleMappingExceptionResolver' has been declared inside
- * /WEB-INF/mvc-core-config.xml
+ *         <p/>
+ *         Also see how the bean of type 'SimpleMappingExceptionResolver' has
+ *         been declared inside /WEB-INF/mvc-core-config.xml
  */
 @Controller
 public class CrashController {
@@ -36,18 +34,19 @@ public class CrashController {
 		throw new RuntimeException(
 				"Expected: controller used to showcase what " + "happens when an exception is thrown");
 	}
-	
-	@GetMapping(value = "/403")
-	public ModelAndView Exception() {
-		ModelAndView mav = new ModelAndView("/403");
-		return mav;
-	
-	}@GetMapping(value = "/403/{mensaje}")
-	public ModelAndView Exception2(@PathVariable("mensaje") String mensaje) {
-		ModelAndView mav = new ModelAndView("/403");
-		mav.addObject("exceptionMessage",mensaje);
-		return mav;
-	
-	}
+
+	/*
+	 * @GetMapping(value = "/403") public ModelAndView Exception(ModelMap model,
+	 * Exception ex) {
+	 * 
+	 * ModelAndView mav = new ModelAndView("/403");
+	 * mav.addObject("exceptionMessage",ex.getMessage()); return mav;
+	 * 
+	 * }@GetMapping(value = "/403/{mensaje}") public ModelAndView
+	 * Exception2(@PathVariable("mensaje") String mensaje) { ModelAndView mav = new
+	 * ModelAndView("/403"); mav.addObject("exceptionMessage",mensaje); return mav;
+	 * 
+	 * }
+	 */
 
 }
