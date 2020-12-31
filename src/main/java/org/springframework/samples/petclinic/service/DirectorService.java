@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Director;
+import org.springframework.samples.petclinic.model.Person;
 import org.springframework.samples.petclinic.repository.DirectorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,16 @@ public class DirectorService {
 	@Transactional
 	public Director findDirectorByPrincipal() {
 		Director result;
+		org.springframework.security.core.userdetails.User user;
+		user = userService.findPrincipal();
+		result = findDirectorByUserName(user.getUsername());
+
+		return result;
+
+	}
+	@Transactional
+	public Person findPersonByPrincipal() {
+		Person result;
 		org.springframework.security.core.userdetails.User user;
 		user = userService.findPrincipal();
 		result = findDirectorByUserName(user.getUsername());

@@ -31,10 +31,11 @@ public class Cuidador extends Person {
 	//----------------------------------------------------------------------------------------------------------------
 
 	//Relaciones------------------------------------------------------------------------------------------------------
+/*
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
-
+*/
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="cuidador")
 	private Set<Animal> animales;
@@ -64,7 +65,7 @@ public class Cuidador extends Person {
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-	
+	/*
 	public User getUser() {
 		return user;
 	}
@@ -72,7 +73,7 @@ public class Cuidador extends Person {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+	*/
 	public Set<Animal> getAnimales(){
 		return this.animales;
 	}

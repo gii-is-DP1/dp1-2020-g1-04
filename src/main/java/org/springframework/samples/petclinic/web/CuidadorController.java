@@ -112,7 +112,7 @@ public class CuidadorController {
 			// creating cuidador, user and authorities
 			this.cuidadorService.saveCuidador(cuidador);
 
-			return "redirect:/cuidadores/" + cuidador.getId();
+			return "redirect:/cuidadores/show/" + cuidador.getId();
 		}
 	}
 

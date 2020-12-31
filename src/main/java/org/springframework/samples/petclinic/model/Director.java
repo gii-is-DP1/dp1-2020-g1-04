@@ -13,11 +13,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "director")
 public class Director extends Person {
-	
+	/*
 	@OneToOne(cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User	user;
-
+*/
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="centros_director")
 	private Set<CentroDeAdopcion> centros;
@@ -33,7 +33,7 @@ public class Director extends Person {
 	public void setCentros(Set<CentroDeAdopcion> centros) {
 		this.centros =centros;
 	}
-	
+	/*
 	public User getUser() {
 		return user;
 	}
@@ -41,6 +41,7 @@ public class Director extends Person {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	*/
 	public Set<Evento> getEventos() {
 		return eventos;
 	}

@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.service;
 
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,22 +48,26 @@ public class UserService {
 		user.setEnabled(true);
 		userRepository.save(user);
 	}
-	
+
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
 	}
-
 
 	public org.springframework.security.core.userdetails.User findPrincipal() {
 		SecurityContext context;
 		Authentication authentication;
 		org.springframework.security.core.userdetails.User principal;
-		principal=null;
+		principal = null;
 		context = SecurityContextHolder.getContext();
 		authentication = context.getAuthentication();
-		if(!(authentication.getPrincipal().toString().contains("anonymousUser"))) {
-		principal = (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+		if (!(authentication.getPrincipal().toString().contains("anonymousUser"))) {
+			principal = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
 		}
 		return principal;
+	}
+
+	public String principalAuthorityString() {
+		String result = findPrincipal().getAuthorities().toString();
+		return result;
 	}
 }
