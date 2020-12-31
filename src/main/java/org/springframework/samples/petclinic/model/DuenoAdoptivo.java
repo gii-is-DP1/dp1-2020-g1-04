@@ -52,12 +52,13 @@ public class DuenoAdoptivo extends Person {
 	@NotEmpty
 	private String dni;
 	
+	/*
 	//
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	//
-	
+	*/
 	
 	//Relacion DuenoAdoptivo-Adopcion
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="dueno")
@@ -88,7 +89,7 @@ public class DuenoAdoptivo extends Person {
 	public String getDireccion() {
 		return this.direccion;
 	}
-
+/*
 	public User getUser() {
 		return user;
 	}
@@ -96,7 +97,7 @@ public class DuenoAdoptivo extends Person {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+*/
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
