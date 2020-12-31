@@ -15,7 +15,6 @@ import org.springframework.samples.petclinic.repository.EventoRepository;
 import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidadoresAsignadosException;
 import org.springframework.samples.petclinic.service.exceptions.ExcedidoAforoEventoException;
 import org.springframework.samples.petclinic.service.exceptions.SinPermisoException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,24 +63,29 @@ public class EventoService {
 			throw new EventoSinCuidadoresAsignadosException(
 					"Un evento con asistentes no se puede quedar sin cuidadores");
 		}
-
-		User user = userService.findPrincipal();
-		String role = user.getAuthorities().toString();
-		if (role.contains("director")) {
+		// Person p = directorService.findPersonByPrincipal();
+		// User user = userService.findPrincipal();
+		// org.springframework.samples.petclinic.model.User user= p.getUser();
+		// String role = user.getAuthorities().toString();
+		String role = userService.principalAuthorityString();
+		Boolean b = role.contains("director");
+		if (!b) {
 			throw new SinPermisoException("Terreno del Director");
 		}
+		evento.getCuidadores().remove(cuidador);
 		eventoRepository.save(evento);
 
 	}
 
 	public void añadirCuidadorEvento(Evento evento, Cuidador cuidador) throws SinPermisoException {
 
-		evento.getCuidadores().remove(cuidador);
-		User user = userService.findPrincipal();
-		String role = user.getAuthorities().toString();
-		if (role.contains("director")) {
+		// User user = userService.findPrincipal();
+		// String role = user.getAuthorities().toString();
+		String role = userService.principalAuthorityString();
+		if (!role.contains("director")) {
 			throw new SinPermisoException("Terreno del Director");
 		}
+		evento.getCuidadores().add(cuidador);
 		eventoRepository.save(evento);
 
 	}

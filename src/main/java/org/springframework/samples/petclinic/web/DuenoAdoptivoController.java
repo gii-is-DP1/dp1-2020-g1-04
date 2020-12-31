@@ -150,7 +150,7 @@ public class DuenoAdoptivoController {
 	@GetMapping("/duenosAdoptivos/{duenoAdoptivoId}")
 	public ModelAndView showDuenoAdoptivo(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId) {
 		ModelAndView mav = new ModelAndView("duenosAdoptivos/duenoAdoptivoDetails");
-		mav.addObject(this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId));
+		mav.addObject("duenoAdoptivo",this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId).get());
 		return mav;
 	}
 	
