@@ -33,10 +33,10 @@ public class Categoria extends BaseEntity {
 		this.raza = raza;
 	}
 	
-	// RELACIÓN
+	/*// RELACIÓN
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
 	private Set<Animal> animales;
-
+*/
 	
 	/* MÉTODOS */
 	public Tipo getTipo() {

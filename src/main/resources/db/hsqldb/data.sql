@@ -35,7 +35,7 @@ INSERT INTO centros(id, nombre, direccion, cantidad_max) VALUES (3, 'CENTRO DE A
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (1, 'JOSE ANTONIO', 'OLTRA GAYA', '754 44 51 11', 'cuiador1@mail.com', '87371991M',  'cuidador1','1');
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (2, 'DAVID', 'CARRANZA ARNAU', '605 38 90 49', 'cuidador2@mail.com', '40257330Q',  'cuidador2','2');
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (3, 'PILAR',  'MOYANO SIMO', '679 47 21 44', 'cuidador3@mail.com', '81494400H',  'cuidador3','3');
-INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (4, 'MARIA NIEVES', 'NOVAS BAREA', '705 74 05 46', 'cuidador4@mail.com', '2538440E',  'cuidador4','2');
+INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (4, 'MARIA NIEVES', 'NOVAS BAREA', '705 74 05 46', 'cuidador4@mail.com', '2538440E',  'cuidador4','1');
 INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, centro_de_adopcion_id) VALUES (5, 'FELIX', 'LOIS ESQUINAS', '663 11 70 08', 'cuidador5@mail.com', '37685775E',  'cuidador5','2');
 
 --
@@ -65,25 +65,120 @@ INSERT INTO categoria(id, tipo, raza) VALUES(2,1, 'Agua');
 INSERT INTO categoria(id, tipo, raza) VALUES(3,1, 'pequines');
 
 --Añadir animales
-INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id, foto) VALUES(1, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	cuidador_id, centro_id, foto) VALUES(1, true, 3, 3, 'CHIP123','2019-10-01', '2020-09-01', '2020-10-01',
 	'Bruno', 'Nregistro1', 3, true, true, true, 'Masculino', 'Mediano', 1, 1,1, 'https://cutt.ly/HhSsxwu');
 
 
-INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id, foto) VALUES(2, true, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	cuidador_id, centro_id, foto) VALUES(2, true, 3, 3, 'CHIP123','2015-01-04', '2020-09-01', '2020-10-01',
 	'Pepito', 'Nregistro2', 3, true, true, true, 'Masculino', 'Pequeño', 1, 1,1, 'https://cutt.ly/ShSfSBE');
 
-INSERT INTO animales(id, adoptado, atencion, dificultad, chip, edad, fecha_nacimiento, 
+INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
 	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
 	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
-	cuidador_id, centro_id, foto) VALUES(3, false, 3, 3, 'CHIP123', 5,'2019-10-01', '2020-09-01', '2020-10-01',
+	cuidador_id, centro_id, foto) VALUES(3, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
 	'Loki', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,1, 'https://cutt.ly/DhSfKbv');
 
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(4, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Toby', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(5, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Thor', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(6, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Chipirón', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(7, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Lucky', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(8, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Coco', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(9, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Nala', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(10, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Lola', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(11, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Monroe', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(12, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Lana', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(13, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Trufa', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(14, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Peluchina', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(15, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Napoleón', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(16, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Bruno', 'Nregistro3', 3, true, true, true, 'Masculino', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(17, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Penny', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 1, 1,3, 'https://cutt.ly/DhSfKbv');
+	INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento, 
+	primera_incorporacion, ultima_incorporacion, nombre, numero_registro,
+	grado, licencia,licenciarequerida, seguro, sexo, tamanyo, categoria_id,
+	cuidador_id, centro_id, foto) VALUES(18, false, 3, 3, 'CHIP123','2015-01-31', '2020-09-01', '2020-10-01',
+	'Bella', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 2, 1,3, 'https://cutt.ly/DhSfKbv');
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 --Añadir Adopcion
 INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
@@ -96,6 +191,10 @@ INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, p
 --Añadir Visitas
 INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
 	VALUES (1, 'centroNuevo', '2010-09-07', 3, 1, 11);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (2, 'centroNuevo', '2019-09-07', 2, 1, 11);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (3, 'centroNuevo', '2110-09-07', 1, 2, 11);
 	
 --Añadir Eventos	
 INSERT INTO eventos(id, titulo, direccion, fecha, aforo, descripcion, DIRECTOR_ID)

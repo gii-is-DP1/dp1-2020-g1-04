@@ -2,6 +2,7 @@
 package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -70,35 +71,41 @@ public class Animal extends BaseEntity {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "ultimaIncorporacion")
 	private LocalDate fechaUltimaIncorporacion;
-	
+
 	@URL
 	private String foto;
 
-	@ManyToOne(optional=false)
-	@JoinColumn(name ="cuidador_id")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "cuidador_id")
 	private Cuidador cuidador;
 
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
-	
-	@ManyToOne(optional=false)
+
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "centro_id")
 	private CentroDeAdopcion centroDeAdopcion;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
 	private Collection<Adopcion> adopciones;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
 	private Collection<Visita> visitas;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
 	private Collection<Enfermedad> enfermedades;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
 	private Collection<Revision> revisiones;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
 	private Collection<Vacunacion> vacunaciones;
-}
 
+	public int getEdad() {
+		LocalDate now = LocalDate.now();
+		Period periodo = Period.between(this.fechaNacimiento, now);
+		
+		return periodo.getYears();
+	}
+}

@@ -39,7 +39,7 @@
 				<petclinic:menuItem active="${name eq 'eventos'}" url="/eventos"
 					title="eventos">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Eventos</span>
+					<span>Eventos Disponibles</span>
 				</petclinic:menuItem>
 				</sec:authorize>
 <!--  >				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
@@ -113,6 +113,7 @@
 													<a href="<c:url value="/visitas/misVisitas"/>" class="btn btn-primary btn-block">Mis Visitas</a>
 													<a href="<c:url value="/adopcion/misSolicitudesDeAdopcion"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
 													<a href="<c:url value="/adopcion/new"/>" class="btn btn-primary btn-block">Nueva Adopción</a>
+													<a href="<c:url value="/eventos/misEventos"/>" class="btn btn-primary btn-block">Mis Eventos</a>
 														</sec:authorize>
 											</p>
 										</div>
