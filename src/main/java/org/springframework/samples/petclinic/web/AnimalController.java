@@ -13,6 +13,8 @@ import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
+import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
+import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -76,12 +78,13 @@ public class AnimalController {
 	}
 
 	@PostMapping("/edit/{animalId}")
-	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
+	public ModelAndView editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
 			BindingResult binding, ModelMap model) {
-
+		ModelAndView mav;
 		if (binding.hasErrors()) {
 
-			return ANIMAL_FORM;
+			mav = new ModelAndView(ANIMAL_FORM);
+			return mav;
 		} else {
 			Optional<Animal> animal = animalService.findAnimalById(animalId);
 			Optional<Cuidador> c = cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
@@ -91,9 +94,23 @@ public class AnimalController {
 			modifiedAnimal.setCentroDeAdopcion(cda);
 			modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
 			// animalService.save(modifiedAnimal);
-			animalService.comprobarRatioCuidador(modifiedAnimal);
+			try {
+				animalService.comprobarRatioCuidador(modifiedAnimal);
+			} catch (RatioAnimalesPorCuidadorSuperadoException e) {
+				// TODO Auto-generated catch block
+
+				mav = new ModelAndView("/403");
+				mav.addObject("exceptionMessage", e.getMessage());
+				return mav;
+			} catch (AforoCentroCompletadoException e) {
+				// TODO Auto-generated catch block
+				mav = new ModelAndView("/403");
+				mav.addObject("exceptionMessage", e.getMessage());
+				return mav;
+			}
 			model.addAttribute("message", "Animal actualizado con exito!");
-			return "redirect:/animales/show/" + modifiedAnimal.getId();
+			mav = new ModelAndView("redirect:/animales/show/" + modifiedAnimal.getId());
+			return mav;
 		}
 	}
 }

@@ -33,8 +33,10 @@ public class VisitaController {
 
 	@GetMapping(value = "/misVisitas")
 	public String listadoVisistasByPrincipal(ModelMap model) {
-		Collection<Visita> visitas = visitaService.findVisitasByPrincipal();
+		Collection<Visita> visitas = visitaService.findVisitasByPrincipalProximas();
+		Collection<Visita> visitasPasadas=visitaService.findVisitasByPrincipalPasadas();
 		model.addAttribute("visitas", visitas);
+		model.addAttribute("visitasPasadas",visitasPasadas);
 		return VISITAS_LISTING;
 	}
 

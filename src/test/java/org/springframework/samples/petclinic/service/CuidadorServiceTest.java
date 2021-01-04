@@ -69,14 +69,14 @@ class CuidadorServiceTests {
 		Collection<Cuidador> cuidadores= cuidadorService.findAllCuidadoresPorCentro(2);
 		
 		
-		assertThat(cuidadores.size()).isEqualTo(3);
+		assertThat(cuidadores.size()).isEqualTo(2);
 		assertThat(cuidadores.size()).isEqualTo(c.getCuidadores().size());
 		assertThat(cuidadores).containsAll(c.getCuidadores());
 		Cuidador cui = EntityUtils.getById(cuidadores, Cuidador.class, 5);
 		assertThat(cui.getDni()).isEqualTo("37685775E");
 		Collection<Cuidador> cuidadores2= cuidadorService.findAllCuidadoresPorCentro(1);
 		
-		assertThat(cuidadores2.size()).isEqualTo(1);
+		assertThat(cuidadores2.size()).isEqualTo(2);
 		 
 	 }
 	 

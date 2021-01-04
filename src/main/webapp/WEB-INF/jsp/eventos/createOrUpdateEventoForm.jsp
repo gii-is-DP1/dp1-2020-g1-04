@@ -25,7 +25,7 @@
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Titulo" name="titulo"/>
                 <petclinic:inputField label="Dirección" name="direccion"/>
-                <petclinic:inputField label="Date" name="fecha"/>
+                <petclinic:inputField label="¿Cuándo?" name="fecha"/>
                 <petclinic:inputField label="Aforo Máximo" name="aforo" type="number" min="1" />
               	<petclinic:inputField label="Descripción" name="descripcion"/>
               	</div>

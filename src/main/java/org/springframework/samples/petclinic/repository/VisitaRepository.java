@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
@@ -11,5 +12,11 @@ public interface VisitaRepository extends Repository<Visita, Integer>{
 
 	@Query("SELECT visita FROM Visita visita WHERE visita.dueno.id =:duenoAdoptivoId")
 	public Collection<Visita> findVisitaByDuenoAdoptivoId(@Param("duenoAdoptivoId")int duenoAdoptivoId);
+
+	@Query("SELECT visita FROM Visita visita WHERE visita.dueno.id =:duenoAdoptivoId and visita.momento>=:now")
+	public Collection<Visita> findVisitaProximasByDuenoAdoptivoId(@Param("duenoAdoptivoId")int duenoAdoptivoId, @Param("now")LocalDate now);
+
+	@Query("SELECT visita FROM Visita visita WHERE visita.dueno.id =:duenoAdoptivoId and visita.momento<:now")
+	public Collection<Visita> findVisitaPasadasByDuenoAdoptivoId(@Param("duenoAdoptivoId")int duenoAdoptivoId, @Param("now")LocalDate now);
 
 }

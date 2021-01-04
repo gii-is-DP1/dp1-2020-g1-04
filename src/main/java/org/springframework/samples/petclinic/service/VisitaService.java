@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,21 @@ public class VisitaService {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 
 		Collection<Visita> result = visitaRepository.findVisitaByDuenoAdoptivoId(dueno.getId());
+		return result;
+	}
+	
+	@Transactional
+	public Collection<Visita> findVisitasByPrincipalProximas() {
+		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		LocalDate now = LocalDate.now();
+		Collection<Visita> result = visitaRepository.findVisitaProximasByDuenoAdoptivoId(dueno.getId(), now);
+		return result;
+	}
+	@Transactional
+	public Collection<Visita> findVisitasByPrincipalPasadas() {
+		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		LocalDate now = LocalDate.now();
+		Collection<Visita> result = visitaRepository.findVisitaPasadasByDuenoAdoptivoId(dueno.getId(), now);
 		return result;
 	}
 
