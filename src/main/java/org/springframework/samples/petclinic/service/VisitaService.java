@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Visita;
 import org.springframework.samples.petclinic.repository.VisitaRepository;
@@ -17,6 +18,8 @@ public class VisitaService {
 
 	@Autowired
 	private DuenoAdoptivoService duenoAdoptivoService;
+	@Autowired
+	private CuidadorService cuidadorService;
 
 	@Autowired
 	public VisitaService(VisitaRepository visitaRepository) {
@@ -51,6 +54,22 @@ public class VisitaService {
 		Visita result;
 		result = visitaRepository.findVisitaById(visitaId);
 
+		return result;
+	}
+	
+	@Transactional
+	public Collection<Visita> findVisitasByCuidadorPrincipalProximas() {
+		Cuidador cuidador = cuidadorService.findCuidadorByPrincipal();
+		LocalDate now = LocalDate.now();
+		Collection<Visita> result = visitaRepository.findVisitaProximasByCuidadorId(cuidador.getId(), now);
+		return result;
+	}
+
+	@Transactional
+	public Collection<Visita> findVisitasByCuidadorPrincipalPasadas() {
+		Cuidador cuidador = cuidadorService.findCuidadorByPrincipal();
+		LocalDate now = LocalDate.now();
+		Collection<Visita> result = visitaRepository.findVisitaPasadasByCuidadorId(cuidador.getId(), now);
 		return result;
 	}
 

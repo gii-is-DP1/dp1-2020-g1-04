@@ -1,6 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -44,7 +44,7 @@ public class ComentarioController {
 		Comentario comentario =new Comentario();
 		Visita visita = visitaService.findVisitaById(visitaId);
 		comentario.setVisita(visita);
-		LocalDate now = LocalDate.now();
+		LocalDateTime now = LocalDateTime.now();
 		comentario.setMomento(now);
 		model.put("comentario", comentario);
 		return VIEWS_COMENTARIO_CREATE_OR_UPDATE_FORM;
@@ -58,7 +58,7 @@ public class ComentarioController {
 		else {
 			Visita visita = visitaService.findVisitaById(visitaId);
 			comentario.setVisita(visita);
-			LocalDate now = LocalDate.now();
+			LocalDateTime now = LocalDateTime.now();
 			comentario.setMomento(now);
 			this.comentarioService.saveComentario(comentario);
 			

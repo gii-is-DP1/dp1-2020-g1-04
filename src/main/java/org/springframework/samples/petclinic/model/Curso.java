@@ -7,11 +7,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cursos")
-@Data
+@Getter
+@Setter
 public class Curso extends BaseEntity {
 	
 	@NotBlank

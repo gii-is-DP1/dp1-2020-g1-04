@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.service;
 
-import java.time.LocalDate;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +7,7 @@ import org.springframework.samples.petclinic.model.Comentario;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
-import org.springframework.samples.petclinic.model.Person;
 import org.springframework.samples.petclinic.repository.ComentarioRepository;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +26,6 @@ public class ComentarioService {
 
 	public void saveComentario(@Valid Comentario comentario) {
 		String authority=userService.principalAuthorityString();
-		String a=authority;
 		switch (authority) 
 	        {
 	        	case "duenoadoptivo":

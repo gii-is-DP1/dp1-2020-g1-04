@@ -1,8 +1,6 @@
 
 package org.springframework.samples.petclinic.service;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Collection;
 import java.util.Optional;
 
@@ -14,7 +12,6 @@ import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.repository.AnimalRepository;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
-import org.springframework.samples.petclinic.service.exceptions.ExcedidoAforoEventoException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,11 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "comentarios")
 public class Comentario extends BaseEntity{
@@ -20,8 +25,8 @@ public class Comentario extends BaseEntity{
 	private String comentario;
 	
 	@Column(name = "momento")
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private LocalDate momento;
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	private LocalDateTime momento;
 
 	@ManyToOne
 	@JoinColumn(name = "visita_id")
@@ -47,11 +52,11 @@ public class Comentario extends BaseEntity{
 		this.comentario = comentario;
 	}
 
-	public LocalDate getMomento() {
+	public LocalDateTime getMomento() {
 		return this.momento;
 	}
 
-	public void setMomento(LocalDate momento) {
+	public void setMomento(LocalDateTime momento) {
 		this.momento = momento;
 	}
 

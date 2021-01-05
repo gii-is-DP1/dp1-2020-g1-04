@@ -185,25 +185,6 @@ INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento,
 	'Bella', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 2, 1,3, 'https://cutt.ly/DhSfKbv');
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 --Añadir Adopcion
 INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
 	VALUES(1, 4, 3, true, true, true, 'Motivo 1', true, 'MotivoDecision 1', '2019-09-01',1,2);
@@ -232,3 +213,10 @@ INSERT INTO rel_eventos_cuidadores(evento_id, cuidador_id) VALUES (1,1);
 INSERT INTO rel_eventos_cuidadores(evento_id, cuidador_id) VALUES (1,2); 	
 INSERT INTO rel_eventos_cuidadores(evento_id, cuidador_id) VALUES (3,1); 
 INSERT INTO rel_eventos_duenos(evento_id, dueno_id) VALUES (3,1); 
+
+--Comentarios
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(1,'Comentario 1','2020-12-11 10:10:10',null,null,11,1);
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(2,'Comentario 2','2020-12-11',1,null,null,1);
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(3,'Comentario 3','2020-12-11',null,null,11,1);
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(4,'Comentario 4','2020-12-11',1,null,null,1);
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(5,'Comentario 5','2020-12-11',null,null,11,1);

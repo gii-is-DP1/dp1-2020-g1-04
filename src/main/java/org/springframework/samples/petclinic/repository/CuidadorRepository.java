@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 
 public interface CuidadorRepository extends Repository<Cuidador, Integer> {
 
