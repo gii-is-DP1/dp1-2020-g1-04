@@ -8,11 +8,9 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Evento;
-import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
@@ -135,12 +133,10 @@ public class EventoController {
 			return mav;
 		} else {
 			Optional<Evento> evento = eventoService.findEventoById(eventoId);
-			Set<DuenoAdoptivo> duenos = duenoAdoptivoService.findAllDuenosAdoptivos();
-			Set<Cuidador> cuidadores = cuidadorService.findAllCuidadores();
 			modifiedEvento.setId(eventoId);
-			modifiedEvento.setCuidadores(cuidadores);
-			modifiedEvento.setDuenos(duenos);
-			
+			modifiedEvento.setCuidadores(evento.get().getCuidadores());
+			modifiedEvento.setDuenos(evento.get().getDuenos());
+			eventoService.saveEvento(modifiedEvento);
 			model.addAttribute("message", "Evento actualizado con éxito");
 			mav = new ModelAndView("redirect:/eventos/show/" + modifiedEvento.getId());
 			return mav;
