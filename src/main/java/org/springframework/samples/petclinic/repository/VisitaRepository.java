@@ -19,4 +19,7 @@ public interface VisitaRepository extends Repository<Visita, Integer>{
 	@Query("SELECT visita FROM Visita visita WHERE visita.dueno.id =:duenoAdoptivoId and visita.momento<:now")
 	public Collection<Visita> findVisitaPasadasByDuenoAdoptivoId(@Param("duenoAdoptivoId")int duenoAdoptivoId, @Param("now")LocalDate now);
 
+	@Query("SELECT visita FROM Visita visita WHERE visita.id =:visitaId")
+	public Visita findVisitaById(@Param("visitaId")int visitaId);
+
 }

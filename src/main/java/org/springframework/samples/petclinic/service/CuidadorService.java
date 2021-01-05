@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Cuidador;
+import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.repository.CuidadorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,4 +59,21 @@ public class CuidadorService {
 		return result;
 	}
 
+	@Transactional
+	public Cuidador findCuidadorByUserName(String cuidadorUserName) {
+		Cuidador result;
+		result = cuidadorRepository.findByUserName(cuidadorUserName);
+		return result;
+	}
+	
+	@Transactional
+	public Cuidador findCuidadorByPrincipal() {
+		Cuidador result;
+		org.springframework.security.core.userdetails.User user;
+		user = userService.findPrincipal();
+		result = findCuidadorByUserName(user.getUsername());
+
+		return result;
+
+	}
 }

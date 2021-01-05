@@ -30,7 +30,7 @@ public class VisitaService {
 		Collection<Visita> result = visitaRepository.findVisitaByDuenoAdoptivoId(dueno.getId());
 		return result;
 	}
-	
+
 	@Transactional
 	public Collection<Visita> findVisitasByPrincipalProximas() {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
@@ -38,11 +38,19 @@ public class VisitaService {
 		Collection<Visita> result = visitaRepository.findVisitaProximasByDuenoAdoptivoId(dueno.getId(), now);
 		return result;
 	}
+
 	@Transactional
 	public Collection<Visita> findVisitasByPrincipalPasadas() {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		LocalDate now = LocalDate.now();
 		Collection<Visita> result = visitaRepository.findVisitaPasadasByDuenoAdoptivoId(dueno.getId(), now);
+		return result;
+	}
+
+	public Visita findVisitaById(int visitaId) {
+		Visita result;
+		result = visitaRepository.findVisitaById(visitaId);
+
 		return result;
 	}
 
