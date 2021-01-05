@@ -21,5 +21,8 @@ public interface CuidadorRepository extends Repository<Cuidador, Integer> {
 
 	@Query("SELECT cuidador FROM Cuidador cuidador WHERE cuidador.centroDeAdopcion.id =:centroId")
 	public Set<Cuidador> findAllCuidadoresPorCentro(@Param("centroId") int centroId);
+	
+	@Query("SELECT d FROM Cuidador d WHERE d.user.username=:cuidadorUserName")
+	public Cuidador findByUserName(@Param("cuidadorUserName") String cuidadorUserName);
 
 }

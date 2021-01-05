@@ -4,10 +4,34 @@
 INSERT INTO users(username,password,enabled) VALUES ('director1','director1',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'director1','director');
 -- One owner user, named owner1 with passwor 0wn3r
-INSERT INTO users(username,password,enabled) VALUES ('owner1','0wn3r',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('dueno1','dueno1',TRUE);
 INSERT INTO users(username,password,enabled) VALUES ('educielan','1111',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'educielan','duenoadoptivo');
-INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','duenoadoptivo');
+INSERT INTO authorities(id,username,authority) VALUES (2,'dueno1','duenoadoptivo');
+
+--Users
+INSERT INTO users(username,password,enabled) VALUES ('dueno2','dueno2',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (12,'dueno2','duenoadoptivo');
+INSERT INTO users(username,password,enabled) VALUES ('dueno3','dueno3',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (13,'dueno3','duenoadoptivo');
+INSERT INTO users(username,password,enabled) VALUES ('dueno4','dueno4',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (14,'dueno4','duenoadoptivo');
+INSERT INTO users(username,password,enabled) VALUES ('dueno5','dueno5',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (15,'dueno5','duenoadoptivo');
+INSERT INTO users(username,password,enabled) VALUES ('dueno6','dueno6',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (16,'dueno6','duenoadoptivo');
+INSERT INTO users(username,password,enabled) VALUES ('dueno7','dueno7',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (17,'dueno7','duenoadoptivo');
+INSERT INTO users(username,password,enabled) VALUES ('dueno8','dueno8',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (18,'dueno8','duenoadoptivo');
+INSERT INTO users(username,password,enabled) VALUES ('dueno9','dueno9',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (19,'dueno9','duenoadoptivo');
+INSERT INTO users(username,password,enabled) VALUES ('dueno10','dueno10',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (20,'dueno10','duenoadoptivo');
+
+
+
+
 
 --Añadir josdurgar1 como owner
 -- One owner user, named owner1 with passwor 0wn3r
@@ -40,16 +64,16 @@ INSERT INTO cuidador (id, nombre, apellidos, telefono, email, dni, username, cen
 
 --
 
-INSERT INTO duenos VALUES (1, 'Franklin',  'em@mail.com','George', '6085551023','110 W. Liberty St.', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (2, 'Davis',   'em@mail.com','Betty','6085551749','638 Cardinal Ave.', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (3, 'Rodriquez',   'em@mail.com','Eduardo','6085558763','2693 Commerce St.', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (4, 'Davis',   'em@mail.com','Harold','6085553198','563 Friendly St.', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (5,  'McTavish',  'em@mail.com','Peter','6085552765','2387 S. Fair Way', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (6, 'Coleman',   'em@mail.com','Jean','6085552654','105 N. Lake St.', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (7, 'Black',   'em@mail.com','Jeff','6085555387','1450 Oak Blvd.', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (8, 'Escobito',   'em@mail.com','Maria','6085557683','345 Maple St.', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (9, 'Schroeder',   'em@mail.com','David','6085559435','2749 Blackhawk Trail', '45555678W',  'owner1');
-INSERT INTO duenos VALUES (10, 'Estaban',   'em@mail.com','Carlos','6085555487','2335 Independence La.', '45555678W',  'owner1');
+INSERT INTO duenos VALUES (1, 'Franklin',  'em@mail.com','George', '6085551023','110 W. Liberty St.', '45555678W',  'dueno1');
+INSERT INTO duenos VALUES (2, 'Davis',   'em@mail.com','Betty','6085551749','638 Cardinal Ave.', '45555678W',  'dueno2');
+INSERT INTO duenos VALUES (3, 'Rodriquez',   'em@mail.com','Eduardo','6085558763','2693 Commerce St.', '45555678W',  'dueno3');
+INSERT INTO duenos VALUES (4, 'Davis',   'em@mail.com','Harold','6085553198','563 Friendly St.', '45555678W',  'dueno4');
+INSERT INTO duenos VALUES (5,  'McTavish',  'em@mail.com','Peter','6085552765','2387 S. Fair Way', '45555678W',  'dueno5');
+INSERT INTO duenos VALUES (6, 'Coleman',   'em@mail.com','Jean','6085552654','105 N. Lake St.', '45555678W',  'dueno6');
+INSERT INTO duenos VALUES (7, 'Black',   'em@mail.com','Jeff','6085555387','1450 Oak Blvd.', '45555678W',  'dueno7');
+INSERT INTO duenos VALUES (8, 'Escobito',   'em@mail.com','Maria','6085557683','345 Maple St.', '45555678W',  'dueno8');
+INSERT INTO duenos VALUES (9, 'Schroeder',   'em@mail.com','David','6085559435','2749 Blackhawk Trail', '45555678W',  'dueno9');
+INSERT INTO duenos VALUES (10, 'Estaban',   'em@mail.com','Carlos','6085555487','2335 Independence La.', '45555678W',  'dueno10');
 
 --Añadir josdurgar1 como owner
 INSERT INTO duenos VALUES (11, 'Durán',   'em@mail.com','Jose Manuel', '680464646','123 C/Falsa', '45555678W',  'josdurgar1');
@@ -161,25 +185,6 @@ INSERT INTO animales(id, adoptado, atencion, dificultad, chip, fecha_nacimiento,
 	'Bella', 'Nregistro3', 3, true, true, true, 'Hembra', 'Grande', 2, 1,3, 'https://cutt.ly/DhSfKbv');
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 --Añadir Adopcion
 INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, aceptada, motivo_decision, fecha_decision, dueno_id, animal_id ) 
 	VALUES(1, 4, 3, true, true, true, 'Motivo 1', true, 'MotivoDecision 1', '2019-09-01',1,2);
@@ -208,3 +213,10 @@ INSERT INTO rel_eventos_cuidadores(evento_id, cuidador_id) VALUES (1,1);
 INSERT INTO rel_eventos_cuidadores(evento_id, cuidador_id) VALUES (1,2); 	
 INSERT INTO rel_eventos_cuidadores(evento_id, cuidador_id) VALUES (3,1); 
 INSERT INTO rel_eventos_duenos(evento_id, dueno_id) VALUES (3,1); 
+
+--Comentarios
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(1,'Comentario 1','2020-12-11 10:10:10',null,null,11,1);
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(2,'Comentario 2','2020-12-11',1,null,null,1);
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(3,'Comentario 3','2020-12-11',null,null,11,1);
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(4,'Comentario 4','2020-12-11',1,null,null,1);
+INSERT INTO comentarios(id, comentario, momento, CUIDADOR_ID, DIRECTOR_ID ,DUENO_ID, VISITA_ID)VALUES(5,'Comentario 5','2020-12-11',null,null,11,1);

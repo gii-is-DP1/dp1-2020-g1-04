@@ -1,15 +1,20 @@
 package org.springframework.samples.petclinic.model;
 
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "director")
 public class Director extends Person {
@@ -21,6 +26,9 @@ public class Director extends Person {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="centros_director")
 	private Set<CentroDeAdopcion> centros;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Collection<Adopcion> adopciones;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="director")
 	private Set<Evento> eventos;
@@ -48,4 +56,12 @@ public class Director extends Person {
 	public void setEventos(Set<Evento> eventos) {
 		this.eventos = eventos;
 	}
+	public Collection<Adopcion> getAdopciones() {
+		return adopciones;
+	}
+	public void setAdopciones(Collection<Adopcion> adopciones) {
+		this.adopciones = adopciones;
+	}
+	
+
 }

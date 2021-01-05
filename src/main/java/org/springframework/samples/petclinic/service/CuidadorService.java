@@ -58,4 +58,21 @@ public class CuidadorService {
 		return result;
 	}
 
+	@Transactional
+	public Cuidador findCuidadorByUserName(String cuidadorUserName) {
+		Cuidador result;
+		result = cuidadorRepository.findByUserName(cuidadorUserName);
+		return result;
+	}
+	
+	@Transactional
+	public Cuidador findCuidadorByPrincipal() {
+		Cuidador result;
+		org.springframework.security.core.userdetails.User user;
+		user = userService.findPrincipal();
+		result = findCuidadorByUserName(user.getUsername());
+
+		return result;
+
+	}
 }
