@@ -148,4 +148,13 @@
 				</td>
             	</sec:authorize>
              </c:if>
+             
+             	<sec:authorize access="hasAnyAuthority('director')">
+   				 <spring:url value="/eventos/edit/{eventoId}" var="editUrl">
+    		    <spring:param name="eventoId" value="${evento.id}"/>
+   				 </spring:url>
+   				 <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Evento</a>
+				</sec:authorize>
+             
+             
 </petclinic:layout>

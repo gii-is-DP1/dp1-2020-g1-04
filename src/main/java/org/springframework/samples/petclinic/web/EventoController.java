@@ -3,13 +3,16 @@ package org.springframework.samples.petclinic.web;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Evento;
+import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
@@ -109,6 +112,40 @@ public class EventoController {
 		return mav;
 	}
 
+	@GetMapping("/edit/{eventoId}")
+	public String editEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
+		Optional<Evento> evento = eventoService.findEventoById(eventoId); 
+		if (evento.isPresent()) {
+			model.addAttribute("evento", evento.get());
+			model.addAttribute("duenos",duenoAdoptivoService.findAllDuenosAdoptivos() );
+			model.addAttribute("cuidadores", cuidadorService.findAllCuidadores());
+			return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
+		} else {
+			model.addAttribute("message", "No se encuentra el evento que quiere editar!");
+			return listadoEventosDirector(model);
+		}
+	}
+	
+	@PostMapping("/edit/{eventoId}")
+	public ModelAndView editEvento(@PathVariable("eventoId") int eventoId, @Valid Evento modifiedEvento, 
+			BindingResult binding, ModelMap model) {
+		ModelAndView mav;
+		if(binding.hasErrors()) {
+			mav = new ModelAndView(VIEWS_EVENTO_CREATE_OR_UPDATE_FORM);
+			return mav;
+		} else {
+			Optional<Evento> evento = eventoService.findEventoById(eventoId);
+			Set<DuenoAdoptivo> duenos = duenoAdoptivoService.findAllDuenosAdoptivos();
+			Set<Cuidador> cuidadores = cuidadorService.findAllCuidadores();
+			modifiedEvento.setId(eventoId);
+			modifiedEvento.setCuidadores(cuidadores);
+			modifiedEvento.setDuenos(duenos);
+			
+			model.addAttribute("message", "Evento actualizado con éxito");
+			mav = new ModelAndView("redirect:/eventos/show/" + modifiedEvento.getId());
+			return mav;
+		}
+	}
 	// Quita un cuidador x al evento y
 	@GetMapping(value = "/{eventoId}/quitarCuidador/{cuidadorId}")
 	public String quitarCuidadorEvento(@PathVariable("eventoId") int eventoId,

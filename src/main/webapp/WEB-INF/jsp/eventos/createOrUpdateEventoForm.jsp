@@ -20,19 +20,25 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${evento['new']}">Nuevo </c:if>Evento</h2>
-            <form:form modelAttribute="evento" class="form-horizontal">
-            <div class="form-group has-feedback">
-                <petclinic:inputField label="Titulo" name="titulo"/>
-                <petclinic:inputField label="Dirección" name="direccion"/>
-                <petclinic:inputField label="¿Cuándo?" name="fecha"/>
-                <petclinic:inputField label="Aforo Máximo" name="aforo" type="number" min="1" />
-              	<petclinic:inputField label="Descripción" name="descripcion"/>
+        <h2><c:choose>
+        		<c:when test="${evento['new']}">Nuevo Evento</h2>
+            	<form:form modelAttribute="evento" class="form-horizontal">
+            	<div class="form-group has-feedback">
+	                <petclinic:inputField label="Titulo" name="titulo"/>
+    	            <petclinic:inputField label="Dirección" name="direccion"/>
+        	        <petclinic:inputField label="¿Cuándo?" name="fecha"/>
+            	    <petclinic:inputField label="Aforo Máximo" name="aforo" type="number" min="1" />
+              		<petclinic:inputField label="Descripción" name="descripcion"/>
               	</div>
-            <div class="form-group">
+            	<div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button class="btn btn-default" type="submit">Guardar Evento</button>
                 </div>
+               </c:when>
+               <c:otherwise>
+              	<button class = "btn btn-default" type="submit"> Editar Evento</button>
+              	</c:otherwise>
+             </c:choose>
             </div>
             
     </form:form>
