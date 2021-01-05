@@ -15,10 +15,13 @@
  */
 package org.springframework.samples.petclinic.model;
 
+import java.util.Collection;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -92,6 +95,17 @@ public class Person extends BaseEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "comentario")
+	private Collection<Comentario> comentarios;
+
+	public Collection<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(Collection<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 
 }
