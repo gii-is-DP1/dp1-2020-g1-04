@@ -159,6 +159,12 @@
         <spring:param name="animalId" value="${animal.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Animal</a>
+    
+     <spring:url value="/animales/reincorporar/{animalId}" var="reiUrl">
+        <spring:param name="animalId" value="${animal.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(reiUrl)}" class="btn btn-default">Reincorporar Animal</a>
+    
 	</sec:authorize>
 	
 	<sec:authorize access="hasAnyAuthority('cuidador')">

@@ -102,6 +102,7 @@ public class AnimalController {
 		//	modifiedAnimal.setId(animalId);
 			//modifiedAnimal.setCuidador(c.get());
 			//modifiedAnimal.setCentroDeAdopcion(cda);
+			modifiedAnimal.setNumeroRegistro(animal.get().getNumeroRegistro());
 			modifiedAnimal.setCategoria(animal.get().getCategoria());
 			modifiedAnimal.setFechaPrimeraIncorporacion(animal.get().getFechaPrimeraIncorporacion());
 			modifiedAnimal.setFechaUltimaIncorporacion(animal.get().getFechaUltimaIncorporacion());
@@ -136,6 +137,8 @@ public class AnimalController {
 		animal.setAdoptado(false);
 		animal.setFechaPrimeraIncorporacion(now);
 		animal.setFechaUltimaIncorporacion(now);
+		String nRgistro=animalService.nuevoNRegistro(categoria.getTipo().toString());
+		animal.setNumeroRegistro(nRgistro);
 		model.put("auxiliar", auxiliar);
 		model.put("animal", animal);
 		model.put("cuidadores", cuidadorService.findAllCuidadores());
@@ -148,6 +151,8 @@ public class AnimalController {
 		Categoria categoria=categoriaService.findCategoriaById(categoriaId).get();
 		animal.setCategoria(categoria);
 		LocalDate now=LocalDate.now();
+		String nRgistro=animalService.nuevoNRegistro(categoria.getTipo().toString());
+		animal.setNumeroRegistro(nRgistro);
 		animal.setFechaPrimeraIncorporacion(now);
 		animal.setFechaUltimaIncorporacion(now);
 		if (result.hasErrors()) {
@@ -158,4 +163,20 @@ public class AnimalController {
 			return "redirect:/animales/show/" + animal.getId();
 		}
 	}
-}
+	
+	@GetMapping("/reincorporar/{animalId}")
+	public String reincorporarAnimal(@PathVariable("animalId") int animalId, ModelMap model) throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
+
+		Optional<Animal> animal=animalService.findAnimalById(animalId);
+		if (animal.isPresent()) {
+			animal.get().setAdoptado(false);
+			LocalDate now=LocalDate.now();
+			animal.get().setFechaUltimaIncorporacion(now);
+			animalService.comprobarRatioCuidador(animal.get());
+			return "redirect:/animales/show/" + animalId;
+		}else {
+			model.addAttribute("message", "No se encuentra el animal que quiere editar!");
+			return listAnimales(model);
+	}
+	}
+	}

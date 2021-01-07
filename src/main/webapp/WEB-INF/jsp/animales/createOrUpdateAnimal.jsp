@@ -160,7 +160,7 @@
 				<petclinic:inputField label="Fecha de nacimiento"
 					name="fechaNacimiento" />
 				<petclinic:inputField label="Chip" name="chip" />
-				<petclinic:inputField label="Nº Registro" name="numeroRegistro" />
+				<!-- <petclinic:inputField label="Nº Registro" name="numeroRegistro" /> -->
 					<div class="form-group">
           	<label class="col-sm-2 control-label">Adoptado</label> 
            <div class="col-sm-10">

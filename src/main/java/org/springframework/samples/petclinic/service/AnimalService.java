@@ -1,9 +1,11 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -86,6 +88,15 @@ public class AnimalService {
 		for (int i=1; i<=10; i++){
 			result.add(i); 
 		}
+		return result;
+	}
+
+	public String nuevoNRegistro(String categoria) {
+		String result;
+		String codigo;
+		Random rand = new Random();
+		codigo=rand.nextInt(900)+1000+"";
+		result=LocalDate.now().getYear()+"-"+categoria.substring(0,2)+"-"+codigo;
 		return result;
 	}
 

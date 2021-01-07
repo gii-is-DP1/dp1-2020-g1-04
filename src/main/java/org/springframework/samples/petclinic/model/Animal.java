@@ -47,7 +47,6 @@ public class Animal extends BaseEntity {
 	@Column(name = "chip")
 	private String chip;
 
-	@NotBlank
 	@Column(name = "numeroRegistro")
 	private String numeroRegistro;
 
