@@ -7,10 +7,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
+import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
+import org.springframework.samples.petclinic.service.CategoriaService;
 import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
@@ -39,9 +41,12 @@ public class AnimalController {
 	CuidadorService cuidadorService;
 	@Autowired
 	CentroDeAdopcionService centroDeAdopcionService;
+	@Autowired
+	private final CategoriaService categoriaService;
 
-	public AnimalController(AnimalService animalService) {
+	public AnimalController(AnimalService animalService, CategoriaService categoriaService) {
 		this.animalService = animalService;
+		this.categoriaService = categoriaService;
 	}
 
 	@InitBinder
@@ -61,6 +66,7 @@ public class AnimalController {
 		mav.addObject(this.animalService.findAnimalById(animalId).get());
 		return mav;
 	}
+		
 
 	@GetMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, ModelMap model) {
@@ -111,6 +117,30 @@ public class AnimalController {
 			model.addAttribute("message", "Animal actualizado con exito!");
 			mav = new ModelAndView("redirect:/animales/show/" + modifiedAnimal.getId());
 			return mav;
+		}
+	}
+	
+	@GetMapping("/nuevo/{categoriaId}")
+	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId, ModelMap model) {
+		Animal animal=new Animal();
+		Categoria categoria=categoriaService.findCategoriaById(categoriaId);
+		animal.setCategoria(categoria);
+		model.put("animal", animal);
+		model.put("cuidadores", cuidadorService.findAllCuidadores());
+		model.put("centros", centroDeAdopcionService.findAllNoEstenLlenos());
+		return ANIMAL_FORM;
+	}
+
+	@PostMapping(value = "/nuevo/{categoriaId}")
+	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId,@Valid Animal animal, BindingResult result) throws AforoCentroCompletadoException {
+		Categoria categoria=categoriaService.findCategoriaById(categoriaId);
+		animal.setCategoria(categoria);
+		if (result.hasErrors()) {
+			return ANIMAL_FORM;
+		} else {
+			this.animalService.save(animal);
+
+			return "redirect:/animales/show/" + animal.getId();
 		}
 	}
 }
