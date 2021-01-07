@@ -1,6 +1,8 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -72,6 +74,8 @@ public class AnimalController {
 	public String editAnimal(@PathVariable("animalId") int animalId, ModelMap model) {
 		Optional<Animal> animal = animalService.findAnimalById(animalId);
 		if (animal.isPresent()) {
+			ArrayList <Integer> auxiliar=animalService.listaAuxiliar();
+			model.put("auxiliar", auxiliar);
 			model.addAttribute("animal", animal.get());
 			model.addAttribute("tipos", Tipo.values());
 			model.addAttribute("cuidadores", cuidadorService.findAllCuidadores());
@@ -93,12 +97,14 @@ public class AnimalController {
 			return mav;
 		} else {
 			Optional<Animal> animal = animalService.findAnimalById(animalId);
-			Optional<Cuidador> c = cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
-			CentroDeAdopcion cda = centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
-			modifiedAnimal.setId(animalId);
-			modifiedAnimal.setCuidador(c.get());
-			modifiedAnimal.setCentroDeAdopcion(cda);
-			modifiedAnimal.getCategoria().setId(animal.get().getCategoria().getId());
+			//Optional<Cuidador> c = cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
+			//CentroDeAdopcion cda = centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
+		//	modifiedAnimal.setId(animalId);
+			//modifiedAnimal.setCuidador(c.get());
+			//modifiedAnimal.setCentroDeAdopcion(cda);
+			modifiedAnimal.setCategoria(animal.get().getCategoria());
+			modifiedAnimal.setFechaPrimeraIncorporacion(animal.get().getFechaPrimeraIncorporacion());
+			modifiedAnimal.setFechaUltimaIncorporacion(animal.get().getFechaUltimaIncorporacion());
 			// animalService.save(modifiedAnimal);
 			try {
 				animalService.comprobarRatioCuidador(modifiedAnimal);
@@ -122,9 +128,15 @@ public class AnimalController {
 	
 	@GetMapping("/nuevo/{categoriaId}")
 	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId, ModelMap model) {
+		ArrayList <Integer> auxiliar=animalService.listaAuxiliar();
 		Animal animal=new Animal();
-		Categoria categoria=categoriaService.findCategoriaById(categoriaId);
+		LocalDate now=LocalDate.now();
+		Categoria categoria=categoriaService.findCategoriaById(categoriaId).get();
 		animal.setCategoria(categoria);
+		animal.setAdoptado(false);
+		animal.setFechaPrimeraIncorporacion(now);
+		animal.setFechaUltimaIncorporacion(now);
+		model.put("auxiliar", auxiliar);
 		model.put("animal", animal);
 		model.put("cuidadores", cuidadorService.findAllCuidadores());
 		model.put("centros", centroDeAdopcionService.findAllNoEstenLlenos());
@@ -133,8 +145,11 @@ public class AnimalController {
 
 	@PostMapping(value = "/nuevo/{categoriaId}")
 	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId,@Valid Animal animal, BindingResult result) throws AforoCentroCompletadoException {
-		Categoria categoria=categoriaService.findCategoriaById(categoriaId);
+		Categoria categoria=categoriaService.findCategoriaById(categoriaId).get();
 		animal.setCategoria(categoria);
+		LocalDate now=LocalDate.now();
+		animal.setFechaPrimeraIncorporacion(now);
+		animal.setFechaUltimaIncorporacion(now);
 		if (result.hasErrors()) {
 			return ANIMAL_FORM;
 		} else {

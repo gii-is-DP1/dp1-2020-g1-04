@@ -16,43 +16,17 @@ import lombok.Setter;
 public class Categoria extends BaseEntity {
 	
 	/* ATRIBUTOS */
-	@JoinColumn(name = "tipo", referencedColumnName = "tipo")
 	private Tipo tipo;
 	
 	@Column(name = "raza")
 	@NotEmpty
 	private String raza;
 	
-	/* CONSTRUCTORES */
-	public Categoria() {}
-
-	public Categoria(Tipo tipo, String raza) {
-		this.tipo = tipo;
-		this.raza = raza;
-	}
-	
 	/*// RELACIÓN
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
 	private Set<Animal> animales;
 */
-	
-	/* MÉTODOS */
-	public Tipo getTipo() {
-		return this.tipo;
-	}
-
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
-	}
-	
-	public String getRaza() {
-		return this.raza;
-	}
-
-	public void setRaza(String raza) {
-		this.raza = raza;
-	}
-	
+		
 	/* TOSTRING */
 	@Override
 	public String toString() {

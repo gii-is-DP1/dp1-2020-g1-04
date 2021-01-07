@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.util.Optional;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -11,6 +13,6 @@ public interface CategoriaRepository extends Repository<Categoria, Integer> {
 	void save(Categoria categoria) throws DataAccessException;
 
 	@Query("SELECT categoria FROM Categoria categoria WHERE categoria.id =:categoriaId")
-	public Categoria findCategoriaById(@Param("categoriaId") int categoriaId);
+	public Optional<Categoria> findCategoriaById(@Param("categoriaId") int categoriaId);
 
 }

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Categoria;
+import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.CategoriaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CategoriaContoller {
 	
 	private final CategoriaService categoriaService;
-	private static final String VIEWS_CATEGORIA_CREATE_OR_UPDATE_FORM = "eventos/createOrUpdateCategoriaForm";
+	private static final String VIEWS_CATEGORIA_CREATE_OR_UPDATE_FORM = "categoria/createOrUpdateCategoriaForm";
 
 	@Autowired
 	public CategoriaContoller(CategoriaService categoriaService) {
@@ -35,6 +36,7 @@ public class CategoriaContoller {
 	@GetMapping(value = "/nuevo")
 	public String initCreationForm(Map<String, Object> model) {
 		Categoria categoria=new Categoria();
+		model.put("tipos", Tipo.values());
 		model.put("categoria", categoria);
 		return VIEWS_CATEGORIA_CREATE_OR_UPDATE_FORM;
 	}
@@ -46,7 +48,7 @@ public class CategoriaContoller {
 		} else {
 			this.categoriaService.saveCategoria(categoria);
 
-			return "/animales/nuevo/" + categoria.getId();
+			return "redirect:/animales/nuevo/" + categoria.getId();
 		}
 	}
 

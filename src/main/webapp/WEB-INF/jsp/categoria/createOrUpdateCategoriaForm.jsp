@@ -12,25 +12,21 @@
 
 <h2><c:if test="${categoria['new']}">Nuevo </c:if>Categoria</h2>
             <form:form modelAttribute="categoria" class="form-horizontal">
-            <div class="form-group has-feedback">
-                    <div class="form-group">
-          	<label class="col-sm-2 control-label">Tipo</label> 
-           <div class="col-sm-10">
-            <select name="tipo" size="${categoria.tipo.size() }" class="form-control">
-            		  <c:forEach var="item" items="${categoria.tipo}">
-           			 <option value="${item.value}" 
-           			 <c:if test="${item.value == item.value}">
+           <div class="form-group">
+					<label class="col-sm-2 control-label">Tipo</label>
+					<div class="col-sm-10"> <select name="tipo" class="form-control">
+						<c:forEach var="item"   items="${tipos}">
+							<option value="${item}"
+							<c:if test="${item == categoria.tipo}">
            			 selected
-           			 </c:if>
-           			 >${item.key}</option>
-         		  </c:forEach>
-         		
-      		  </select>
-       </div>
-       </div>
-       </div>
+								</c:if>
+							>${item}</option>
+						</c:forEach>
+					</select>
+				</div>
+				</div>
+     
                 <petclinic:inputField label="Raza" name="raza"/>
-               	</div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button class="btn btn-default" type="submit">Continuar</button>
@@ -39,4 +35,4 @@
             
     </form:form>
 
-</petclinic>
+</petclinic:layout>

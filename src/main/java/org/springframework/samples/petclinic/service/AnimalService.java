@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -77,6 +78,14 @@ public class AnimalService {
 
 	public Collection<Animal> findAllNoAdoptedByCentro(Integer centroId) {
 		Collection<Animal> result= animalRepository.findAllNoAdoptedByCentro(centroId);
+		return result;
+	}
+
+	public ArrayList<Integer> listaAuxiliar() {
+		ArrayList<Integer> result=new ArrayList<Integer>();
+		for (int i=1; i<=10; i++){
+			result.add(i); 
+		}
 		return result;
 	}
 
