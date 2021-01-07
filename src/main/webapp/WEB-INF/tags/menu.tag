@@ -104,7 +104,7 @@
 												<a href="<c:url value="/cuidadores"/>" class="btn btn-primary btn-block">Listado de Cuidadores</a>
 												<a href="<c:url value="/eventos/nuevo"/>" class="btn btn-primary btn-block">Nuevo Evento</a>
 												<a href="<c:url value="/eventos/director/misEventos"/>" class="btn btn-primary btn-block">Mis Eventos</a>
-												
+												<a href="<c:url value="/categoria/nuevo"/>" class="btn btn-primary btn-block">Añadir Animal</a>
 													</sec:authorize>	
 													
 													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">

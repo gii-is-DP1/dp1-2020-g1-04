@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Embeddable;
 
+import org.hibernate.validator.constraints.Range;
+
 @Embeddable
 public class Peligrosidad {
 	
@@ -20,6 +22,7 @@ public class Peligrosidad {
 		
 	}
 
+	@Range(min=1,max=10)
 	public Integer getGrado() {
 		return grado;
 	}
