@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Adopcion;
+import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.repository.AdopcionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +16,11 @@ public class AdopcionService {
 
 	private AdopcionRepository adopcionRepository;
 
+	private final DuenoAdoptivoService duenoAdoptivoService;
+
 	@Autowired
-	public AdopcionService(AdopcionRepository adopcionRepository) {
+	public AdopcionService(AdopcionRepository adopcionRepository, DuenoAdoptivoService duenoAdoptivoService) {
+		this.duenoAdoptivoService = duenoAdoptivoService;
 		this.adopcionRepository = adopcionRepository;
 	}
 
@@ -43,6 +47,32 @@ public class AdopcionService {
 	public Collection<Adopcion> findAllByDuenoAdoptivo(int duenoAdoptivoId) {
 		Collection<Adopcion> result;
 		result = adopcionRepository.findAllByDuenoAdoptivo(duenoAdoptivoId);
+		return result;
+	}
+
+	public Collection<Adopcion> findSolicitadasByDuenoAdoptivo() {
+		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+
+		Collection<Adopcion> result = adopcionRepository.findSolicitadasByDuenoAdoptivo(dueno.getId());
+		return result;
+	}
+
+	public Collection<Adopcion> findAceptadasByDuenoAdoptivo() {
+		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+
+		Collection<Adopcion> result = adopcionRepository.findAceptadasByDuenoAdoptivo(dueno.getId());
+		return result;
+	}
+
+	public Collection<Adopcion> findDenegadasByDuenoAdoptivo() {
+		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+
+		Collection<Adopcion> result = adopcionRepository.findDenegadasByDuenoAdoptivo(dueno.getId());
+		return result;
+	}
+	
+	public Collection<Adopcion>findAllSolicitadas(){
+		Collection<Adopcion> result=adopcionRepository.findAllSolicitadas();
 		return result;
 	}
 

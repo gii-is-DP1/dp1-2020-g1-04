@@ -100,5 +100,11 @@ public class AnimalService {
 		return result;
 	}
 
+	public Collection<Animal> findAllNoAdoptados() {
+		Collection<Animal> result;
+		result=animalRepository.findAllNoAdopted();
+		return result;
+	}
+
 
 }
