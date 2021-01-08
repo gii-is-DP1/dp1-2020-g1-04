@@ -105,6 +105,8 @@
 												<a href="<c:url value="/eventos/nuevo"/>" class="btn btn-primary btn-block">Nuevo Evento</a>
 												<a href="<c:url value="/eventos/director/misEventos"/>" class="btn btn-primary btn-block">Mis Eventos</a>
 												<a href="<c:url value="/categoria/nuevo"/>" class="btn btn-primary btn-block">Añadir Animal</a>
+												<a href="<c:url value="/animales/todos"/>" class="btn btn-primary btn-block">Todos los animales</a>
+													<a href="<c:url value="/adopcion/pendientes"/>" class="btn btn-primary btn-block">Solicitud de Adopciones</a>
 													</sec:authorize>	
 													
 													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">
@@ -112,8 +114,8 @@
 													<a href="<c:url value="/adopcion/misSolicitudesDeAdopcion"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
 													<a href="<c:url value="/visitas/misVisitas"/>" class="btn btn-primary btn-block">Mis Visitas</a>
 													<a href="<c:url value="/adopcion/misSolicitudesDeAdopcion"/>" class="btn btn-primary btn-block">Mis Adopciones</a>
-													<a href="<c:url value="/adopcion/new"/>" class="btn btn-primary btn-block">Nueva Adopción</a>
 													<a href="<c:url value="/eventos/misEventos"/>" class="btn btn-primary btn-block">Mis Eventos</a>
+														
 														</sec:authorize>
 											</p>
 										</div>

@@ -145,7 +145,7 @@
               
       </table>
       
- <sec:authorize access="hasAnyAuthority('duenoadoptivo')">
+ <sec:authorize access="hasAuthority('duenoadoptivo')">
  <c:if test="${!animal.adoptado}">
   <spring:url value="/adopcion/new/{animalId}" var="editUrl">
         <spring:param name="animalId" value="${animal.id}"/>
@@ -155,16 +155,18 @@
  </sec:authorize>
 	
 	<sec:authorize access="hasAnyAuthority('director')">
+    
     <spring:url value="/animales/edit/{animalId}" var="editUrl">
         <spring:param name="animalId" value="${animal.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Animal</a>
     
+    <c:if test="${animal.adoptado}">
      <spring:url value="/animales/reincorporar/{animalId}" var="reiUrl">
         <spring:param name="animalId" value="${animal.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(reiUrl)}" class="btn btn-default">Reincorporar Animal</a>
-    
+    </c:if>
 	</sec:authorize>
 	
 	<sec:authorize access="hasAnyAuthority('cuidador')">

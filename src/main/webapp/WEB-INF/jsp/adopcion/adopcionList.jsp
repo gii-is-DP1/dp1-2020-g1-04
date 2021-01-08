@@ -11,13 +11,14 @@
 	    <table id="adopcionTable" class="table table-striped">
         <thead>
         <tr>
+        <th style="width: 20%;">Detalles</th>
             <th style="width: 20%;">Unidad Familiar</th>
             <th style="width: 40%;">Mayores Edad</th>
             <th style="width: 40%;">Requisitos Leídos</th>           
             <th style="width: 40%;">Permiso Comunidad</th>
             <th style="width: 40%;">¿Otros animales?</th>
             <th style="width: 40%;">Motivo adopción</th>
-            <th style="width: 40%;">¿Está aceptada?</th> 
+            <th style="width: 40%;">Estado</th> 
             <th style="width: 40%;">Motivo de la decisión</th>
             <th style="width: 40%;">Fecha de la decisión</th>
             <th style="width: 40%;">Cuidador</th>
@@ -28,6 +29,9 @@
         <tbody>
         <c:forEach items="${adopciones}" var="adopcion">
             <tr>
+            <td>
+            	<a href="/adopcion/show/${adopcion.id}">Ver</a>
+            </td>
                 <td>
                   <c:out value="${adopcion.unidadFamiliar}"/>
                 </td>
@@ -47,7 +51,7 @@
                     <c:out value="${adopcion.motivo}"/>
 				</td>
 				<td>
-                    <c:out value="${adopcion.aceptada}"/>
+                    <c:out value="${adopcion.estado}"/>
 				</td>
 				<td>
                     <c:out value="${adopcion.motivoDecision}"/>

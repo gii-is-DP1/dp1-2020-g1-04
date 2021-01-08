@@ -56,9 +56,14 @@ public class AnimalController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	@GetMapping(value = "")
+	@GetMapping(value = "/todos")
 	public String listAnimales(ModelMap model) {
 		model.addAttribute("animales", animalService.findAll());
+		return ANIMAL_LISTING;
+	}
+	@GetMapping(value = "")
+	public String listAnimalesDisponibles(ModelMap model) {
+		model.addAttribute("animales", animalService.findAllNoAdoptados());
 		return ANIMAL_LISTING;
 	}
 

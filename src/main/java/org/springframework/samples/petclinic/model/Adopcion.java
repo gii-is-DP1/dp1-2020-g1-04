@@ -45,15 +45,12 @@ public class Adopcion extends BaseEntity{
 	@Column(name="motivo")
 	private String motivo;
 	
-	@NotNull
-	@Column(name="aceptada")
-	private boolean aceptada;
+	@Column(name="estado")
+	private Estado estado;
 	
-	@NotBlank
 	@Column(name="motivoDecision")
 	private String motivoDecision;
 	
-	@NotNull
 	@Column(name="fechaDecision")
 	private LocalDate fechaDecision;
 
@@ -121,14 +118,6 @@ public class Adopcion extends BaseEntity{
 
 	public void setMotivo(String motivo) {
 		this.motivo = motivo;
-	}
-
-	public boolean isAceptada() {
-		return aceptada;
-	}
-
-	public void setAceptada(boolean aceptada) {
-		this.aceptada = aceptada;
 	}
 
 	public String getMotivoDecision() {
