@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.web;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
@@ -8,19 +7,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
-import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Enfermedad;
-import org.springframework.samples.petclinic.model.Evento;
 import org.springframework.samples.petclinic.service.AnimalService;
-import org.springframework.samples.petclinic.service.CuidadorService;
-import org.springframework.samples.petclinic.service.DirectorService;
-import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.EnfermedadService;
-import org.springframework.samples.petclinic.service.EventoService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.samples.petclinic.service.exceptions.FechaFinAntesQueDeInicioException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
