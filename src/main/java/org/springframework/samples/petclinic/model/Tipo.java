@@ -1,12 +1,12 @@
 package org.springframework.samples.petclinic.model;
 
 public enum Tipo {
-	/*
+	
 	CANINO,
 	FELINO,
 	REPTIL,
 	AVE;
-	*/
+	/*
 	CANINO(1,"canino"), 
 	FELINO(2,"felino"), 
 	REPTILES(3,"reptiles"), 
@@ -35,4 +35,5 @@ public enum Tipo {
     public void setKey(String key) {
         this.key = key;
     }
+    */
 }

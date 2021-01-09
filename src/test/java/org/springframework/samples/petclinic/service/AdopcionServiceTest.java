@@ -31,6 +31,7 @@ import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
+import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -58,7 +59,7 @@ class AdopcionServiceTests {
 		 LocalDate fechaDecision=LocalDate.now();
 		 
 		 Adopcion adopcion= new Adopcion();
-		 adopcion.setAceptada(true);
+		 adopcion.setEstado(Estado.ACEPTADA);
 		 adopcion.setAnimal(animal.get());
 		 adopcion.setDueno(dueno.get());
 		 adopcion.setFechaDecision(fechaDecision);

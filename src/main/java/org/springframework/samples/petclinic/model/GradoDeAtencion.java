@@ -2,22 +2,16 @@ package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Embeddable;
 
+import org.hibernate.validator.constraints.Range;
+
 @Embeddable
 public class GradoDeAtencion {
 
+	@Range(min=0,max=10)
 	private Integer dificultad;
-	
+	@Range(min=0,max=10)
 	private Integer atencion;
-	
-	public GradoDeAtencion() {
-		super();
-	}
-	
-	public GradoDeAtencion(Integer dificultad, Integer atencion) {
-		this.dificultad = dificultad;
-		this.atencion = atencion;
-	}
-
+		
 	public Integer getDificultad() {
 		return dificultad;
 	}

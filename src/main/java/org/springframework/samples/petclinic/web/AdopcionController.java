@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -10,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adopcion;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
+import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.service.AdopcionService;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.UserService;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdopcionController {
 
 	private static final String VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM = "adopcion/createOrUpdateAdopcionForm";
+	private static final String VIEWS_ADOPCION_ACTUALIZAR_ESTADO_FORM = "adopcion/actualizarEstadoForm";
 
 	private final AdopcionService adopcionService;
 
@@ -53,21 +55,29 @@ public class AdopcionController {
 	}
 
 	// Crear nuevo formulario de adopcion
-	@GetMapping(value = "/adopcion/new")
-	public String initCreationForm(Map<String, Object> model) {
+	@GetMapping(value = "/adopcion/new/{animalId}")
+	public String initCreationForm(@PathVariable("animalId") int animalId,Map<String, Object> model) {
 		Adopcion adopcion = new Adopcion();
-		Collection<Animal> noAdoptados = animalService.findAllNoAdopted();
+		adopcion.setEstado(Estado.PENDIENTE);
+		DuenoAdoptivo dueno=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		adopcion.setDueno(dueno);
+		Optional<Animal> animal=animalService.findAnimalById(animalId);
+		adopcion.setAnimal(animal.get());
 		model.put("adopcion", adopcion);
-		model.put("animales", noAdoptados);
 		return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/adopcion/new")
-	public String processCreationForm(@Valid Adopcion adopcion, BindingResult result) {
+	@PostMapping(value = "/adopcion/new/{animalId}")
+	public String processCreationForm(@PathVariable("animalId") int animalId,@Valid Adopcion adopcion, BindingResult result) {
+		adopcion.setEstado(Estado.PENDIENTE);
+		DuenoAdoptivo dueno=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		adopcion.setDueno(dueno);
+		Optional<Animal> animal=animalService.findAnimalById(animalId);
+		adopcion.setAnimal(animal.get());
 		if (result.hasErrors()) {
 			return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
 		} else {
-
+			
 			this.adopcionService.saveAdopcion(adopcion);
 
 			return "redirect:/adopcion/show/" + adopcion.getId();
@@ -130,12 +140,65 @@ public class AdopcionController {
 
 	@GetMapping(value = "/adopcion/misSolicitudesDeAdopcion")
 	public String findAllByDuenoAdoptivo(Map<String, Object> model) {
-		Collection<Adopcion> results;
-		User user = userService.findPrincipal();
-		DuenoAdoptivo duenoAdoptivo = duenoAdoptivoService.findDuenoAdoptivoByUserName(user.getUsername());
-		results = adopcionService.findAllByDuenoAdoptivo(duenoAdoptivo.getId());
-		model.put("adopciones", results);
+		Collection<Adopcion> solicitadas=adopcionService.findSolicitadasByDuenoAdoptivo();
+		Collection<Adopcion> aceptadas=adopcionService.findAceptadasByDuenoAdoptivo();
+		Collection<Adopcion> denegadas=adopcionService.findDenegadasByDuenoAdoptivo();
+		model.put("solicitadas", solicitadas);
+		model.put("aceptadas", aceptadas);
+		model.put("denegadas", denegadas);
+		return "adopcion/adopcionList2";
+	}
+	
+	@GetMapping(value = "/adopcion/pendientes")
+	public String findAllPendientes(Map<String, Object> model) {
+		Collection<Adopcion> pendientes=adopcionService.findAllSolicitadas();
+		model.put("adopciones", pendientes);
 		return "adopcion/adopcionList";
 	}
+	
+	@GetMapping(value = "/adopcion/show/{adopcionId}")
+	public String showAdopcion(@PathVariable("adopcionId") int adopcionId,Map<String, Object> model) {
+		Optional<Adopcion> adopcion=adopcionService.findAdopcionById(adopcionId);
+		model.put("adopcion", adopcion.get());
+		return "adopcion/showAdopcion";
+		
+	}
+	
+	// Actualizar adopcion
+		@GetMapping(value = "/adopcion/actualizarEstado/{adopcionId}")
+		public String actualizarEstado(@PathVariable("adopcionId") int adopcionId, Model model) {
+			Optional<Adopcion> adopcion = this.adopcionService.findAdopcionById(adopcionId);
+			model.addAttribute("adopcion",adopcion.get());
+			model.addAttribute("estados", Estado.values());
+			if (!userService.principalAuthorityString().contains("director")) {
+				return "redirect: /403";
+			}
+			return VIEWS_ADOPCION_ACTUALIZAR_ESTADO_FORM;
+		}
+
+		@PostMapping(value = "/adopcion/actualizarEstado/{adopcionId}")
+		public String actualizarEstado(@Valid Adopcion adopcion, BindingResult result,
+				@PathVariable("adopcionId") int adopcionId) {
+			Optional<Adopcion> adopcionAux = this.adopcionService.findAdopcionById(adopcionId);
+			Adopcion aux=adopcionAux.get();
+			adopcion.setAnimal(aux.getAnimal());
+			adopcion.setDueno(aux.getDueno());
+			adopcion.setFechaDecision(LocalDate.now());
+			adopcion.setLeidoRequisitos(aux.getLeidoRequisitos());
+			adopcion.setMayoresDeEdad(aux.getMayoresDeEdad());
+			adopcion.setMotivo(aux.getMotivo());
+			adopcion.setOtrosAnimales(aux.getOtrosAnimales());
+			adopcion.setPermisoComunidadVecinos(aux.getPermisoComunidadVecinos());
+			adopcion.setUnidadFamiliar(aux.getUnidadFamiliar());
+			adopcion.setId(adopcionId);
+			if (result.hasErrors()) {
+				return VIEWS_ADOPCION_ACTUALIZAR_ESTADO_FORM;
+			} else {
+				adopcionService.saveAdopcion(adopcion);
+
+				return "redirect:/adopcion/show/{adopcionId}";
+			}
+		}
+	
 
 }

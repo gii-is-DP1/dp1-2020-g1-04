@@ -11,8 +11,8 @@
 
 
     <h2>${animal.nombre} al detalle</h2>
-
-
+	<a href="/animales/show/${animal.id }"><img src="${animal.foto}" alt="${animal.nombre}" class="foto"></a>
+	
     <table class="table table-striped">
         <tr>
             <th>Nombre</th>
@@ -141,9 +141,11 @@
             		<td><b><c:out value="${animal.categoria.raza}"/></b></td>
         </tr>
         
+        <tr>
+              
       </table>
       
- <sec:authorize access="hasAnyAuthority('duenoadoptivo')">
+ <sec:authorize access="hasAuthority('duenoadoptivo')">
  <c:if test="${!animal.adoptado}">
   <spring:url value="/adopcion/new/{animalId}" var="editUrl">
         <spring:param name="animalId" value="${animal.id}"/>
@@ -153,12 +155,66 @@
  </sec:authorize>
 	
 	<sec:authorize access="hasAnyAuthority('director')">
+    
     <spring:url value="/animales/edit/{animalId}" var="editUrl">
         <spring:param name="animalId" value="${animal.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Animal</a>
+    
+    <c:if test="${animal.adoptado}">
+     <spring:url value="/animales/reincorporar/{animalId}" var="reiUrl">
+        <spring:param name="animalId" value="${animal.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(reiUrl)}" class="btn btn-default">Reincorporar Animal</a>
+    </c:if>
 	</sec:authorize>
 	
+	<sec:authorize access="hasAnyAuthority('cuidador')">
+	  <tr>
+            <th><h2>Enfermedades</h2></th>
+            <th>
+           <table id="enfermedadesTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 150px;">Nombre</th>
+            <th style="width: 150px;">Inicio</th>
+             <th style="width: 150px;">Curado</th>       
+             <th style="width: 150px;">Detalles</th>                 
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${animal.enfermedades}" var="enfermedad">
+            <tr>
+               <td>
+                	<c:out value="${enfermedad.nombre}"/>
+                </td>
+                <td>
+                	<c:out value="${enfermedad.comienzo}"/>
+                </td>
+                 <td>
+                	<c:if test="${enfermedad.curado}">
+                	<c:out value="Si"/>
+                	</c:if>
+                	<c:if test="${!enfermedad.curado}">
+                	<c:out value="No"/>
+                	</c:if>
+                </td>
+                <td>
+                <a href="/enfermedad/show/${animal.id }">Ver</a>
+                </td>
+                               
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+	 
+	 <spring:url value="/enfermedad/nuevo/{animalId}" var="editUrl">
+        <spring:param name="animalId" value="${animal.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Añadir Enfermedad</a>
+	</th>
+	</tr>
+	</sec:authorize>
 	
     <br/>
     <br/>

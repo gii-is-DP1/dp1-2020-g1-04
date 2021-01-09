@@ -28,4 +28,17 @@ public interface AdopcionRepository extends Repository<Adopcion, Integer>{
 	
 	//Listado de Adopciones relacionadaas con X animal-- > Implementar más adelante
 	//List<Adopcion> findByAnimalId(Integer animalId);
+	@Query("SELECT adopcion FROM  Adopcion adopcion WHERE adopcion.dueno.id=:duenoAdoptivoId and adopcion.estado=0")
+	public Collection<Adopcion>findSolicitadasByDuenoAdoptivo(@Param("duenoAdoptivoId") int duenoAdoptivoId);
+
+	@Query("SELECT adopcion FROM  Adopcion adopcion WHERE adopcion.dueno.id=:duenoAdoptivoId and adopcion.estado=1")
+	public Collection<Adopcion>findAceptadasByDuenoAdoptivo(@Param("duenoAdoptivoId") int duenoAdoptivoId);
+	
+	@Query("SELECT adopcion FROM  Adopcion adopcion WHERE adopcion.dueno.id=:duenoAdoptivoId and adopcion.estado=2")
+	public Collection<Adopcion>findDenegadasByDuenoAdoptivo(@Param("duenoAdoptivoId") int duenoAdoptivoId);
+	
+	
+	@Query("SELECT adopcion FROM  Adopcion adopcion WHERE adopcion.estado=0")
+	public Collection<Adopcion>findAllSolicitadas();
+	
 }
