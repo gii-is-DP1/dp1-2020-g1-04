@@ -156,5 +156,12 @@
    				 <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Evento</a>
 				</sec:authorize>
              
+                 <sec:authorize access="hasAnyAuthority('director')">
+   				 <spring:url value="/eventos/delete/{eventoId}" var="deleteUrl">
+    		    <spring:param name="eventoId" value="${evento.id}"/>
+   				 </spring:url>
+   				 <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default" 
+   				 			onclick="return confirm('¿Seguro que desea eliminar el Evento?');">Eliminar Evento</a>
+				</sec:authorize>
              
 </petclinic:layout>

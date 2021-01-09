@@ -257,5 +257,30 @@ public class EventoController {
 		mav = new ModelAndView("redirect:/eventos/show/" + eventoId);
 		return mav;
 	}
+	
+	//Eliminar evento
+	@GetMapping(value="/delete/{eventoId}")
+	public ModelAndView eliminarEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
+		ModelAndView mav;
+		try {
+			Optional<Evento> e = eventoService.findEventoById(eventoId);
+			Boolean b = e.isPresent();
+			if (!b) {
+				throw new BusquedaVaciaException("No existe");
+			}
+			Evento evento = e.get();
+			eventoService.deleteEvento(evento);
+		} catch (Exception ex) {
+			mav = new ModelAndView("/403");
+			mav.addObject("exceptionMessage", ex.getMessage());
+			return mav;
+
+		}
+		mav = new ModelAndView("redirect:/eventos" );
+		return mav;
+	}
+	
+	
+
 
 }
