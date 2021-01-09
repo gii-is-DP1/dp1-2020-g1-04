@@ -1,4 +1,3 @@
-
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
@@ -10,8 +9,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
-import org.springframework.samples.petclinic.model.CentroDeAdopcion;
-import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CategoriaService;
