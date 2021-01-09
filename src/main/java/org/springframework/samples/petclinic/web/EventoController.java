@@ -3,7 +3,6 @@ package org.springframework.samples.petclinic.web;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -276,7 +275,7 @@ public class EventoController {
 			return mav;
 
 		}
-		mav = new ModelAndView("redirect:/eventos" );
+		mav = new ModelAndView("redirect:/eventos/director/misEventos" );
 		return mav;
 	}
 	

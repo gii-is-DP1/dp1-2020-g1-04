@@ -129,7 +129,7 @@ public class EventoService {
 		eventoRepository.save(evento);
 
 	}
-	
+	@Transactional
 	public void deleteEvento(Evento evento) throws SinPermisoException {
 
 		String role = userService.principalAuthorityString();
@@ -137,8 +137,10 @@ public class EventoService {
 		if (!b) {
 			throw new SinPermisoException("Terreno del Director");
 		}
-		Director d = directorService.findDirectorByPrincipal();
-		d.getEventos().remove(evento);
+		evento.setCuidadores(null);
+		evento.setDuenos(null);
+		eventoRepository.save(evento);
+		eventoRepository.delete(evento);
 		
 	}
 
