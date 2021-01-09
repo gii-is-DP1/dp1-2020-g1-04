@@ -109,6 +109,38 @@ public class EventoController {
 		return mav;
 	}
 
+	@GetMapping("/edit/{eventoId}")
+	public String editEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
+		Optional<Evento> evento = eventoService.findEventoById(eventoId); 
+		if (evento.isPresent()) {
+			model.addAttribute("evento", evento.get());
+			model.addAttribute("duenos",duenoAdoptivoService.findAllDuenosAdoptivos() );
+			model.addAttribute("cuidadores", cuidadorService.findAllCuidadores());
+			return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
+		} else {
+			model.addAttribute("message", "No se encuentra el evento que quiere editar!");
+			return listadoEventosDirector(model);
+		}
+	}
+	
+	@PostMapping("/edit/{eventoId}")
+	public ModelAndView editEvento(@PathVariable("eventoId") int eventoId, @Valid Evento modifiedEvento, 
+			BindingResult binding, ModelMap model) {
+		ModelAndView mav;
+		if(binding.hasErrors()) {
+			mav = new ModelAndView(VIEWS_EVENTO_CREATE_OR_UPDATE_FORM);
+			return mav;
+		} else {
+			Optional<Evento> evento = eventoService.findEventoById(eventoId);
+			modifiedEvento.setId(eventoId);
+			modifiedEvento.setCuidadores(evento.get().getCuidadores());
+			modifiedEvento.setDuenos(evento.get().getDuenos());
+			eventoService.saveEvento(modifiedEvento);
+			model.addAttribute("message", "Evento actualizado con éxito");
+			mav = new ModelAndView("redirect:/eventos/show/" + modifiedEvento.getId());
+			return mav;
+		}
+	}
 	// Quita un cuidador x al evento y
 	@GetMapping(value = "/{eventoId}/quitarCuidador/{cuidadorId}")
 	public String quitarCuidadorEvento(@PathVariable("eventoId") int eventoId,
@@ -224,5 +256,30 @@ public class EventoController {
 		mav = new ModelAndView("redirect:/eventos/show/" + eventoId);
 		return mav;
 	}
+	
+	//Eliminar evento
+	@GetMapping(value="/delete/{eventoId}")
+	public ModelAndView eliminarEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
+		ModelAndView mav;
+		try {
+			Optional<Evento> e = eventoService.findEventoById(eventoId);
+			Boolean b = e.isPresent();
+			if (!b) {
+				throw new BusquedaVaciaException("No existe");
+			}
+			Evento evento = e.get();
+			eventoService.deleteEvento(evento);
+		} catch (Exception ex) {
+			mav = new ModelAndView("/403");
+			mav.addObject("exceptionMessage", ex.getMessage());
+			return mav;
+
+		}
+		mav = new ModelAndView("redirect:/eventos/director/misEventos" );
+		return mav;
+	}
+	
+	
+
 
 }

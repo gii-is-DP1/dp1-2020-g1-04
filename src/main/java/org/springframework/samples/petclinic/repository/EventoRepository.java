@@ -30,4 +30,7 @@ public interface EventoRepository extends Repository<Evento, Integer>{
 	public Collection<Evento> findEventosDisponibles(@Param("now")LocalDate now);
 
 
+	void delete(Evento evento)throws DataAccessException;
+
+
 }
