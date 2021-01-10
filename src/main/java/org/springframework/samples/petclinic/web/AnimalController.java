@@ -153,8 +153,8 @@ public class AnimalController {
 		Categoria categoria=categoriaService.findCategoriaById(categoriaId).get();
 		animal.setCategoria(categoria);
 		LocalDate now=LocalDate.now();
-		String nRgistro=animalService.nuevoNRegistro(categoria.getTipo().toString());
-		animal.setNumeroRegistro(nRgistro);
+		//String nRgistro=animalService.nuevoNRegistro(categoria.getTipo().toString());
+		//animal.setNumeroRegistro(nRgistro);
 		animal.setFechaPrimeraIncorporacion(now);
 		animal.setFechaUltimaIncorporacion(now);
 		if (result.hasErrors()) {
