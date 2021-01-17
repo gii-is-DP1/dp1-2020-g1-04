@@ -90,9 +90,12 @@ public class EventoService {
 
 	}
 
+	@Transactional
 	public Collection<Evento> findEventosByDueno() {
-		DuenoAdoptivo duenoAdoptivo = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-		Collection<Evento> result = eventoRepository.findEventosByDuenoAdoptivo(duenoAdoptivo.getId());
+		DuenoAdoptivo duenoAdoptivo;
+		duenoAdoptivo =duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		int i=duenoAdoptivo.getId();
+		Collection<Evento> result = eventoRepository.findEventosByDuenoAdoptivo(i);
 		return result;
 	}
 
