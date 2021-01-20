@@ -35,7 +35,7 @@
     </table>
     <c:if test="${pageContext.request.userPrincipal.name == duenoAdoptivo.user.username}">
 
-    <spring:url value="{duenoAdoptivoId}/edit" var="editUrl">
+    <spring:url value="edit/{duenoAdoptivoId}" var="editUrl">
         <spring:param name="duenoAdoptivoId" value="${duenoAdoptivo.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Dueño Adoptivo</a>
