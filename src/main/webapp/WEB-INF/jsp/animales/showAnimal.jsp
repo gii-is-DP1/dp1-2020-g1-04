@@ -200,7 +200,7 @@
                 	</c:if>
                 </td>
                 <td>
-                <a href="/enfermedad/show/${animal.id }">Ver</a>
+                <a href="/enfermedad/show/${enfermedad.id }">Ver</a>
                 </td>
                                
             </tr>
