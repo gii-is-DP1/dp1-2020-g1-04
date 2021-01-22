@@ -12,16 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class DirectorService {
 
 	private DirectorRepository directorRepository;
-
-	@Autowired
 	private UserService userService;
-
-	@Autowired
 	private AuthoritiesService authoritiesService;
 
 	@Autowired
-	public DirectorService(DirectorRepository directorRepository) {
+	public DirectorService(DirectorRepository directorRepository, UserService userService, AuthoritiesService authoritiesService ) {
 		this.directorRepository = directorRepository;
+		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}
 
 	@Transactional
