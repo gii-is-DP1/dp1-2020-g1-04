@@ -24,7 +24,19 @@ public interface AnimalRepository extends Repository<Animal, Integer> {
 	void save(Animal animal) throws DataAccessException;
 
 	@Query("SELECT animal FROM Animal animal JOIN animal.centroDeAdopcion c WHERE c.id =:centroId and animal.adoptado=false")
-	public Collection<Animal> findAllNoAdoptedByCentro(@Param("centroId") int centroId); 
+	public Collection<Animal> findAllNoAdoptedByCentro(@Param("centroId") int centroId);
+
+	@Query("SELECT animal FROM Animal animal JOIN animal.cuidador c WHERE c.id =:cuidadorId and animal.adoptado=false and animal.categoria.tipo=0")
+	public Collection<Animal> findAnimalAsignadoCanino(@Param("cuidadorId")int cuidadorId); 
+	
+	@Query("SELECT animal FROM Animal animal JOIN animal.cuidador c WHERE c.id =:cuidadorId and animal.adoptado=false and animal.categoria.tipo=1")
+	public Collection<Animal> findAnimalAsignadoFelino(@Param("cuidadorId")int cuidadorId); 
+	
+	@Query("SELECT animal FROM Animal animal JOIN animal.cuidador c WHERE c.id =:cuidadorId and animal.adoptado=false and animal.categoria.tipo=2")
+	public Collection<Animal> findAnimalAsignadoReptil(@Param("cuidadorId")int cuidadorId); 
+	
+	@Query("SELECT animal FROM Animal animal JOIN animal.cuidador c WHERE c.id =:cuidadorId and animal.adoptado=false and animal.categoria.tipo=3")
+	public Collection<Animal> findAnimalAsignadoAve(@Param("cuidadorId")int cuidadorId); 
 
 }
 

@@ -144,7 +144,7 @@ public class DuenoAdoptivoController {
 	 * @param duenoAdoptivoId the ID of the duenoAdoptivo to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@GetMapping("/duenosAdoptivos/{duenoAdoptivoId}")
+	@GetMapping("/duenosAdoptivos/show/{duenoAdoptivoId}")
 	public ModelAndView showDuenoAdoptivo(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId) {
 		ModelAndView mav = new ModelAndView("duenosAdoptivos/duenoAdoptivoDetails");
 		mav.addObject("duenoAdoptivo", this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId).get());

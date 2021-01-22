@@ -107,6 +107,8 @@
 												<a href="<c:url value="/categoria/nuevo"/>" class="btn btn-primary btn-block">Añadir Animal</a>
 												<a href="<c:url value="/animales/todos"/>" class="btn btn-primary btn-block">Todos los animales</a>
 													<a href="<c:url value="/adopcion/pendientes"/>" class="btn btn-primary btn-block">Solicitud de Adopciones</a>
+													<a href="<c:url value="/duenosAdoptivos"/>" class="btn btn-primary btn-block">Listado DueñoAdoptivos</a>
+													
 													</sec:authorize>	
 													
 													<sec:authorize access="hasAnyAuthority('duenoadoptivo')">
@@ -117,6 +119,14 @@
 													<a href="<c:url value="/eventos/misEventos"/>" class="btn btn-primary btn-block">Mis Eventos</a>
 														
 														</sec:authorize>
+														<sec:authorize access="hasAnyAuthority('cuidador')">
+													<a href="<c:url value="/cuidadores/show"/>" class="btn btn-primary btn-block">Mi perfil</a>
+													<a href="<c:url value="/animales/listaAsignados"/>" class="btn btn-primary btn-block">Animales Asignados</a>
+													<a href="<c:url value="/visitas/cuidador/misVisitas"/>" class="btn btn-primary btn-block">Mis Visitas</a>
+													<a href="<c:url value="/eventos/cuidador/misEventos"/>" class="btn btn-primary btn-block">Mis Eventos</a>
+														
+														</sec:authorize>
+														
 											</p>
 										</div>
 									</div>

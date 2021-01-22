@@ -199,6 +199,12 @@ public class EventoController {
 		model.addAttribute("eventos", eventos);
 		return EVENTOS_LISTING;
 	}
+	@GetMapping(value = "/cuidador/misEventos")
+	public String listadoEventosCuidador(ModelMap model) {
+		Collection<Evento> eventos = eventoService.findEventosByCuidador();
+		model.addAttribute("eventos", eventos);
+		return EVENTOS_LISTING;
+	}
 
 	// Carga todos los eventos que tienen asignado algún Cuidador
 	@GetMapping(value = "")

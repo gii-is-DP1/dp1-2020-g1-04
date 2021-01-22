@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/403/**").permitAll()
 				.antMatchers("/duenosAdoptivos/findAll").permitAll()
 				.antMatchers("/duenosAdoptivos/show").hasAnyAuthority("duenoadoptivo")
+				.antMatchers("/duenosAdoptivos/show/**").authenticated()
 				.antMatchers("/duenosAdoptivos/**").hasAnyAuthority("director","cuidador","duenoadoptivo")
 				.antMatchers("/duenosAdoptivos").permitAll()
 				.antMatchers("/duenoAdoptivo/new").permitAll()
@@ -90,6 +91,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/adopcion/pendientes").hasAnyAuthority("director")
 				.antMatchers("/adopcion/show/**").hasAnyAuthority("director","duenoadoptivo")
 				.antMatchers("/adopcion/actualizarEstado/**").hasAnyAuthority("director")
+				.antMatchers("/animales/listaAsignados").hasAuthority("cuidador")
+				.antMatchers("/cuidadores/show").hasAuthority("cuidador")
+				.antMatchers("/eventos/cuidador/misEventos").hasAuthority("cuidador")
+				
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
