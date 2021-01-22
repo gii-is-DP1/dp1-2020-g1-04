@@ -60,10 +60,12 @@ public class EnfermedadController {
 		if (result.hasErrors()) {
 			return VIEWS_ENFERMEDAD_CREATE_OR_UPDATE_FORM;
 		} else {
+			if(enfermedad.getFin()!=null) {
 			if(enfermedad.getFin().isBefore(enfermedad.getComienzo())) {
 				 errorFecha="La fecha de fin tiene que ser después de la de inicio";
 				 model.put("errorFecha", errorFecha);
 				 return VIEWS_ENFERMEDAD_CREATE_OR_UPDATE_FORM;
+			}
 			}
 			Optional<Animal> animal= animalService.findAnimalById(animalId);
 			enfermedad.setAnimal(animal.get());
