@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class EnfermedadController {
 	
 	private static final String VIEWS_ENFERMEDAD_CREATE_OR_UPDATE_FORM = "enfermedad/createOrUpdateEnfermedadForm";
 	private static final String ENFERMEDADES_SHOW = "enfermedad/showEnfermedad";
+	private static final String ENFERMEDADES_LIST = "enfermedad/listadoEnfemedades";
 
 	private final EnfermedadService enfermedadService;
 	private final AnimalService animalService;
@@ -78,4 +80,11 @@ public class EnfermedadController {
 		return ENFERMEDADES_SHOW;
 	}
 
+	@GetMapping(value = "/{animalId}")
+	public String listadoEnfermedad(Map<String, Object> model, @PathVariable("animalId") int animalId) {
+		Collection<Enfermedad> enfermedades =enfermedadService.findAllEnfermedadByAnimalId(animalId);
+		model.put("enfermedades", enfermedades);
+		return ENFERMEDADES_LIST;
+	}
+	
 }

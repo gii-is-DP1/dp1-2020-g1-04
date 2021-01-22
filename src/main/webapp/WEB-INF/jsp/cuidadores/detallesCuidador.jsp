@@ -28,6 +28,17 @@
             <td><c:out value="${cuidador.telefono}"/></td>
         </tr>
         </sec:authorize>
+        <c:if test="${pageContext.request.userPrincipal.name == cuidador.user.username}">
+         <tr>
+            <th>DNI</th>
+            <td><c:out value="${cuidador.dni}"/></td>
+        </tr>
+        <tr>
+            <th>Teléfono</th>
+            <td><c:out value="${cuidador.telefono}"/></td>
+        </tr>
+        </c:if>
+        
         <tr>
             <th>Email</th>
             <td><c:out value="${cuidador.email}"/></td>
@@ -37,6 +48,7 @@
             <th>Centro De Adopcion</th>
             <td><c:out value="${cuidador.centroDeAdopcion.nombre}"/></td>
         </tr>
+        
         
         
     </table>

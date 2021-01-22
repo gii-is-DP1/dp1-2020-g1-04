@@ -28,6 +28,8 @@ public class EventoService {
 	private DuenoAdoptivoService duenoAdoptivoService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CuidadorService cuidadorService;
 
 	@Autowired
 	public EventoService(EventoRepository eventoRepository) {
@@ -90,9 +92,12 @@ public class EventoService {
 
 	}
 
+	@Transactional
 	public Collection<Evento> findEventosByDueno() {
-		DuenoAdoptivo duenoAdoptivo = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-		Collection<Evento> result = eventoRepository.findEventosByDuenoAdoptivo(duenoAdoptivo.getId());
+		DuenoAdoptivo duenoAdoptivo;
+		duenoAdoptivo =duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		int i=duenoAdoptivo.getId();
+		Collection<Evento> result = eventoRepository.findEventosByDuenoAdoptivo(i);
 		return result;
 	}
 
@@ -142,6 +147,15 @@ public class EventoService {
 		eventoRepository.save(evento);
 		eventoRepository.delete(evento);
 		
+	}
+
+	@Transactional
+	public Collection<Evento> findEventosByCuidador() {
+		Cuidador cuidador;
+		cuidador =cuidadorService.findCuidadorByPrincipal();
+		int i=cuidador.getId();
+		Collection<Evento> result = eventoRepository.findEventosByCuidador(i);
+		return result;
 	}
 
 

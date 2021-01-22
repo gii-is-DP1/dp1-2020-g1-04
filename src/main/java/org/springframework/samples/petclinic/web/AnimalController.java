@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
+import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CategoriaService;
@@ -32,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AnimalController {
 
 	public static final String ANIMAL_LISTING = "animales/AnimalListing";
+	public static final String ANIMAL_LISTING_CATEGORIA = "animales/AnimalListingCategoria";
 	public static final String ANIMAL_FORM = "animales/createOrUpdateAnimal";
 
 	@Autowired
@@ -181,4 +184,24 @@ public class AnimalController {
 			return listAnimales(model);
 	}
 	}
+	@GetMapping(value = "/listaAsignados")
+	public String listAnimalesAsignados(ModelMap model) {
+		Cuidador principal=cuidadorService.findCuidadorByPrincipal();
+		int cuidadorId= principal.getId();
+		Collection<Animal> animalesCanino;
+		Collection<Animal> animalesFelino;
+		Collection<Animal> animalesReptil;
+		Collection<Animal> animalesAve;
+		animalesCanino=animalService.findAnimalAsignadoCanino(cuidadorId);
+		animalesFelino=animalService.findAnimalAsignadoFelino(cuidadorId);
+		animalesReptil=animalService.findAnimalAsignadoReptil(cuidadorId);
+		animalesAve=animalService.findAnimalAsignadoAve(cuidadorId);
+		model.addAttribute("animalesCanino", animalesCanino);
+		model.addAttribute("animalesFelino", animalesFelino);
+		model.addAttribute("animalesReptil", animalesReptil);
+		model.addAttribute("animalesAve", animalesAve);
+		return ANIMAL_LISTING_CATEGORIA;
+	}
+	
+	
 	}

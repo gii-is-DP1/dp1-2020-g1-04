@@ -50,7 +50,7 @@
 							<a href="${fn:escapeXml(cuidadorUrl)}"><c:out
 									value="${visita.cuidador.nombre} " /></a>
 						</sec:authorize> <sec:authorize access="hasAnyAuthority('cuidador')">
-							<spring:url value="/duenoAdoptivo/show/{duenoId}" var="duenoUrl">
+							<spring:url value="/duenosAdoptivos/show/{duenoId}" var="duenoUrl">
 								<spring:param name="duenoId" value="${visita.dueno.id}" />
 							</spring:url>
 							<a href="${fn:escapeXml(duenoUrl)}"><c:out
@@ -113,7 +113,7 @@
 							<a href="${fn:escapeXml(cuidadorUrl)}"><c:out
 									value="${visitaPasada.cuidador.nombre} " /></a>
 						</sec:authorize> <sec:authorize access="hasAnyAuthority('cuidador')">
-							<spring:url value="/duenoAdoptivo/show/{duenoId}" var="duenoUrl">
+							<spring:url value="/duenosAdoptivos/show/{duenoId}" var="duenoUrl">
 								<spring:param name="duenoId" value="${visitaPasada.dueno.id}" />
 							</spring:url>
 							<a href="${fn:escapeXml(duenoUrl)}"><c:out

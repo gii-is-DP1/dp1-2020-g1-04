@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -16,4 +17,7 @@ public interface EnfermedadRepository extends Repository<Enfermedad, Integer>{
 
 	@Query("SELECT enfermedad FROM Enfermedad enfermedad WHERE enfermedad.id=:enfermedadId")
 	public Optional<Enfermedad> findEnfermedadById(@Param("enfermedadId")int enfermedadId);
+
+	@Query("SELECT enfermedad FROM Enfermedad enfermedad WHERE enfermedad.animal.id=:animalId")
+	public Collection<Enfermedad> findAllEnfermedadeByAnimalId(@Param("animalId")int animalId);
 }

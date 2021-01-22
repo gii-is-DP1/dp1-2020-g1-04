@@ -86,6 +86,15 @@ public class CuidadorController {
 		// return mav;
 //	}
 	}
+	
+	@GetMapping("/cuidadores/show")
+	public ModelAndView showCuidadorPrincipal() {
+		
+		ModelAndView mav = new ModelAndView("cuidadores/detallesCuidador");
+		Cuidador cuidador = cuidadorService.findCuidadorByPrincipal();
+		mav.addObject(cuidador);
+		return mav;
+	}
 
 	@GetMapping(value = "/cuidadores/findAllByCentro/{centroId}")
 	public String findAllCuidadoresPorCentro(@PathVariable("centroId") int centroId, Map<String, Object> model) {
@@ -139,7 +148,7 @@ public class CuidadorController {
 
 			this.cuidadorService.saveCuidador(cuidador);
 
-			return "redirect:/cuidadores/{cuidadorId}";
+			return "redirect:/cuidadores/show/{cuidadorId}";
 		}
 	}
 

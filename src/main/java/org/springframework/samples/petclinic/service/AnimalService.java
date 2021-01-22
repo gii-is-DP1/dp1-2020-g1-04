@@ -106,5 +106,26 @@ public class AnimalService {
 		return result;
 	}
 
+	public Collection<Animal> findAnimalAsignadoCanino(int cuidadorId) {
+
+		Collection<Animal> result=animalRepository.findAnimalAsignadoCanino(cuidadorId); 
+		return result;
+	}
+	public Collection<Animal> findAnimalAsignadoFelino(int cuidadorId) {
+
+		Collection<Animal> result=animalRepository.findAnimalAsignadoFelino(cuidadorId); 
+		return result;
+	}
+	public Collection<Animal> findAnimalAsignadoReptil(int cuidadorId) {
+
+		Collection<Animal> result=animalRepository.findAnimalAsignadoReptil(cuidadorId); 
+		return result;
+	}
+	public Collection<Animal> findAnimalAsignadoAve(int cuidadorId) {
+
+		Collection<Animal> result=animalRepository.findAnimalAsignadoAve(cuidadorId); 
+		return result;
+	}
+
 
 }
