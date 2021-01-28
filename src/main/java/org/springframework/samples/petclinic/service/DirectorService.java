@@ -11,17 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DirectorService {
 
-	private DirectorRepository directorRepository;
+	private final DirectorRepository directorRepository;
+
+	private final UserService userService;
+
+	private final AuthoritiesService authoritiesService;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private AuthoritiesService authoritiesService;
-
-	@Autowired
-	public DirectorService(DirectorRepository directorRepository) {
+	public DirectorService(DirectorRepository directorRepository, UserService userService,
+			AuthoritiesService authoritiesService) {
 		this.directorRepository = directorRepository;
+		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}
 
 	@Transactional
@@ -49,6 +50,7 @@ public class DirectorService {
 		return result;
 
 	}
+
 	@Transactional
 	public Person findPersonByPrincipal() {
 		Person result;

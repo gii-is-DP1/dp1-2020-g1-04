@@ -21,19 +21,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class EventoService {
 
-	private EventoRepository eventoRepository;
-	@Autowired
-	private DirectorService directorService;
-	@Autowired
-	private DuenoAdoptivoService duenoAdoptivoService;
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private CuidadorService cuidadorService;
+	private final EventoRepository eventoRepository;
+
+	private final DirectorService directorService;
+
+	private final DuenoAdoptivoService duenoAdoptivoService;
+
+	private final UserService userService;
+
+	private final CuidadorService cuidadorService;
 
 	@Autowired
-	public EventoService(EventoRepository eventoRepository) {
+	public EventoService(EventoRepository eventoRepository, DirectorService directorService,
+			DuenoAdoptivoService duenoAdoptivoService, UserService userService, CuidadorService cuidadorService) {
 		this.eventoRepository = eventoRepository;
+		this.directorService=directorService;
+		this.duenoAdoptivoService=duenoAdoptivoService;
+		this.userService=userService;
+		this.cuidadorService=cuidadorService;
 	}
 
 	@Transactional
@@ -95,8 +100,8 @@ public class EventoService {
 	@Transactional
 	public Collection<Evento> findEventosByDueno() {
 		DuenoAdoptivo duenoAdoptivo;
-		duenoAdoptivo =duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-		int i=duenoAdoptivo.getId();
+		duenoAdoptivo = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		int i = duenoAdoptivo.getId();
 		Collection<Evento> result = eventoRepository.findEventosByDuenoAdoptivo(i);
 		return result;
 	}
@@ -134,6 +139,7 @@ public class EventoService {
 		eventoRepository.save(evento);
 
 	}
+
 	@Transactional
 	public void deleteEvento(Evento evento) throws SinPermisoException {
 
@@ -146,17 +152,16 @@ public class EventoService {
 		evento.setDuenos(null);
 		eventoRepository.save(evento);
 		eventoRepository.delete(evento);
-		
+
 	}
 
 	@Transactional
 	public Collection<Evento> findEventosByCuidador() {
 		Cuidador cuidador;
-		cuidador =cuidadorService.findCuidadorByPrincipal();
-		int i=cuidador.getId();
+		cuidador = cuidadorService.findCuidadorByPrincipal();
+		int i = cuidador.getId();
 		Collection<Evento> result = eventoRepository.findEventosByCuidador(i);
 		return result;
 	}
-
 
 }

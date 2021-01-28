@@ -19,28 +19,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/categoria")
 public class CategoriaContoller {
-	
+
 	private final CategoriaService categoriaService;
 	private static final String VIEWS_CATEGORIA_CREATE_OR_UPDATE_FORM = "categoria/createOrUpdateCategoriaForm";
 
 	@Autowired
 	public CategoriaContoller(CategoriaService categoriaService) {
-		this.categoriaService=categoriaService;
-			}
+		this.categoriaService = categoriaService;
+	}
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	@GetMapping(value = "/nuevo")
 	public String initCreationForm(Map<String, Object> model) {
-		Categoria categoria=new Categoria();
+		Categoria categoria = new Categoria();
 		model.put("tipos", Tipo.values());
 		model.put("categoria", categoria);
 		return VIEWS_CATEGORIA_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/nuevo")
 	public String processCreationForm(@Valid Categoria categoria, BindingResult result) {
 		if (result.hasErrors()) {

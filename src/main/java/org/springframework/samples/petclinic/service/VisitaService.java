@@ -14,16 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class VisitaService {
 
-	private VisitaRepository visitaRepository;
+	private final VisitaRepository visitaRepository;
+
+	private final DuenoAdoptivoService duenoAdoptivoService;
+	private final CuidadorService cuidadorService;
 
 	@Autowired
-	private DuenoAdoptivoService duenoAdoptivoService;
-	@Autowired
-	private CuidadorService cuidadorService;
-
-	@Autowired
-	public VisitaService(VisitaRepository visitaRepository) {
+	public VisitaService(VisitaRepository visitaRepository, DuenoAdoptivoService duenoAdoptivoService,
+			CuidadorService cuidadorService) {
 		this.visitaRepository = visitaRepository;
+		this.cuidadorService = cuidadorService;
+		this.duenoAdoptivoService = duenoAdoptivoService;
 	}
 
 	@Transactional
@@ -56,7 +57,7 @@ public class VisitaService {
 
 		return result;
 	}
-	
+
 	@Transactional
 	public Collection<Visita> findVisitasByCuidadorPrincipalProximas() {
 		Cuidador cuidador = cuidadorService.findCuidadorByPrincipal();

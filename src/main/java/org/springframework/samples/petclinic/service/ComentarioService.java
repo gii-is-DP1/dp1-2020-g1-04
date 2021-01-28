@@ -15,37 +15,47 @@ public class ComentarioService {
 
 	private ComentarioRepository comentarioRepository;
 
+	private final UserService userService;
+
+	private final DuenoAdoptivoService duenoAdoptivoService;
+
+	private final CuidadorService cuidadorService;
+
+	private final DirectorService directorService;
+
 	@Autowired
-	private UserService userService;
-	@Autowired
-	private DuenoAdoptivoService duenoAdoptivoService;
-	@Autowired
-	private CuidadorService cuidadorService;
-	@Autowired
-	private DirectorService directorService;
+	public ComentarioService(ComentarioRepository comentarioRepository, UserService userService,
+			DuenoAdoptivoService duenoAdoptivoService, CuidadorService cuidadorService,
+			DirectorService directorService) {
+		this.comentarioRepository = comentarioRepository;
+		this.userService = userService;
+		this.duenoAdoptivoService = duenoAdoptivoService;
+		this.cuidadorService = cuidadorService;
+		this.directorService = directorService;
+	}
 
 	public void saveComentario(@Valid Comentario comentario) {
-		String authority=userService.principalAuthorityString();
-		switch (authority) 
-	        {
-	        	case "duenoadoptivo":
-	            DuenoAdoptivo d=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-	            comentario.setDueno(d);         
-	            break;
-	            case "cuidador":
-	            Cuidador c=cuidadorService.findCuidadorByPrincipal();
-	            comentario.setCuidador(c);       
-	            break;
-	            case "director":
-	            Director di=directorService.findDirectorByPrincipal();
-	            comentario.setDirector(di);      
-	            break;
-	            default: authority = "null";
-	                     break;
-	        }
-		
+		String authority = userService.principalAuthorityString();
+		switch (authority) {
+		case "duenoadoptivo":
+			DuenoAdoptivo d = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+			comentario.setDueno(d);
+			break;
+		case "cuidador":
+			Cuidador c = cuidadorService.findCuidadorByPrincipal();
+			comentario.setCuidador(c);
+			break;
+		case "director":
+			Director di = directorService.findDirectorByPrincipal();
+			comentario.setDirector(di);
+			break;
+		default:
+			authority = "null";
+			break;
+		}
+
 		comentarioRepository.save(comentario);
-		
+
 	}
 
 }
