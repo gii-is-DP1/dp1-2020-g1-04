@@ -124,7 +124,7 @@
 													<a href="<c:url value="/animales/listaAsignados"/>" class="btn btn-primary btn-block">Animales Asignados</a>
 													<a href="<c:url value="/visitas/cuidador/misVisitas"/>" class="btn btn-primary btn-block">Mis Visitas</a>
 													<a href="<c:url value="/eventos/cuidador/misEventos"/>" class="btn btn-primary btn-block">Mis Eventos</a>
-														
+													<a href="<c:url value="/enfermedad/cuidador"/>" class="btn btn-primary btn-block">Enfermedades de mis animales</a>
 														</sec:authorize>
 														
 											</p>

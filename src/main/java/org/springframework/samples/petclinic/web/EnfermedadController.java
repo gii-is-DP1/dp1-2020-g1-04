@@ -8,8 +8,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
+import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Enfermedad;
 import org.springframework.samples.petclinic.service.AnimalService;
+import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.EnfermedadService;
 import org.springframework.samples.petclinic.service.exceptions.FechaFinAntesQueDeInicioException;
 import org.springframework.stereotype.Controller;
@@ -28,15 +30,17 @@ public class EnfermedadController {
 	
 	private static final String VIEWS_ENFERMEDAD_CREATE_OR_UPDATE_FORM = "enfermedad/createOrUpdateEnfermedadForm";
 	private static final String ENFERMEDADES_SHOW = "enfermedad/showEnfermedad";
-	private static final String ENFERMEDADES_LIST = "enfermedad/listadoEnfemedades";
+	private static final String ENFERMEDADES_LIST = "enfermedad/listadoEnfermedades";
 
 	private final EnfermedadService enfermedadService;
 	private final AnimalService animalService;
-
+	private final CuidadorService cuidadorService;
+	
 	@Autowired
-	public EnfermedadController(EnfermedadService enfermedadService, AnimalService animalService) {
+	public EnfermedadController(EnfermedadService enfermedadService, AnimalService animalService, CuidadorService cuidadorService) {
 		this.enfermedadService = enfermedadService;
 		this.animalService = animalService;
+		this.cuidadorService=cuidadorService;
 	
 	}
 
@@ -85,6 +89,13 @@ public class EnfermedadController {
 	@GetMapping(value = "/{animalId}")
 	public String listadoEnfermedad(Map<String, Object> model, @PathVariable("animalId") int animalId) {
 		Collection<Enfermedad> enfermedades =enfermedadService.findAllEnfermedadByAnimalId(animalId);
+		model.put("enfermedades", enfermedades);
+		return ENFERMEDADES_LIST;
+	}
+	@GetMapping(value = "/cuidador")
+	public String listadoEnfermedadAnimalByCuidador(Map<String, Object> model) {
+		Cuidador principal= cuidadorService.findCuidadorByPrincipal();
+		Collection<Enfermedad> enfermedades =enfermedadService.findAllEnfermedadAnimalByCuidadorId(principal.getId());
 		model.put("enfermedades", enfermedades);
 		return ENFERMEDADES_LIST;
 	}

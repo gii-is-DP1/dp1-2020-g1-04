@@ -18,15 +18,23 @@
            <table id="enfermedadesTable" class="table table-striped">
         <thead>
         <tr>
+        	<th style="width: 150px;">Animal</th>
             <th style="width: 150px;">Nombre</th>
             <th style="width: 150px;">Inicio</th>
-             <th style="width: 150px;">Curado</th>       
+             <th style="width: 150px;">Curado</th>
+             <th style="width: 150px;">Fecha Curado</th>         
              <th style="width: 150px;">Detalles</th>                 
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${animal.enfermedades}" var="enfermedad">
+        <c:forEach items="${enfermedades}" var="enfermedad">
             <tr>
+             <td>
+             <c:out value="${enfermedad.animal.nombre}"></c:out><br>
+                	<a href="/animales/show/${enfermedad.animal.id }"><img
+		alt="${enfermedad.animal.nombre }" src="${enfermedad.animal.foto }"
+		class="foto"> </a>
+                </td>
                <td>
                 	<c:out value="${enfermedad.nombre}"/>
                 </td>
@@ -42,7 +50,10 @@
                 	</c:if>
                 </td>
                 <td>
-                <a href="/enfermedad/show/${animal.id }">Ver</a>
+                
+                <c:out value="${enfermedad.fin }"></c:out>
+                <td>
+                <a href="/enfermedad/show/${enfermedad.id }">Ver</a>
                 </td>
                                
             </tr>
@@ -50,11 +61,6 @@
         </tbody>
     </table>
 	 
-	 <spring:url value="/enfermedad/nuevo/{animalId}" var="editUrl">
-        <spring:param name="animalId" value="${animal.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Añadir Enfermedad</a>
-	
 	</th>
 	</tr>
 	</petclinic:layout>

@@ -37,5 +37,11 @@ public class EnfermedadService {
 		enfermedades=enfermedadRepository.findAllEnfermedadeByAnimalId(animalId);
 		return enfermedades;
 	}
+	
+	public Collection<Enfermedad> findAllEnfermedadAnimalByCuidadorId(int cuidadorId) {
+		Collection <Enfermedad> enfermedades;
+		enfermedades=enfermedadRepository.findAllEnfermedadeAnimalByCuidador(cuidadorId);
+		return enfermedades;
+	}
 
 }

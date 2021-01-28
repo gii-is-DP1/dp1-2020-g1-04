@@ -20,4 +20,8 @@ public interface EnfermedadRepository extends Repository<Enfermedad, Integer>{
 
 	@Query("SELECT enfermedad FROM Enfermedad enfermedad WHERE enfermedad.animal.id=:animalId")
 	public Collection<Enfermedad> findAllEnfermedadeByAnimalId(@Param("animalId")int animalId);
+	
+	@Query("SELECT enfermedad FROM Enfermedad enfermedad join enfermedad.animal c WHERE c.cuidador.id=:cuidadorId")
+	public Collection<Enfermedad> findAllEnfermedadeAnimalByCuidador(@Param("cuidadorId")int cuidadorId);
+	
 }
