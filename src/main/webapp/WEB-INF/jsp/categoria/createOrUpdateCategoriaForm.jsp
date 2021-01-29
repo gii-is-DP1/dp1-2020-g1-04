@@ -20,7 +20,7 @@
 							<c:if test="${item == categoria.tipo}">
            			 selected
 								</c:if>
-							>${item}</option>
+							><c:out value="${item}"/></option>
 						</c:forEach>
 					</select>
 				</div>

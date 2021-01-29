@@ -24,14 +24,14 @@
 	<jsp:body>
 
         <h2>
-			<c:if test="${enfermedad['new']}">Nueva </c:if>Enfermedad  para ${enfermedad.animal.nombre}</h2> 
-			<a href="/animales/show/${enfermedad.animal.id }"><img src="${enfermedad.animal.foto}" alt="${enfermedad.animal.nombre}" class="foto"></a>
+			<c:if test="${enfermedad['new']}">Nueva </c:if>Enfermedad  para <c:out value="${enfermedad.animal.nombre}"/></h2> 
+			<a href="/animales/show/${enfermedad.animal.id }"><img src="<c:out value="${enfermedad.animal.foto}"/>" alt="<c:out value="${enfermedad.animal.nombre}"/>" class="foto"></a>
             <form:form modelAttribute="enfermedad"
 			class="form-horizontal">
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Nombre" name="nombre" />
                  <petclinic:inputField label="Inicio" name="comienzo"/>
-             		<p style="color:red">${errorFecha}</p>
+             		<p style="color:red"><c:out value="${errorFecha}"/></p>
                  <petclinic:inputField label="Fin" name="fin"/>
                  <petclinic:inputField label="Comentario" name="comentario"/>
               <div class="form-group">

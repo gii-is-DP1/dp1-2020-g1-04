@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,13 +15,13 @@
         <th style="width: 20%;">Detalles</th>
             <th style="width: 20%;">Unidad Familiar</th>
             <th style="width: 40%;">Mayores Edad</th>
-            <th style="width: 40%;">Requisitos Leídos</th>           
+            <th style="width: 40%;">Requisitos LeÃ­dos</th>           
             <th style="width: 40%;">Permiso Comunidad</th>
-            <th style="width: 40%;">¿Otros animales?</th>
-            <th style="width: 40%;">Motivo adopción</th>
+            <th style="width: 40%;">Â¿Otros animales?</th>
+            <th style="width: 40%;">Motivo adopciÃ³n</th>
             <th style="width: 40%;">Estado</th> 
-            <th style="width: 40%;">Motivo de la decisión</th>
-            <th style="width: 40%;">Fecha de la decisión</th>
+            <th style="width: 40%;">Motivo de la decisiÃ³n</th>
+            <th style="width: 40%;">Fecha de la decisiÃ³n</th>
             <th style="width: 40%;">Cuidador</th>
             <th style="width: 40%;">Animal</th>
 
@@ -30,7 +31,7 @@
         <c:forEach items="${adopciones}" var="adopcion">
             <tr>
             <td>
-            	<a href="/adopcion/show/${adopcion.id}">Ver</a>
+            	<a href="/adopcion/show/ <c:out value="${adopcion.id}"/>">Ver</a>
             </td>
                 <td>
                   <c:out value="${adopcion.unidadFamiliar}"/>

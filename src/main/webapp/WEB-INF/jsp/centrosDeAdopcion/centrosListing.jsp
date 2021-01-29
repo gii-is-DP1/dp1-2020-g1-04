@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -11,8 +12,8 @@
         <thead>
         <tr>
             <th style="width: 20%;">Nombre</th>
-            <th style="width: 40%;">DirecciÛn</th>
-            <th style="width: 40%;">Cantidad m·xima de animales</th>           
+            <th style="width: 40%;">Direcci√≥n</th>
+            <th style="width: 40%;">Cantidad m√°xima de animales</th>           
             <th style="width: 40%;">Lista de animales</th>
             <th style="width: 40%;">Lista de cuidadores</th>
             
@@ -33,7 +34,7 @@
 				</td>
 				
 	            <td>
-    	            <a href="<spring:url value="/animal/animalList.jsp" htmlEscape="true" />">Lista de Animales</a>
+    	            <a href="<spring:url value="/animales/listAnimales/${centro.id }" htmlEscape="true" />">Lista de Animales</a>
         	    </td>      
         	    	            <td>
     	            <a href="<spring:url value="/cuidadores/findAllByCentro/${centro.id }" htmlEscape="true" />">Lista de Cuidadores</a>

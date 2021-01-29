@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,14 +16,14 @@
              <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Apellidos" name="apellidos"/>
             <petclinic:inputField label="DNI" name="dni"/>
-            <petclinic:inputField label="Teléfono" name="telefono"/>
+            <petclinic:inputField label="TelÃ©fono" name="telefono"/>
             <petclinic:inputField label="Email" name="email"/>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>
         
            
            <div class="form-group">
-          	<label class="col-sm-2 control-label">Centro De Adopción</label> 
+          	<label class="col-sm-2 control-label">Centro De AdopciÃ³n</label> 
            <div class="col-sm-10">
             <select name="centroDeAdopcion" size="${centros.size() }" class="form-control">
             		  <c:forEach var="item" items="${centros}">
@@ -30,7 +31,7 @@
            			 <c:if test="${item.id == cuidador.centroDeAdopcion.id}">
            			 selected
            			 </c:if>
-           			 >${item.nombre}</option>
+           			 ><c:out value="${item.nombre}"/></option>
          		  </c:forEach>
          		
       		  </select>
@@ -41,7 +42,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${cuidador['new']}">
-                        <button class="btn btn-default" type="submit">Añadir Cuidador</button>
+                        <button class="btn btn-default" type="submit">AÃ±adir Cuidador</button>
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit" value="editar">Actualizar Cuidador</button>

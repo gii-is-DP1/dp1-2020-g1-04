@@ -9,11 +9,11 @@
 <petclinic:layout pageName="home">
     <h2><fmt:message key="welcome"/></h2>
     <div class="row">
-    <h2>Project ${title}</h2>
-    <p><h2>Group ${group}</h2></p>
+    <h2>Project <c:out value="${title}"/></h2>
+    <p><h2>Group <c:out value="${group}"/></h2></p>
     <p><ul>
-    <c:forEach items="${persons}" var="persons">
-    	<li>${persons.nombre } ${persons.apellidos }</li>
+    <c:forEach items="<c:out value="${persons}"/>" var="persons">
+    	<li><c:out value="${persons.nombre } ${persons.apellidos }"/></li>
     </c:forEach></ul></p>
     <div class="row">
         <div class="col-md-12">

@@ -11,8 +11,8 @@
 
 <petclinic:layout pageName="enfermedad">
 
-	<h2>La Enfermedad "${enfermedad.nombre}" de
-		${enfermedad.animal.nombre} al detalle</h2>
+	<h2>La Enfermedad <c:out value="${enfermedad.nombre}"/> de
+		 <c:out value="${enfermedad.animal.nombre}"/> al detalle</h2>
 
 
 
@@ -53,7 +53,7 @@
 
 	
 	<a href="/animales/show/${enfermedad.animal.id }"><c:out value="Volver a"></c:out><img
-		alt="${enfermedad.animal.nombre }" src="${enfermedad.animal.foto }"
+		alt="<c:out value="${enfermedad.animal.nombre }"/>" src="<c:out value="${enfermedad.animal.foto }"/>"
 		class="foto"> </a>
 
 

@@ -32,7 +32,7 @@
              <td>
              <c:out value="${enfermedad.animal.nombre}"></c:out><br>
                 	<a href="/animales/show/${enfermedad.animal.id }"><img
-		alt="${enfermedad.animal.nombre }" src="${enfermedad.animal.foto }"
+		alt="<c:out value="${enfermedad.animal.nombre }"/>" src="<c:out value="${enfermedad.animal.foto }"/>"
 		class="foto"> </a>
                 </td>
                <td>

@@ -11,9 +11,9 @@
 
 <petclinic:layout pageName="adopcion">
 
-	<h2>Solicitud de Adopcion de ${adopcion.animal.nombre} al detalle</h2>
-	<a href="/animales/show/${adopcion.animal.id }"><img
-		src="${adopcion.animal.foto}" alt="${adopcion.animal.nombre}"
+	<h2>Solicitud de Adopcion de <c:out value="${adopcion.animal.nombre}"/> al detalle</h2>
+	<a href="/animales/show/<c:out value="${adopcion.animal.id }"/>"><img
+		src="<c:out value="${adopcion.animal.foto}"/>" alt="<c:out value="${adopcion.animal.nombre}"/>"
 		class="foto"></a>
 
 	<table class="table table-striped">

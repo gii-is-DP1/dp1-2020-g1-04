@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -6,7 +7,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 
 <petclinic:layout pageName="animales">
-	<h2>Categoría Canino</h2>
+	<h2>CategorÃ­a Canino</h2>
 	<table id="animalesTable" class="table table-striped">
 		<thead>
 			<tr>
@@ -19,7 +20,7 @@
 				<th style="width: 50%;">Licencia Adopcion</th>
 				<th style="width: 50%;">Seguro</th>
 				<th style="width: 50%;">Adoptado</th>
-				<th style="width: 50%;">Tamaño</th>
+				<th style="width: 50%;">TamaÃ±o</th>
 				<th style="width: 50%;">Edad</th>
 				<th style="width: 50%;">Sexo</th>
 				<th style="width: 50%;">Categoria</th>
@@ -30,8 +31,8 @@
 			<c:forEach items="${animalesCanino}" var="canino">
 				<tr>
 					<td><a href="<c:url value="/animales/show/${canino.id}"/>"
-						class="btn btn-primary btn-block">${canino.nombre }</a></td>
-					<td><img src="${animal.foto }" alt="Foto de ${canino.nombre }"
+						class="btn btn-primary btn-block"><c:out value="${canino.nombre }"/></a></td>
+					<td><img src="<c:out value="${animal.foto }"/>" alt="Foto de <c:out value="${canino.nombre }"/>"
 						class="foto"></td>
 					<td><a
 						href="<c:url value="/centros/show/${canino.centroDeAdopcion.id}"/>"
@@ -56,7 +57,7 @@
 	</table>
 
 
-<h2>Categoría Felino</h2>
+<h2>CategorÃ­a Felino</h2>
 	<table id="animalesTable" class="table table-striped">
 		<thead>
 			<tr>
@@ -69,7 +70,7 @@
 				<th style="width: 50%;">Licencia Adopcion</th>
 				<th style="width: 50%;">Seguro</th>
 				<th style="width: 50%;">Adoptado</th>
-				<th style="width: 50%;">Tamaño</th>
+				<th style="width: 50%;">TamaÃ±o</th>
 				<th style="width: 50%;">Edad</th>
 				<th style="width: 50%;">Sexo</th>
 				<th style="width: 50%;">Categoria</th>
@@ -80,8 +81,8 @@
 			<c:forEach items="${animalesFelino}" var="felino">
 				<tr>
 					<td><a href="<c:url value="/animales/show/${felino.id}"/>"
-						class="btn btn-primary btn-block">${felino.nombre }</a></td>
-					<td><img src="${felino.foto }" alt="Foto de ${felino.nombre }"
+						class="btn btn-primary btn-block"><c:out value="${felino.nombre }"/></a></td>
+					<td><img src="<c:out value="${felino.foto }"/>" alt="Foto de <c:out value="${felino.nombre }"/>"
 						class="foto"></td>
 					<td><a
 						href="<c:url value="/centros/show/${felino.centroDeAdopcion.id}"/>"
@@ -105,7 +106,7 @@
 		</tbody>
 	</table>
 	
-	<h2>Categoría Reptil</h2>
+	<h2>CategorÃ­a Reptil</h2>
 	<table id="animalesTable" class="table table-striped">
 		<thead>
 			<tr>
@@ -118,7 +119,7 @@
 				<th style="width: 50%;">Licencia Adopcion</th>
 				<th style="width: 50%;">Seguro</th>
 				<th style="width: 50%;">Adoptado</th>
-				<th style="width: 50%;">Tamaño</th>
+				<th style="width: 50%;">TamaÃ±o</th>
 				<th style="width: 50%;">Edad</th>
 				<th style="width: 50%;">Sexo</th>
 				<th style="width: 50%;">Categoria</th>
@@ -129,8 +130,8 @@
 			<c:forEach items="${animalesReptil}" var="reptil">
 				<tr>
 					<td><a href="<c:url value="/animales/show/${reptil.id}"/>"
-						class="btn btn-primary btn-block">${reptil.nombre }</a></td>
-					<td><img src="${reptil.foto }" alt="Foto de ${reptil.nombre }"
+						class="btn btn-primary btn-block"><c:out value="${reptil.nombre }"/></a></td>
+					<td><img src="<c:out value="${reptil.foto }"/>" alt="Foto de <c:out value="${reptil.nombre }"/>"
 						class="foto"></td>
 					<td><a
 						href="<c:url value="/centros/show/${reptil.centroDeAdopcion.id}"/>"
@@ -154,7 +155,7 @@
 		</tbody>
 	</table>
 	
-	<h2>Categoría Ave</h2>
+	<h2>CategorÃ­a Ave</h2>
 	<table id="animalesTable" class="table table-striped">
 		<thead>
 			<tr>
@@ -167,7 +168,7 @@
 				<th style="width: 50%;">Licencia Adopcion</th>
 				<th style="width: 50%;">Seguro</th>
 				<th style="width: 50%;">Adoptado</th>
-				<th style="width: 50%;">Tamaño</th>
+				<th style="width: 50%;">TamaÃ±o</th>
 				<th style="width: 50%;">Edad</th>
 				<th style="width: 50%;">Sexo</th>
 				<th style="width: 50%;">Categoria</th>
@@ -178,8 +179,8 @@
 			<c:forEach items="${animalesAve}" var="ave">
 				<tr>
 					<td><a href="<c:url value="/animales/show/${ave.id}"/>"
-						class="btn btn-primary btn-block">${ave.nombre }</a></td>
-					<td><img src="${ave.foto }" alt="Foto de ${ave.nombre }"
+						class="btn btn-primary btn-block"><c:out value="${ave.nombre }"/></a></td>
+					<td><img src="<c:out value="${ave.foto }"/>" alt="Foto de <c:out value="${ave.nombre }"/>"
 						class="foto"></td>
 					<td><a
 						href="<c:url value="/centros/show/${ave.centroDeAdopcion.id}"/>"
