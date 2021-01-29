@@ -131,7 +131,8 @@ public class DuenoAdoptivoController {
 			return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 		} else {
 			duenoAdoptivo.setId(duenoAdoptivoId);
-			Optional<DuenoAdoptivo> aux = duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
+			// Optional<DuenoAdoptivo> aux =
+			// duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
 			// duenoAdoptivo.getUser().setAuthorities(aux.get().getUser().getAuthorities());
 			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
 			return "redirect:/duenosAdoptivos/{duenoAdoptivoId}";

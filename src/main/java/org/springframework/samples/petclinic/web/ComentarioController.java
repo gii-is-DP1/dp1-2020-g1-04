@@ -22,26 +22,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/comentario")
 public class ComentarioController {
-	
+
 	private static final String VIEWS_COMENTARIO_CREATE_OR_UPDATE_FORM = "comentario/createOrUpdateComentarioForm";
-	
+
 	private ComentarioService comentarioService;
 	private VisitaService visitaService;
-	
+
 	@Autowired
 	public ComentarioController(ComentarioService comentarioService, VisitaService visitaService) {
-		this.comentarioService=comentarioService;
-		this.visitaService=visitaService;
+		this.comentarioService = comentarioService;
+		this.visitaService = visitaService;
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	@GetMapping(value = "/new/{visitaId}")
-	public String crearComentarioDueno(Map<String, Object> model,@PathVariable("visitaId") int visitaId) {
-		Comentario comentario =new Comentario();
+	public String crearComentarioDueno(Map<String, Object> model, @PathVariable("visitaId") int visitaId) {
+		Comentario comentario = new Comentario();
 		Visita visita = visitaService.findVisitaById(visitaId);
 		comentario.setVisita(visita);
 		LocalDateTime now = LocalDateTime.now();
@@ -51,20 +51,19 @@ public class ComentarioController {
 	}
 
 	@PostMapping(value = "/new/{visitaId}")
-	public String processCreationForm(@Valid Comentario comentario, BindingResult result,@PathVariable("visitaId") int visitaId) {
+	public String processCreationForm(@Valid Comentario comentario, BindingResult result,
+			@PathVariable("visitaId") int visitaId) {
 		if (result.hasErrors()) {
 			return VIEWS_COMENTARIO_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			Visita visita = visitaService.findVisitaById(visitaId);
 			comentario.setVisita(visita);
 			LocalDateTime now = LocalDateTime.now();
 			comentario.setMomento(now);
 			this.comentarioService.saveComentario(comentario);
-			
+
 			return "redirect:/visitas/show/" + visita.getId();
 		}
 	}
-
 
 }

@@ -94,7 +94,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/animales/listaAsignados").hasAuthority("cuidador")
 				.antMatchers("/cuidadores/show").hasAuthority("cuidador")
 				.antMatchers("/eventos/cuidador/misEventos").hasAuthority("cuidador")
-				
+				.antMatchers("/enfermedad/cuidador").hasAuthority("cuidador")
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()

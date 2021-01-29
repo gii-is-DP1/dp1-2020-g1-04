@@ -86,10 +86,10 @@ public class CuidadorController {
 		// return mav;
 //	}
 	}
-	
+
 	@GetMapping("/cuidadores/show")
 	public ModelAndView showCuidadorPrincipal() {
-		
+
 		ModelAndView mav = new ModelAndView("cuidadores/detallesCuidador");
 		Cuidador cuidador = cuidadorService.findCuidadorByPrincipal();
 		mav.addObject(cuidador);

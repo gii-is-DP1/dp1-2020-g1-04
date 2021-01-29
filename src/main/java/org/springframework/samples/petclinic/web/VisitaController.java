@@ -36,20 +36,21 @@ public class VisitaController {
 	@GetMapping(value = "/misVisitas")
 	public String listadoVisistasByPrincipal(ModelMap model) {
 		Collection<Visita> visitas = visitaService.findVisitasByPrincipalProximas();
-		Collection<Visita> visitasPasadas=visitaService.findVisitasByPrincipalPasadas();
+		Collection<Visita> visitasPasadas = visitaService.findVisitasByPrincipalPasadas();
 		model.addAttribute("visitas", visitas);
-		model.addAttribute("visitasPasadas",visitasPasadas);
+		model.addAttribute("visitasPasadas", visitasPasadas);
 		return VISITAS_LISTING;
 	}
+
 	@GetMapping(value = "/cuidador/misVisitas")
 	public String listadoVisistasByPrincipalCuidador(ModelMap model) {
 		Collection<Visita> visitas = visitaService.findVisitasByCuidadorPrincipalProximas();
-		Collection<Visita> visitasPasadas=visitaService.findVisitasByCuidadorPrincipalPasadas();
+		Collection<Visita> visitasPasadas = visitaService.findVisitasByCuidadorPrincipalPasadas();
 		model.addAttribute("visitas", visitas);
-		model.addAttribute("visitasPasadas",visitasPasadas);
+		model.addAttribute("visitasPasadas", visitasPasadas);
 		return VISITAS_LISTING;
 	}
-	
+
 	@GetMapping(value = "/show/{visitaId}")
 	public String DetalleVisita(ModelMap model, @PathVariable("visitaId") int visitaId) {
 		Visita visita = visitaService.findVisitaById(visitaId);
@@ -58,5 +59,4 @@ public class VisitaController {
 		return VISITAS_DETALLES;
 	}
 
-	
 }

@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/centros")
 public class CentroDeAdopcionController {
 
-	@Autowired
-	CentroDeAdopcionService centroDeAdopcionService;
+	private final CentroDeAdopcionService centroDeAdopcionService;
 
+	@Autowired
+	public CentroDeAdopcionController(CentroDeAdopcionService centroDeAdopcionService) {
+		this.centroDeAdopcionService= centroDeAdopcionService;
+	}
 	// ESTO se haría si queremos mostrar 1 solo centro
 	/*
 	 * @GetMapping(value = "/find") public String initFindForm(Map<String, Object>

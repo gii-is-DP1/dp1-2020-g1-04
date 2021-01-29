@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AdopcionService {
 
-	private AdopcionRepository adopcionRepository;
+	private final AdopcionRepository adopcionRepository;
 
 	private final DuenoAdoptivoService duenoAdoptivoService;
 
@@ -70,9 +70,9 @@ public class AdopcionService {
 		Collection<Adopcion> result = adopcionRepository.findDenegadasByDuenoAdoptivo(dueno.getId());
 		return result;
 	}
-	
-	public Collection<Adopcion>findAllSolicitadas(){
-		Collection<Adopcion> result=adopcionRepository.findAllSolicitadas();
+
+	public Collection<Adopcion> findAllSolicitadas() {
+		Collection<Adopcion> result = adopcionRepository.findAllSolicitadas();
 		return result;
 	}
 

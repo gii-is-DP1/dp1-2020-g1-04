@@ -13,8 +13,43 @@
 
 	<sec:authorize access="hasAnyAuthority('director')">
 		<h2>
-			Actualizar Estado Adopcion
-		</h2>
+			Actualizar Estado Adopcion de ${adopcion.animal.nombre}</h2>
+	<a href="/animales/show/${adopcion.animal.id }"><img
+		src="${adopcion.animal.foto}" alt="${adopcion.animal.nombre}"
+		class="foto"></a>
+		
+		<table class="table table-striped">
+		<tr>
+			<th>Unidad Familiar</th>
+			<td><b><c:out value="${adopcion.unidadFamiliar}" /></b></td>
+		</tr>
+		<tr>
+			<th>Mayores de Edad</th>
+			<td><b><c:out value="${adopcion.mayoresDeEdad}" /></b></td>
+		</tr>
+		<tr>
+			<th>Permiso Comunidad</th>
+			<td><b><c:out value="${adopcion.permisoComunidadVecinos}" /></b></td>
+		</tr>
+		<tr>
+			<th>¿Tiene en casa otros animales?</th>
+			<td><b><c:out value="${adopcion.otrosAnimales}" /></b></td>
+		</tr>
+		<tr>
+			<th>¿Por qué quiere adoptar?</th>
+			<td><b><c:out value="${adopcion.motivo}" /></b></td>
+		</tr>
+		<tr>
+			<th>Animal</th>
+			<td><b><a href="/animal/show/${adopcion.animal.id }">${adopcion.animal.nombre}</a></b></td>
+		</tr>
+
+			<tr>
+				<th>Dueño Adoptivo</th>
+				<td><b><a href="/duenosAdoptivos/${adopcion.dueno.id }">${adopcion.dueno.nombre}</a></b></td>
+			</tr>
+		</table>
+		
 		<form:form modelAttribute="adopcion" class="form-horizontal"
 			id="edit-adopcion-form">
 			<form:hidden path="mayoresDeEdad"/>
