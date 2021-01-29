@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -11,7 +12,7 @@
 
 
     <h2>${animal.nombre} al detalle</h2>
-	<a href="/animales/show/${animal.id }"><img src="${animal.foto}" alt="${animal.nombre}" class="foto"></a>
+	<a href="/animales/show/<c:out value="${animal.id }"/>"><img src="<c:out value="${animal.foto}"/>" alt="<c:out value="${animal.nombre}"/>" class="foto"></a>
 	
     <table class="table table-striped">
         <tr>
@@ -103,7 +104,7 @@
         </tr>
         
          <tr>
-       <th>Tamaño</th>
+       <th>TamaÃ±o</th>
             		<td><b><c:out value="${animal.tamanyo}"/></b></td>
         </tr>
         
@@ -150,7 +151,7 @@
   <spring:url value="/adopcion/new/{animalId}" var="editUrl">
         <spring:param name="animalId" value="${animal.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Solicitar su adopción</a>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Solicitar su adopciÃ³n</a>
  </c:if>
  </sec:authorize>
 	
@@ -211,7 +212,7 @@
 	 <spring:url value="/enfermedad/nuevo/{animalId}" var="editUrl">
         <spring:param name="animalId" value="${animal.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Añadir Enfermedad</a>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">AÃ±adir Enfermedad</a>
 	</th>
 	</tr>
 	</sec:authorize>

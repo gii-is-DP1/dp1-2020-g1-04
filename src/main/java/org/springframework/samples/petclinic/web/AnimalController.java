@@ -210,5 +210,11 @@ public class AnimalController {
 		model.addAttribute("animalesAve", animalesAve);
 		return ANIMAL_LISTING_CATEGORIA;
 	}
+	
+	@GetMapping(value = "listAnimales/{centroId}")
+	public String listAnimalesDisponibles(@PathVariable("centroId") int centroId,ModelMap model) {
+		model.addAttribute("animales", animalService.findAllNoAdoptedByCentro(centroId));
+		return ANIMAL_LISTING;
+	}
 
 }

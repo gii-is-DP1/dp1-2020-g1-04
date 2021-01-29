@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,13 +14,13 @@
         <tr>
             <th style="width: 20%;">Unidad Familiar</th>
             <th style="width: 40%;">Mayores Edad</th>
-            <th style="width: 40%;">Requisitos Le韉os</th>           
+            <th style="width: 40%;">Requisitos Le铆dos</th>           
             <th style="width: 40%;">Permiso Comunidad</th>
-            <th style="width: 40%;">縊tros animales?</th>
-            <th style="width: 40%;">Motivo adopci髇</th>
+            <th style="width: 40%;">驴Otros animales?</th>
+            <th style="width: 40%;">Motivo adopci贸n</th>
             <th style="width: 40%;">Estado</th> 
-            <th style="width: 40%;">Motivo de la decisi髇</th>
-            <th style="width: 40%;">Fecha de la decisi髇</th>
+            <th style="width: 40%;">Motivo de la decisi贸n</th>
+            <th style="width: 40%;">Fecha de la decisi贸n</th>
             <th style="width: 40%;">Cuidador</th>
             <th style="width: 40%;">Animal</th>
 
@@ -72,13 +73,13 @@
         <tr>
             <th style="width: 20%;">Unidad Familiar</th>
             <th style="width: 40%;">Mayores Edad</th>
-            <th style="width: 40%;">Requisitos Le韉os</th>           
+            <th style="width: 40%;">Requisitos Le铆dos</th>           
             <th style="width: 40%;">Permiso Comunidad</th>
-            <th style="width: 40%;">縊tros animales?</th>
-            <th style="width: 40%;">Motivo adopci髇</th>
+            <th style="width: 40%;">驴Otros animales?</th>
+            <th style="width: 40%;">Motivo adopci贸n</th>
             <th style="width: 40%;">Estado</th> 
-            <th style="width: 40%;">Motivo de la decisi髇</th>
-            <th style="width: 40%;">Fecha de la decisi髇</th>
+            <th style="width: 40%;">Motivo de la decisi贸n</th>
+            <th style="width: 40%;">Fecha de la decisi贸n</th>
             <th style="width: 40%;">Cuidador</th>
             <th style="width: 40%;">Animal</th>
 
@@ -131,13 +132,13 @@
         <tr>
             <th style="width: 20%;">Unidad Familiar</th>
             <th style="width: 40%;">Mayores Edad</th>
-            <th style="width: 40%;">Requisitos Le韉os</th>           
+            <th style="width: 40%;">Requisitos Le铆dos</th>           
             <th style="width: 40%;">Permiso Comunidad</th>
-            <th style="width: 40%;">縊tros animales?</th>
-            <th style="width: 40%;">Motivo adopci髇</th>
+            <th style="width: 40%;">驴Otros animales?</th>
+            <th style="width: 40%;">Motivo adopci贸n</th>
             <th style="width: 40%;">Estado</th> 
-            <th style="width: 40%;">Motivo de la decisi髇</th>
-            <th style="width: 40%;">Fecha de la decisi髇</th>
+            <th style="width: 40%;">Motivo de la decisi贸n</th>
+            <th style="width: 40%;">Fecha de la decisi贸n</th>
             <th style="width: 40%;">Cuidador</th>
             <th style="width: 40%;">Animal</th>
 

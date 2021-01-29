@@ -13,9 +13,9 @@
 
 	<sec:authorize access="hasAnyAuthority('director')">
 		<h2>
-			Actualizar Estado Adopcion de ${adopcion.animal.nombre}</h2>
-	<a href="/animales/show/${adopcion.animal.id }"><img
-		src="${adopcion.animal.foto}" alt="${adopcion.animal.nombre}"
+			Actualizar Estado Adopcion de <c:out value="${adopcion.animal.nombre}"></c:out></h2>
+	<a href="/animales/show/<c:out value="${adopcion.animal.id }"></c:out>"><img
+		src="<c:out value="${adopcion.animal.foto}"></c:out>" alt="<c:out value="${adopcion.animal.nombre}"></c:out>"
 		class="foto"></a>
 		
 		<table class="table table-striped">
@@ -41,12 +41,12 @@
 		</tr>
 		<tr>
 			<th>Animal</th>
-			<td><b><a href="/animal/show/${adopcion.animal.id }">${adopcion.animal.nombre}</a></b></td>
+			<td><b><a href="/animal/show/<c:out value="${adopcion.animal.id }" />"><c:out value="${adopcion.animal.nombre}" /></a></b></td>
 		</tr>
 
 			<tr>
 				<th>Dueño Adoptivo</th>
-				<td><b><a href="/duenosAdoptivos/${adopcion.dueno.id }">${adopcion.dueno.nombre}</a></b></td>
+				<td><b><a href="/duenosAdoptivos/<c:out value="${adopcion.dueno.id }" />"><c:out value="${adopcion.dueno.nombre}" /></a></b></td>
 			</tr>
 		</table>
 		
@@ -63,7 +63,7 @@
 							<c:if test="${item == adopcion.estado}">
            			 selected
 								</c:if>
-							>${item}</option>
+							><c:out value="${item}"/></option>
 						</c:forEach>
 					</select>
 				</div>

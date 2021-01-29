@@ -84,7 +84,7 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.peligrosidad.grado}">
            			 selected
-           			 </c:if>>${item}</option>
+           			 </c:if>><c:out value="${item}"/></option>
          		  </c:forEach>
          		
       		  </select>
@@ -136,7 +136,7 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.atencion.atencion}">
            			 selected
-           			 </c:if>>${item}</option>
+           			 </c:if>><c:out value="${item}"/></option>
          		  </c:forEach>
          		
       		  </select>
@@ -152,7 +152,7 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.atencion.dificultad}">
            			 selected
-           			 </c:if>>${item}</option>
+           			 </c:if>><c:out value="${item}"/></option>
          		  </c:forEach>
          		
       		  </select>
