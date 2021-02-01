@@ -54,53 +54,48 @@ public class DuenoAdoptivo extends Person {
 	@Column(name = "dni")
 	@NotEmpty
 	private String dni;
-	
+
 	/*
-	//
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
-	private User user;
-	//
-	*/
-	
-	//Relacion DuenoAdoptivo-Adopcion
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="dueno")
-	private Collection<Adopcion> adopciones ;
-	
-	//Relación DuenoAdoptivo-Visita
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="dueno")
+	 * //
+	 * 
+	 * @OneToOne(cascade = CascadeType.ALL)
+	 * 
+	 * @JoinColumn(name = "username", referencedColumnName = "username") private
+	 * User user; //
+	 */
+
+	// Relacion DuenoAdoptivo-Adopcion
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
+	private Collection<Adopcion> adopciones;
+
+	// Relación DuenoAdoptivo-Visita
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
 	private Collection<Visita> vistitas;
-	
-	//Relacion DuenoAdoptivo-Evento
+
+	// Relacion DuenoAdoptivo-Evento
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "duenos_eventos",
-				joinColumns = @JoinColumn(name = "dueno_id"),
-				inverseJoinColumns = @JoinColumn(name = "evento_id"))
+	@JoinTable(name = "duenos_eventos", joinColumns = @JoinColumn(name = "dueno_id"), inverseJoinColumns = @JoinColumn(name = "evento_id"))
 	private Set<Evento> eventos;
-	
-	
-	//getters and setters
-	
-	
-	public Collection<Adopcion> getAdopciones(){
+
+	// getters and setters
+
+	public Collection<Adopcion> getAdopciones() {
 		return adopciones;
 	}
-	
+
 	public void setAdopciones(Collection<Adopcion> adopciones) {
 		this.adopciones = adopciones;
 	}
+
 	public String getDireccion() {
 		return this.direccion;
 	}
-/*
-	public User getUser() {
-		return user;
-	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-*/
+	/*
+	 * public User getUser() { return user; }
+	 * 
+	 * public void setUser(User user) { this.user = user; }
+	 */
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
@@ -113,15 +108,13 @@ public class DuenoAdoptivo extends Person {
 		this.dni = dni;
 	}
 
-	
-
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
 
-				.append("id", this.getId()).append("new", this.isNew()).append("apellidos", this.getApellidos())
-				.append("nombre", this.getNombre()).append("direccion", this.direccion).append("dni", this.dni)
-				.append("",this.getUser().getAuthorities()).toString();
+				.append("id", this.getId()).append("new", this.isNew()).append("nombre", this.getNombre())
+				.append("apellidos", this.getApellidos()).append("direccion", this.direccion).append("dni", this.dni)
+				.append("telefono", this.telefono).append("email", this.email).toString();
 	}
 
 	public Collection<Visita> getVistitas() {

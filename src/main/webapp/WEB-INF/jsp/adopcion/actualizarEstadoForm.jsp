@@ -13,8 +13,43 @@
 
 	<sec:authorize access="hasAnyAuthority('director')">
 		<h2>
-			Actualizar Estado Adopcion
-		</h2>
+			Actualizar Estado Adopcion de <c:out value="${adopcion.animal.nombre}"></c:out></h2>
+	<a href="/animales/show/<c:out value="${adopcion.animal.id }"></c:out>"><img
+		src="<c:out value="${adopcion.animal.foto}"></c:out>" alt="<c:out value="${adopcion.animal.nombre}"></c:out>"
+		class="foto"></a>
+		
+		<table class="table table-striped">
+		<tr>
+			<th>Unidad Familiar</th>
+			<td><b><c:out value="${adopcion.unidadFamiliar}" /></b></td>
+		</tr>
+		<tr>
+			<th>Mayores de Edad</th>
+			<td><b><c:out value="${adopcion.mayoresDeEdad}" /></b></td>
+		</tr>
+		<tr>
+			<th>Permiso Comunidad</th>
+			<td><b><c:out value="${adopcion.permisoComunidadVecinos}" /></b></td>
+		</tr>
+		<tr>
+			<th>¿Tiene en casa otros animales?</th>
+			<td><b><c:out value="${adopcion.otrosAnimales}" /></b></td>
+		</tr>
+		<tr>
+			<th>¿Por qué quiere adoptar?</th>
+			<td><b><c:out value="${adopcion.motivo}" /></b></td>
+		</tr>
+		<tr>
+			<th>Animal</th>
+			<td><b><a href="/animal/show/<c:out value="${adopcion.animal.id }" />"><c:out value="${adopcion.animal.nombre}" /></a></b></td>
+		</tr>
+
+			<tr>
+				<th>Dueño Adoptivo</th>
+				<td><b><a href="/duenosAdoptivos/<c:out value="${adopcion.dueno.id }" />"><c:out value="${adopcion.dueno.nombre}" /></a></b></td>
+			</tr>
+		</table>
+		
 		<form:form modelAttribute="adopcion" class="form-horizontal"
 			id="edit-adopcion-form">
 			<form:hidden path="mayoresDeEdad"/>
@@ -28,7 +63,7 @@
 							<c:if test="${item == adopcion.estado}">
            			 selected
 								</c:if>
-							>${item}</option>
+							><c:out value="${item}"/></option>
 						</c:forEach>
 					</select>
 				</div>

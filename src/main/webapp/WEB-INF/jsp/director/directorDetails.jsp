@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -23,7 +24,7 @@
             <td><c:out value="${director.dni}"/></td>
         </tr>
         <tr>
-            <th>Teléfono</th>
+            <th>TelÃ©fono</th>
             <td><c:out value="${director.telefono}"/></td>
         </tr>
         <tr>
@@ -45,7 +46,7 @@
     <spring:url value="{directorId}/listCentros" var="listCentros">
         <spring:param name="directorId" value="${director.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(listUrl)}" class="btn btn-default">Lista Centros Adopción</a>
+    <a href="${fn:escapeXml(listUrl)}" class="btn btn-default">Lista Centros AdopciÃ³n</a>
 	</c:if>
 
     <br/>

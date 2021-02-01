@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -29,6 +30,18 @@ public class EnfermedadService {
 		Optional<Enfermedad> result;
 		result=enfermedadRepository.findEnfermedadById(enfermedadId);
 		return result;
+	}
+
+	public Collection<Enfermedad> findAllEnfermedadByAnimalId(int animalId) {
+		Collection <Enfermedad> enfermedades;
+		enfermedades=enfermedadRepository.findAllEnfermedadeByAnimalId(animalId);
+		return enfermedades;
+	}
+	
+	public Collection<Enfermedad> findAllEnfermedadAnimalByCuidadorId(int cuidadorId) {
+		Collection <Enfermedad> enfermedades;
+		enfermedades=enfermedadRepository.findAllEnfermedadeAnimalByCuidador(cuidadorId);
+		return enfermedades;
 	}
 
 }

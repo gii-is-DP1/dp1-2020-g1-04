@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -19,7 +20,7 @@
 				<th style="width: 50%;">Licencia Adopcion</th>
 				<th style="width: 50%;">Seguro</th>
 				<th style="width: 50%;">Adoptado</th>
-				<th style="width: 50%;">Tamaño</th>
+				<th style="width: 50%;">TamaÃ±o</th>
 				<th style="width: 50%;">Edad</th>
 				<th style="width: 50%;">Sexo</th>
 				<th style="width: 50%;">Categoria</th>
@@ -30,8 +31,8 @@
 			<c:forEach items="${animales}" var="animal">
 				<tr>
 					<td><a href="<c:url value="/animales/show/${animal.id}"/>"
-						class="btn btn-primary btn-block">${animal.nombre }</a></td>
-					<td><img src="${animal.foto }" alt="Foto de ${animal.nombre }"
+						class="btn btn-primary btn-block"><c:out value="${animal.nombre }"/></a></td>
+					<td><img src="<c:out value="${animal.foto }"/>" alt="Foto de <c:out value="${animal.nombre }"/>"
 						class="foto"></td>
 					<td><a
 						href="<c:url value="/centros/show/${animal.centroDeAdopcion.id}"/>"

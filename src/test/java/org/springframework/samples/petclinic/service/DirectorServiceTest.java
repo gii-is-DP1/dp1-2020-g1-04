@@ -37,7 +37,7 @@ public class DirectorServiceTest {
 	@Mock
 	private DirectorRepository directorRepository;
 	
-	@MockBean
+	@Mock
 	private UserService userService;
 //
 //	@BeforeEach
@@ -45,25 +45,25 @@ public class DirectorServiceTest {
 //	     directorService = new DirectorService(directorRepository);
 //	}
 	
-//	private Director directorNuevo() {
-//		Director director = new Director();
-//		director.setNombre("Juan");
-//		director.setApellidos("perez");
-//		director.setTelefono("666777888");
-//		director.setEmail("fsfd@dfs.com");
-//		director.setId(13);
-//		User user = new User();
-//		user.setUsername("Sam");
-//		user.setPassword("supersecretpassword");
-//		user.setEnabled(true);
-//		Authorities authorities = new Authorities();
-//		authorities.setAuthority("director");
-//		Set<Authorities> a = new HashSet<Authorities>();
-//		a.add(authorities);
-//		user.setAuthorities(a);
-//		director.setUser(user);
-//		return director;
-//	}
+	private Director directorNuevo() {
+		Director director = new Director();
+		director.setNombre("Juan");
+		director.setApellidos("perez");
+		director.setTelefono("666777888");
+		director.setEmail("fsfd@dfs.com");
+		director.setId(13);
+		User user = new User();
+		user.setUsername("Sam");
+		user.setPassword("supersecretpassword");
+		user.setEnabled(true);
+		Authorities authorities = new Authorities();
+		authorities.setAuthority("director");
+		Set<Authorities> a = new HashSet<Authorities>();
+		a.add(authorities);
+		user.setAuthorities(a);
+		director.setUser(user);
+		return director;
+	}
 	
 //	private BDDMyOngoingStubbing<Director> directorMock(){ 
 //		
@@ -80,11 +80,12 @@ public class DirectorServiceTest {
 	//Añadir Director
 	@Test
 	void addDirectorTest() {
-		Director dummy = mock(Director.class);
-		List<Director> directores = new ArrayList<Director>();
+		Director d= directorNuevo();
 		
-		directores.add(dummy);
-		assertEquals(1, directores.size());
+		directorService.saveDirector(d);
+		
+		
+		assertThat(directorService.findDirectorById(13).getId()).isEqualTo(d.getId());
 		
 	}
 	
@@ -101,12 +102,10 @@ public class DirectorServiceTest {
 	@Test
 	void findDirectorByIdTest() {
 		Director d = mock(Director.class);
-		d.setId(1);
-		d.setNombre("Juan");
 		
 		when(directorRepository.findById(1)).thenReturn(d);
 		
-		assertThat(d.getNombre()).isEqualTo("Juan");
+		assertThat(directorRepository.findById(d.getId())).isEqualTo(d.getId());
 	}
 	
 	@Test

@@ -32,5 +32,8 @@ public interface EventoRepository extends Repository<Evento, Integer>{
 
 	void delete(Evento evento)throws DataAccessException;
 
+	@Query("SELECT evento FROM Evento evento join evento.cuidadores c WHERE c.id =:cuidadorId")
+	public Collection<Evento> findEventosByCuidador(@Param("cuidadorId") int cuidadorId);
+
 
 }

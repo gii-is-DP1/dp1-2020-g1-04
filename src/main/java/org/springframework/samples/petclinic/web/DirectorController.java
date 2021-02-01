@@ -22,38 +22,36 @@ public class DirectorController {
 	private static final String VIEWS_DIRECTOR_CREATE_OR_UPDATE_FORM = "director/createOrUpdateOwnerForm";
 
 	private final DirectorService directorService;
-	
+
 	@Autowired
 	public DirectorController(DirectorService directorService) {
 		this.directorService = directorService;
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	@GetMapping(value = "/director/new")
 	public String initCreationForm(Map<String, Object> model) {
 		Director director = new Director();
 		model.put("director", director);
 		return VIEWS_DIRECTOR_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/director/new")
 	public String processCreationForm(@Valid Director director, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_DIRECTOR_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			//creating director, user and authorities
+		} else {
+			// creating director, user and authorities
 			this.directorService.saveDirector(director);
-			
+
 			return "redirect:/owners/" + director.getId();
 		}
 	}
-	
-	
+
 	@GetMapping("/director/{directorId}")
 	public ModelAndView showDirector(@PathVariable("directorId") int directorId) {
 		ModelAndView mav = new ModelAndView("director/directorDetails");

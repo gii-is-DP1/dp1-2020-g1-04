@@ -40,6 +40,8 @@
 				id="edit-duenoAdoptivo-form">
 			
 			  <div class="form-group">
+       	<form:hidden path="numeroRegistro"/>	
+       	<form:hidden path="adoptado"/>
         <label class="col-sm-2 control-label">Tipo</label>
 
         <div class="col-sm-10 col-sm-offset-2">
@@ -82,7 +84,7 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.peligrosidad.grado}">
            			 selected
-           			 </c:if>>${item}</option>
+           			 </c:if>><c:out value="${item}"/></option>
          		  </c:forEach>
          		
       		  </select>
@@ -134,7 +136,7 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.atencion.atencion}">
            			 selected
-           			 </c:if>>${item}</option>
+           			 </c:if>><c:out value="${item}"/></option>
          		  </c:forEach>
          		
       		  </select>
@@ -150,7 +152,7 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.atencion.dificultad}">
            			 selected
-           			 </c:if>>${item}</option>
+           			 </c:if>><c:out value="${item}"/></option>
          		  </c:forEach>
          		
       		  </select>
@@ -160,7 +162,7 @@
 				<petclinic:inputField label="Fecha de nacimiento"
 					name="fechaNacimiento" />
 				<petclinic:inputField label="Chip" name="chip" />
-				<!-- <petclinic:inputField label="Nº Registro" name="numeroRegistro" /> -->
+				<!-- <petclinic:inputField label="Nº Registro" name="numeroRegistro" /> 
 					<div class="form-group">
           	<label class="col-sm-2 control-label">Adoptado</label> 
            <div class="col-sm-10">
@@ -177,6 +179,7 @@
       		  </select>
        </div>
        </div>
+			-->
 				<div class="form-group">
           	<label class="col-sm-2 control-label">Tamaño</label> 
            <div class="col-sm-10">

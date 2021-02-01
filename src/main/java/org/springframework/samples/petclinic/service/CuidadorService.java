@@ -15,17 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CuidadorService {
 
-	private CuidadorRepository cuidadorRepository;
+	private final CuidadorRepository cuidadorRepository;
+
+	private final UserService userService;
+
+	private final AuthoritiesService authoritiesService;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private AuthoritiesService authoritiesService;
-
-	@Autowired
-	public CuidadorService(CuidadorRepository cuidadorRepository) {
+	public CuidadorService(CuidadorRepository cuidadorRepository, UserService userService,
+			AuthoritiesService authoritiesService) {
 		this.cuidadorRepository = cuidadorRepository;
+		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}
 
 	@Transactional
@@ -64,7 +65,7 @@ public class CuidadorService {
 		result = cuidadorRepository.findByUserName(cuidadorUserName);
 		return result;
 	}
-	
+
 	@Transactional
 	public Cuidador findCuidadorByPrincipal() {
 		Cuidador result;

@@ -111,10 +111,10 @@ public class EventoController {
 
 	@GetMapping("/edit/{eventoId}")
 	public String editEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
-		Optional<Evento> evento = eventoService.findEventoById(eventoId); 
+		Optional<Evento> evento = eventoService.findEventoById(eventoId);
 		if (evento.isPresent()) {
 			model.addAttribute("evento", evento.get());
-			model.addAttribute("duenos",duenoAdoptivoService.findAllDuenosAdoptivos() );
+			model.addAttribute("duenos", duenoAdoptivoService.findAllDuenosAdoptivos());
 			model.addAttribute("cuidadores", cuidadorService.findAllCuidadores());
 			return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -122,12 +122,12 @@ public class EventoController {
 			return listadoEventosDirector(model);
 		}
 	}
-	
+
 	@PostMapping("/edit/{eventoId}")
-	public ModelAndView editEvento(@PathVariable("eventoId") int eventoId, @Valid Evento modifiedEvento, 
+	public ModelAndView editEvento(@PathVariable("eventoId") int eventoId, @Valid Evento modifiedEvento,
 			BindingResult binding, ModelMap model) {
 		ModelAndView mav;
-		if(binding.hasErrors()) {
+		if (binding.hasErrors()) {
 			mav = new ModelAndView(VIEWS_EVENTO_CREATE_OR_UPDATE_FORM);
 			return mav;
 		} else {
@@ -141,6 +141,7 @@ public class EventoController {
 			return mav;
 		}
 	}
+
 	// Quita un cuidador x al evento y
 	@GetMapping(value = "/{eventoId}/quitarCuidador/{cuidadorId}")
 	public String quitarCuidadorEvento(@PathVariable("eventoId") int eventoId,
@@ -196,6 +197,13 @@ public class EventoController {
 	@GetMapping(value = "/misEventos")
 	public String listadoEventosDueno(ModelMap model) {
 		Collection<Evento> eventos = eventoService.findEventosByDueno();
+		model.addAttribute("eventos", eventos);
+		return EVENTOS_LISTING;
+	}
+
+	@GetMapping(value = "/cuidador/misEventos")
+	public String listadoEventosCuidador(ModelMap model) {
+		Collection<Evento> eventos = eventoService.findEventosByCuidador();
 		model.addAttribute("eventos", eventos);
 		return EVENTOS_LISTING;
 	}
@@ -256,9 +264,9 @@ public class EventoController {
 		mav = new ModelAndView("redirect:/eventos/show/" + eventoId);
 		return mav;
 	}
-	
-	//Eliminar evento
-	@GetMapping(value="/delete/{eventoId}")
+
+	// Eliminar evento
+	@GetMapping(value = "/delete/{eventoId}")
 	public ModelAndView eliminarEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
 		ModelAndView mav;
 		try {
@@ -275,11 +283,8 @@ public class EventoController {
 			return mav;
 
 		}
-		mav = new ModelAndView("redirect:/eventos/director/misEventos" );
+		mav = new ModelAndView("redirect:/eventos/director/misEventos");
 		return mav;
 	}
-	
-	
-
 
 }

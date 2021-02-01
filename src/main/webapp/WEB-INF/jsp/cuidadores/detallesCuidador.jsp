@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -24,10 +25,21 @@
             <td><c:out value="${cuidador.dni}"/></td>
         </tr>
         <tr>
-            <th>Tel�fono</th>
+            <th>Teléfono</th>
             <td><c:out value="${cuidador.telefono}"/></td>
         </tr>
         </sec:authorize>
+        <c:if test="${pageContext.request.userPrincipal.name == cuidador.user.username}">
+         <tr>
+            <th>DNI</th>
+            <td><c:out value="${cuidador.dni}"/></td>
+        </tr>
+        <tr>
+            <th>Teléfono</th>
+            <td><c:out value="${cuidador.telefono}"/></td>
+        </tr>
+        </c:if>
+        
         <tr>
             <th>Email</th>
             <td><c:out value="${cuidador.email}"/></td>
@@ -37,6 +49,7 @@
             <th>Centro De Adopcion</th>
             <td><c:out value="${cuidador.centroDeAdopcion.nombre}"/></td>
         </tr>
+        
         
         
     </table>

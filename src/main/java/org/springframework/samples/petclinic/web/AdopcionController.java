@@ -191,6 +191,9 @@ public class AdopcionController {
 			adopcion.setPermisoComunidadVecinos(aux.getPermisoComunidadVecinos());
 			adopcion.setUnidadFamiliar(aux.getUnidadFamiliar());
 			adopcion.setId(adopcionId);
+			if (!userService.principalAuthorityString().contains("director")) {
+				return "redirect: /403";
+			}
 			if (result.hasErrors()) {
 				return VIEWS_ADOPCION_ACTUALIZAR_ESTADO_FORM;
 			} else {

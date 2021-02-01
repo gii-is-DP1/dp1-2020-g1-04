@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
+import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CategoriaService;
@@ -32,20 +34,24 @@ import org.springframework.web.servlet.ModelAndView;
 public class AnimalController {
 
 	public static final String ANIMAL_LISTING = "animales/AnimalListing";
+	public static final String ANIMAL_LISTING_CATEGORIA = "animales/AnimalListingCategoria";
 	public static final String ANIMAL_FORM = "animales/createOrUpdateAnimal";
 
-	@Autowired
-	AnimalService animalService;
-	@Autowired
-	CuidadorService cuidadorService;
-	@Autowired
-	CentroDeAdopcionService centroDeAdopcionService;
-	@Autowired
+	private final AnimalService animalService;
+
+	private final CuidadorService cuidadorService;
+
+	private final CentroDeAdopcionService centroDeAdopcionService;
+
 	private final CategoriaService categoriaService;
 
-	public AnimalController(AnimalService animalService, CategoriaService categoriaService) {
+	@Autowired
+	public AnimalController(AnimalService animalService, CuidadorService cuidadorService,
+			CentroDeAdopcionService centroDeAdopcionService, CategoriaService categoriaService) {
 		this.animalService = animalService;
 		this.categoriaService = categoriaService;
+		this.centroDeAdopcionService = centroDeAdopcionService;
+		this.cuidadorService = cuidadorService;
 	}
 
 	@InitBinder
@@ -58,6 +64,7 @@ public class AnimalController {
 		model.addAttribute("animales", animalService.findAll());
 		return ANIMAL_LISTING;
 	}
+
 	@GetMapping(value = "")
 	public String listAnimalesDisponibles(ModelMap model) {
 		model.addAttribute("animales", animalService.findAllNoAdoptados());
@@ -70,13 +77,12 @@ public class AnimalController {
 		mav.addObject(this.animalService.findAnimalById(animalId).get());
 		return mav;
 	}
-		
 
 	@GetMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, ModelMap model) {
 		Optional<Animal> animal = animalService.findAnimalById(animalId);
 		if (animal.isPresent()) {
-			ArrayList <Integer> auxiliar=animalService.listaAuxiliar();
+			ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
 			model.put("auxiliar", auxiliar);
 			model.addAttribute("animal", animal.get());
 			model.addAttribute("tipos", Tipo.values());
@@ -99,11 +105,13 @@ public class AnimalController {
 			return mav;
 		} else {
 			Optional<Animal> animal = animalService.findAnimalById(animalId);
-			//Optional<Cuidador> c = cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
-			//CentroDeAdopcion cda = centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
-		//	modifiedAnimal.setId(animalId);
-			//modifiedAnimal.setCuidador(c.get());
-			//modifiedAnimal.setCentroDeAdopcion(cda);
+			// Optional<Cuidador> c =
+			// cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
+			// CentroDeAdopcion cda =
+			// centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
+			// modifiedAnimal.setId(animalId);
+			// modifiedAnimal.setCuidador(c.get());
+			// modifiedAnimal.setCentroDeAdopcion(cda);
 			modifiedAnimal.setNumeroRegistro(animal.get().getNumeroRegistro());
 			modifiedAnimal.setCategoria(animal.get().getCategoria());
 			modifiedAnimal.setFechaPrimeraIncorporacion(animal.get().getFechaPrimeraIncorporacion());
@@ -128,18 +136,18 @@ public class AnimalController {
 			return mav;
 		}
 	}
-	
+
 	@GetMapping("/nuevo/{categoriaId}")
 	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId, ModelMap model) {
-		ArrayList <Integer> auxiliar=animalService.listaAuxiliar();
-		Animal animal=new Animal();
-		LocalDate now=LocalDate.now();
-		Categoria categoria=categoriaService.findCategoriaById(categoriaId).get();
+		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
+		Animal animal = new Animal();
+		LocalDate now = LocalDate.now();
+		Categoria categoria = categoriaService.findCategoriaById(categoriaId).get();
 		animal.setCategoria(categoria);
 		animal.setAdoptado(false);
 		animal.setFechaPrimeraIncorporacion(now);
 		animal.setFechaUltimaIncorporacion(now);
-		String nRgistro=animalService.nuevoNRegistro(categoria.getTipo().toString());
+		String nRgistro = animalService.nuevoNRegistro(categoria.getTipo().toString());
 		animal.setNumeroRegistro(nRgistro);
 		model.put("auxiliar", auxiliar);
 		model.put("animal", animal);
@@ -149,12 +157,13 @@ public class AnimalController {
 	}
 
 	@PostMapping(value = "/nuevo/{categoriaId}")
-	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId,@Valid Animal animal, BindingResult result) throws AforoCentroCompletadoException {
-		Categoria categoria=categoriaService.findCategoriaById(categoriaId).get();
+	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId, @Valid Animal animal, BindingResult result)
+			throws AforoCentroCompletadoException {
+		Categoria categoria = categoriaService.findCategoriaById(categoriaId).get();
 		animal.setCategoria(categoria);
-		LocalDate now=LocalDate.now();
-		String nRgistro=animalService.nuevoNRegistro(categoria.getTipo().toString());
-		animal.setNumeroRegistro(nRgistro);
+		LocalDate now = LocalDate.now();
+		// String nRgistro=animalService.nuevoNRegistro(categoria.getTipo().toString());
+		// animal.setNumeroRegistro(nRgistro);
 		animal.setFechaPrimeraIncorporacion(now);
 		animal.setFechaUltimaIncorporacion(now);
 		if (result.hasErrors()) {
@@ -165,20 +174,47 @@ public class AnimalController {
 			return "redirect:/animales/show/" + animal.getId();
 		}
 	}
-	
-	@GetMapping("/reincorporar/{animalId}")
-	public String reincorporarAnimal(@PathVariable("animalId") int animalId, ModelMap model) throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
 
-		Optional<Animal> animal=animalService.findAnimalById(animalId);
+	@GetMapping("/reincorporar/{animalId}")
+	public String reincorporarAnimal(@PathVariable("animalId") int animalId, ModelMap model)
+			throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
+
+		Optional<Animal> animal = animalService.findAnimalById(animalId);
 		if (animal.isPresent()) {
 			animal.get().setAdoptado(false);
-			LocalDate now=LocalDate.now();
+			LocalDate now = LocalDate.now();
 			animal.get().setFechaUltimaIncorporacion(now);
 			animalService.comprobarRatioCuidador(animal.get());
 			return "redirect:/animales/show/" + animalId;
-		}else {
+		} else {
 			model.addAttribute("message", "No se encuentra el animal que quiere editar!");
 			return listAnimales(model);
+		}
 	}
+
+	@GetMapping(value = "/listaAsignados")
+	public String listAnimalesAsignados(ModelMap model) {
+		Cuidador principal = cuidadorService.findCuidadorByPrincipal();
+		int cuidadorId = principal.getId();
+		Collection<Animal> animalesCanino;
+		Collection<Animal> animalesFelino;
+		Collection<Animal> animalesReptil;
+		Collection<Animal> animalesAve;
+		animalesCanino = animalService.findAnimalAsignadoCanino(cuidadorId);
+		animalesFelino = animalService.findAnimalAsignadoFelino(cuidadorId);
+		animalesReptil = animalService.findAnimalAsignadoReptil(cuidadorId);
+		animalesAve = animalService.findAnimalAsignadoAve(cuidadorId);
+		model.addAttribute("animalesCanino", animalesCanino);
+		model.addAttribute("animalesFelino", animalesFelino);
+		model.addAttribute("animalesReptil", animalesReptil);
+		model.addAttribute("animalesAve", animalesAve);
+		return ANIMAL_LISTING_CATEGORIA;
 	}
+	
+	@GetMapping(value = "listAnimales/{centroId}")
+	public String listAnimalesDisponibles(@PathVariable("centroId") int centroId,ModelMap model) {
+		model.addAttribute("animales", animalService.findAllNoAdoptedByCentro(centroId));
+		return ANIMAL_LISTING;
 	}
+
+}

@@ -47,8 +47,6 @@ public class DuenoAdoptivoController {
 	private static final String VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM = "duenosAdoptivos/createOrUpdateduenoAdoptivoForm";
 
 	private final DuenoAdoptivoService duenoAdoptivoService;
-	
-	
 
 	@Autowired
 	public DuenoAdoptivoController(DuenoAdoptivoService duenoAdoptivoService) {
@@ -71,11 +69,10 @@ public class DuenoAdoptivoController {
 	public String processCreationForm(@Valid DuenoAdoptivo duenoAdoptivo, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			//creating duenoAdoptivo, user and authorities
+		} else {
+			// creating duenoAdoptivo, user and authorities
 			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
-			
+
 			return "redirect:/duenosAdoptivos/" + duenoAdoptivo.getId();
 		}
 	}
@@ -85,11 +82,11 @@ public class DuenoAdoptivoController {
 		model.put("duenoAdoptivo", new DuenoAdoptivo());
 		return "duenosAdoptivos/findDuenosAdoptivos";
 	}
-	
+
 	@GetMapping(value = "/duenosAdoptivos")
 	public String findAll(Map<String, Object> model) {
 		Set<DuenoAdoptivo> results;
-		results=duenoAdoptivoService.findAllDuenosAdoptivos();
+		results = duenoAdoptivoService.findAllDuenosAdoptivos();
 		model.put("selections", results);
 		return "duenosAdoptivos/duenosAdoptivosList";
 	}
@@ -103,27 +100,27 @@ public class DuenoAdoptivoController {
 		}
 
 		// find duenosAdoptivos by last name
-		Collection<DuenoAdoptivo> results = this.duenoAdoptivoService.findDuenoAdoptivoByApellidos(duenoAdoptivo.getApellidos());
+		Collection<DuenoAdoptivo> results = this.duenoAdoptivoService
+				.findDuenoAdoptivoByApellidos(duenoAdoptivo.getApellidos());
 		if (results.isEmpty()) {
 			// no duenosAdoptivos found
 			result.rejectValue("apellidos", "notFound", "not found");
 			return "duenosAdoptivos/findDuenosAdoptivos";
-		}
-		else if (results.size() == 1) {
+		} else if (results.size() == 1) {
 			// 1 duenoAdoptivo found
 			duenoAdoptivo = results.iterator().next();
 			return "redirect:/duenosAdoptivos/" + duenoAdoptivo.getId();
-		}
-		else {
+		} else {
 			// multiple duenosAdoptivos found
 			model.put("selections", results);
 			return "duenosAdoptivos/duenosAdoptivosList";
 		}
 	}
+
 	@GetMapping(value = "/duenosAdoptivos/edit/{duenoAdoptivoId}")
 	public String initUpdateDuenoAdoptivoForm(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId, Model model) {
 		Optional<DuenoAdoptivo> duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
-		model.addAttribute(duenoAdoptivo.get());
+		model.addAttribute("duenoAdoptivo", duenoAdoptivo.get());
 		return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 	}
 
@@ -132,11 +129,11 @@ public class DuenoAdoptivoController {
 			@PathVariable("duenoAdoptivoId") int duenoAdoptivoId) {
 		if (result.hasErrors()) {
 			return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			duenoAdoptivo.setId(duenoAdoptivoId);
-			Optional<DuenoAdoptivo> aux=duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
-			duenoAdoptivo.getUser().setAuthorities(aux.get().getUser().getAuthorities());
+			// Optional<DuenoAdoptivo> aux =
+			// duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
+			// duenoAdoptivo.getUser().setAuthorities(aux.get().getUser().getAuthorities());
 			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
 			return "redirect:/duenosAdoptivos/{duenoAdoptivoId}";
 		}
@@ -144,41 +141,46 @@ public class DuenoAdoptivoController {
 
 	/**
 	 * Custom handler for displaying an duenoAdoptivo.
+	 * 
 	 * @param duenoAdoptivoId the ID of the duenoAdoptivo to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@GetMapping("/duenosAdoptivos/{duenoAdoptivoId}")
+	@GetMapping("/duenosAdoptivos/show/{duenoAdoptivoId}")
 	public ModelAndView showDuenoAdoptivo(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId) {
 		ModelAndView mav = new ModelAndView("duenosAdoptivos/duenoAdoptivoDetails");
-		mav.addObject("duenoAdoptivo",this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId).get());
+		mav.addObject("duenoAdoptivo", this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId).get());
 		return mav;
 	}
-	
-	//Eitar dueño adoptivo desde el username(esto se debe que desde el Menú no tiene la posibilidad de utilizar el id)
-	@GetMapping(value = "/duenosAdoptivos/editByName/{duenoAdoptivoUserName}")
-	public String initUpdateDuenoAdoptivoForm2(@PathVariable("duenoAdoptivoUserName") String duenoAdoptivoUserName, Model model) {
-		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoByUserName(duenoAdoptivoUserName);
+
+	@GetMapping("/duenosAdoptivos/show")
+	public ModelAndView showDuenoAdoptivo2() {
+		ModelAndView mav = new ModelAndView("duenosAdoptivos/duenoAdoptivoDetails");
+		DuenoAdoptivo duenoAdoptivo = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		mav.addObject("duenoAdoptivo", duenoAdoptivo);
+		return mav;
+	}
+
+	// Eitar dueño adoptivo desde el username(esto se debe que desde el Menú no
+	// tiene la posibilidad de utilizar el id)
+	@GetMapping(value = "/duenosAdoptivos/editByName")
+	public String initUpdateDuenoAdoptivoForm2(Model model) {
+		DuenoAdoptivo duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		model.addAttribute(duenoAdoptivo);
 		return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/duenosAdoptivos/editByName/{duenoAdoptivoUserName}")
-	public String processUpdateDuenoAdoptivoForm2(@Valid DuenoAdoptivo duenoAdoptivo, BindingResult result,
-			@PathVariable("duenoAdoptivoUserName") String duenoAdoptivoUserName) {
+	@PostMapping(value = "/duenosAdoptivos/editByName")
+	public String processUpdateDuenoAdoptivoForm2(@Valid DuenoAdoptivo duenoAdoptivo, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
-		}
-		else {			
-			duenoAdoptivo.getUser().setUsername(duenoAdoptivoUserName);
-			DuenoAdoptivo aux=duenoAdoptivoService.findDuenoAdoptivoByUserName(duenoAdoptivoUserName);
+		} else {
+			DuenoAdoptivo aux = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 			duenoAdoptivo.setId(aux.getId());
-			duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
+			// duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
 			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
-			int duenoAdoptivoId=duenoAdoptivo.getId();
-			return "redirect:/duenosAdoptivos/"+duenoAdoptivoId;
+			int duenoAdoptivoId = duenoAdoptivo.getId();
+			return "redirect:/duenosAdoptivos/" + duenoAdoptivoId;
 		}
 	}
-	
-	
 
 }

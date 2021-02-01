@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -48,18 +49,23 @@ public class EventoServiceTest {
 
 	@MockBean
 	private AuthoritiesService authoritiesService;
+
 	@MockBean
 	private DirectorService directorService;
 
-	private BDDMyOngoingStubbing<DuenoAdoptivo> duenoAdoptivoMock() {
-		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
-		duenoAdoptivo.setNombre("Juan");
-		duenoAdoptivo.setApellidos("perez");
-		duenoAdoptivo.setDireccion("calle falsa");
-		duenoAdoptivo.setDni("1234567H");
-		duenoAdoptivo.setTelefono("666777888");
-		duenoAdoptivo.setEmail("fsfd@dfs.com");
-		duenoAdoptivo.setId(66);
+	private DuenoAdoptivo duenoNuevo() {
+		DuenoAdoptivo result = new DuenoAdoptivo();
+		result.setNombre("Juan");
+		result.setApellidos("perez");
+		result.setDireccion("calle falsa");
+		result.setDni("1234567H");
+		result.setTelefono("666777888");
+		result.setEmail("fsfd@dfs.com");
+		result.setId(1);
+		Set<Evento> eventos = new HashSet<Evento>();
+		// Evento evento= eventoNuevo();
+		// eventos.add(evento);
+		// result.setEventos(eventos);
 		User user = new User();
 		user.setUsername("Sam");
 		user.setPassword("supersecretpassword");
@@ -69,18 +75,19 @@ public class EventoServiceTest {
 		Set<Authorities> a = new HashSet<Authorities>();
 		a.add(authorities);
 		user.setAuthorities(a);
-		duenoAdoptivo.setUser(user);
+		result.setUser(user);
 
-		return given(duenoAdoptivoService.findDuenoAdoptivoByPrincipal()).willReturn(duenoAdoptivo);
+		return result;
+
 	}
 
-	private BDDMyOngoingStubbing<Director> directorMock() {
+	private Director directorNuevo() {
 		Director director = new Director();
 		director.setNombre("Juan");
 		director.setApellidos("perez");
 		director.setTelefono("666777888");
 		director.setEmail("fsfd@dfs.com");
-		director.setId(66);
+		director.setId(13);
 		User user = new User();
 		user.setUsername("Sam");
 		user.setPassword("supersecretpassword");
@@ -91,10 +98,43 @@ public class EventoServiceTest {
 		a.add(authorities);
 		user.setAuthorities(a);
 		director.setUser(user);
-
-		return given(directorService.findDirectorByPrincipal()).willReturn(director);
+		return director;
 	}
 
+	@Transactional
+	private Evento eventoNuevo() {
+		Evento evento = new Evento();
+		DuenoAdoptivo dueno = duenoNuevo();
+		evento.setAforo(1);
+		evento.setDescripcion("des");
+		evento.setDireccion("dfdf");
+		evento.setFecha(LocalDate.now().withYear(2022));
+		evento.setTitulo("tit");
+		evento.setDirector(directorService.findDirectorById(1));
+		evento.setId(88);
+		// Set<Evento> eventos=new HashSet<Evento>();
+		// eventos.add(evento);
+		// dueno.setEventos(eventos);
+		Set<DuenoAdoptivo> duenos = new HashSet<DuenoAdoptivo>();
+		duenos.add(dueno);
+		evento.setDuenos(duenos);
+		return evento;
+	}
+
+	@Transactional
+	private BDDMyOngoingStubbing<DuenoAdoptivo> duenoAdoptivoMock() {
+		DuenoAdoptivo duenoAdoptivo = duenoNuevo();
+		int i = duenoAdoptivo.getId();
+		return given(duenoAdoptivoService.findDuenoAdoptivoByPrincipal()).willReturn(duenoAdoptivo);
+	}
+
+	
+	  private BDDMyOngoingStubbing<Director> directorMock() { Director director =
+	  directorNuevo();
+	  
+	  return given(directorService.findDirectorByPrincipal()).willReturn(director);
+	  }
+	 
 	private BDDMyOngoingStubbing<String> directorStringMock() {
 
 		return given(userService.principalAuthorityString()).willReturn("director");
@@ -221,8 +261,73 @@ public class EventoServiceTest {
 	// quitarDuenoAdoptivoEvento
 	@Test
 	@Transactional
-	void quitarDuenoAdoptivoEvento(){
+	void quitarDuenoAdoptivoEvento() {
+		Evento evento = eventoService.findEventoById(1).get();
+		DuenoAdoptivo dueno = duenoNuevo();
+		evento.getDuenos().add(dueno);
+		// eventoService.saveEvento(evento);
+
+		eventoService.quitarDuenoAdoptivoEvento(evento);
 		// al estar creado el MockBean de duenoAdoptivo, no es capaz de recuperar un
 		// duenoAdoptivo del repositorio ni creando otro duenoAdoptivoService
 	}
+
+	// findAllByPrincipalDueno
+	@Test
+	@Transactional
+	void findAllByPrincipalDueno() {
+		duenoAdoptivoMock();
+
+		assertThat(eventoService.findEventosByDueno().size()).isEqualTo(1);
+	}
+
+	// deleteEvento
+	@Test
+	@Transactional
+	void deleteEvento() throws SinPermisoException {
+		directorStringMock();
+		Evento evento = eventoService.findEventoById(1).get();
+		eventoService.deleteEvento(evento);
+
+		Optional<Evento> aux = eventoService.findEventoById(1);
+		boolean b = aux.isPresent();
+		assertThat(aux.isPresent()).isEqualTo(false);
+
+	}
+
+	// deleteEventoNegative
+	@Test
+	@Transactional
+	void deleteEventoSiendoDueno() throws SinPermisoException {
+		duenoStringMock();
+		Evento evento = eventoService.findEventoById(1).get();
+		Exception exception = assertThrows(SinPermisoException.class, () -> {
+			eventoService.deleteEvento(evento);
+		});
+
+	}
+
+	// findEventosByDirector
+	@Test
+	@Transactional
+	void findEventosByDirector() {
+		directorMock();
+
+		assertThat(eventoService.findEventosByDirector().size()).isEqualTo(3);
+	}
+	
+	//save
+	@Test
+	@Transactional
+	void saveEvento() {
+		directorMock();
+		Evento evento = eventoNuevo();
+		evento.setDuenos(null);
+	int i= eventoService.findEventosByDirector().size();
+		eventoService.saveEvento(evento);
+		int j= eventoService.findEventosByDirector().size();
+		Boolean b=i+1==j;
+		assertThat(b).isEqualTo(true);
+	}
+
 }

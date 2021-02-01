@@ -34,17 +34,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DuenoAdoptivoService {
 
-	private DuenoAdoptivoRepository duenoAdoptivoRepository;
+	private final DuenoAdoptivoRepository duenoAdoptivoRepository;
+
+	private final UserService userService;
+
+	private final AuthoritiesService authoritiesService;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private AuthoritiesService authoritiesService;
-
-	@Autowired
-	public DuenoAdoptivoService(DuenoAdoptivoRepository duenoAdoptivoRepository) {
+	public DuenoAdoptivoService(DuenoAdoptivoRepository duenoAdoptivoRepository, UserService userService,
+			AuthoritiesService authoritiesService) {
 		this.duenoAdoptivoRepository = duenoAdoptivoRepository;
+		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}
 
 	@Transactional(readOnly = true)
