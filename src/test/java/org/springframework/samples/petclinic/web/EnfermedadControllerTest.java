@@ -7,7 +7,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Enfermedad;
+import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.EnfermedadService;
@@ -49,48 +54,53 @@ public class EnfermedadControllerTest {
 	private Enfermedad enfermedad;
 
 	void principal() {
-//		Cuidador principal = new Cuidador();
-//		CentroDeAdopcion c = new CentroDeAdopcion();
-//		c.setCantidadMax(25);
-//		c.setDireccion("dfsd");
-//		c.setId(1);
-//		c.setNombre("dsf");
-//		principal = new Cuidador();
-//		principal.setId(TEST_ENFERMEDAD_ID);
-//		principal.setNombre("George");
-//		principal.setApellidos("Franklin");
-//		principal.setDni("24324324G");
-//		principal.setTelefono("6085551023");
-//		principal.setEmail("test@email.com");
-//		principal.setCentroDeAdopcion(c);
-//		int i = principal.getId();
-
-		Cuidador principal=mock(Cuidador.class);
+		Cuidador principal = mock(Cuidador.class);
 		given(this.cuidadorService.findCuidadorByPrincipal()).willReturn(principal);
 
 	}
 
+	void mockAnimal() {
+		Animal animal = mock(Animal.class);
+		given(this.animalService.findAnimalById(3)).willReturn(Optional.of(animal));
+	}
+
+	// H19 Positivo
 	@WithMockUser(value = "spring")
 	@Test
 	void testCreateEnfermedadFormSuccess() throws Exception {
+		mockAnimal();
 		mockMvc.perform(post("/enfermedad/nuevo/{animalId}", 3).with(csrf()).param("nombre", "Rabia")
-				.param("comienzo", "10/11/2020").param("cuado", "false")).andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/enfermedad/show/1"));
+				.param("comienzo", "10/11/2020").param("curado", "true").param("fin", "10/12/2020")
+				.param("comentario", "cumple requisitos")).andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/enfermedad/show/null"));
 	}
 
+	// H19 Negativo
+	@WithMockUser(value = "spring")
+	@Test
+	void testCreateEnfermedadFormErrorFechaFinAnteriorFechaInicio() throws Exception {
+		mockAnimal();
+		mockMvc.perform(post("/enfermedad/nuevo/{animalId}", 3).with(csrf()).param("nombre", "Rabia")
+				.param("comienzo", "10/11/2020").param("curado", "true").param("fin", "10/09/2020")
+				.param("comentario", "cumple requisitos")).andExpect(status().isOk())
+				.andExpect(view().name("enfermedad/createOrUpdateEnfermedadForm"));
+	}
+
+	// H20 Positivo
 	@WithMockUser(value = "spring")
 	@Test
 	void testListadoEnfermedadesAnimalesByCuidador() throws Exception {
 		principal();
-		mockMvc.perform(post("/enfermedad/cuidador", TEST_ENFERMEDAD_ID)).andExpect(status().isOk())
+		mockMvc.perform(get("/enfermedad/cuidador", TEST_ENFERMEDAD_ID)).andExpect(status().isOk())
 				.andExpect(view().name("enfermedad/listadoEnfermedades"));
 	}
-	
+
+	// H20 Negativo
 	@WithMockUser(value = "spring")
 	@Test
-	void testListadoEnfermedadesAnimalesByCuidador2() throws Exception {
-		principal();
-		given(this.enfermedadService.findAllEnfermedadAnimalByCuidadorId(1)).willReturn(new ArrayList<>());
-		mockMvc.perform(get("/enfermedad/cuidador").sessionAttr("type","cuidador")).andExpect(status().isOk());
+	void testListadoEnfermedadesAnimalesByCuidadorNoAutenticado() throws Exception {
+		// principal();
+		mockMvc.perform(get("/enfermedad/cuidador", TEST_ENFERMEDAD_ID)).andExpect(status().isOk())
+				.andExpect(status().isBadRequest());
 	}
 }
