@@ -12,7 +12,7 @@
     <h2>Project <c:out value="${title}"/></h2>
     <p><h2>Group <c:out value="${group}"/></h2></p>
     <p><ul>
-    <c:forEach items="<c:out value="${persons}"/>" var="persons">
+    <c:forEach items="${persons}" var="persons">
     	<li><c:out value="${persons.nombre } ${persons.apellidos }"/></li>
     </c:forEach></ul></p>
     <div class="row">
