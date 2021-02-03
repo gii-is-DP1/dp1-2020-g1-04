@@ -191,7 +191,7 @@ class DuenoAdoptivoControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowDuenoAdoptivo() throws Exception {
-		mockMvc.perform(get("/duenosAdoptivos/{duenoAdoptivoId}", TEST_OWNER_ID)).andExpect(status().isOk())
+		mockMvc.perform(get("/duenosAdoptivos/show/{duenoAdoptivoId}", TEST_OWNER_ID)).andExpect(status().isOk())
 				.andExpect(model().attribute("duenoAdoptivo", hasProperty("apellidos", is("Franklin"))))
 				.andExpect(model().attribute("duenoAdoptivo", hasProperty("nombre", is("George"))))
 				.andExpect(model().attribute("duenoAdoptivo", hasProperty("direccion", is("110 W. Liberty St."))))
