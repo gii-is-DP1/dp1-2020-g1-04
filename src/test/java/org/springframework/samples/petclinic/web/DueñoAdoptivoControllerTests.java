@@ -211,4 +211,12 @@ class DuenoAdoptivoControllerTests {
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/duenosAdoptivos/1"));
 	}
+	
+	//H13 Test Positivo
+	@WithMockUser(value = "spring")
+	@Test
+	void testListadoTodosDueños() throws Exception {
+		mockMvc.perform(get("/duenosAdoptivos")).andExpect(status().isOk())
+				.andExpect(view().name("duenosAdoptivos/duenosAdoptivosList"));
+	}
 }

@@ -52,6 +52,7 @@ class AnimalServiceTests {
 	@Autowired
 	protected CentroDeAdopcionService centroDeAdopcionService;
 
+	//H12 Test Positivo
 	@Test
 	@Transactional
 	public void findAll() {
@@ -137,4 +138,7 @@ class AnimalServiceTests {
 		assertThat(animalService.findAllNoAdoptedByCentro(3).size()).isEqualTo(15);
 	}
 
+	
+	
+	
 }
