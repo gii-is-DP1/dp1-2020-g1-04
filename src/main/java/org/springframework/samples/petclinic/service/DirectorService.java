@@ -14,7 +14,7 @@ public class DirectorService {
 	private final DirectorRepository directorRepository;
 
 	private final UserService userService;
-
+	
 	private final AuthoritiesService authoritiesService;
 
 	@Autowired

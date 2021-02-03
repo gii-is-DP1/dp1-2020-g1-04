@@ -1,20 +1,23 @@
 package org.springframework.samples.petclinic.service;
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.mockito.Mockito.when;
+import java.util.ArrayList;
 import java.util.Collection;
 
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
+import org.springframework.samples.petclinic.repository.CentroDeAdopcionRepository;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
 
-
+@ExtendWith(MockitoExtension.class)
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class CentroDeAdopcionServiceTest {
 	
@@ -24,7 +27,24 @@ public class CentroDeAdopcionServiceTest {
 	@Autowired
 	protected DirectorService directorService;
 	
+	@Mock
+	private CentroDeAdopcionRepository centroDeAdopcionRepository;
 	
+	
+	@Test
+	void shouldFindCentros() {
+		CentroDeAdopcion c1 = new CentroDeAdopcion();
+		CentroDeAdopcion c2 = new CentroDeAdopcion();
+		CentroDeAdopcion c3 = new CentroDeAdopcion();
+		Collection<CentroDeAdopcion> centros = new ArrayList<CentroDeAdopcion>();
+		centros.add(c1);centros.add(c2);centros.add(c3);
+		//when(centroDeAdopcionRepository.findAll()).thenReturn(centros);
+		
+		Collection<CentroDeAdopcion> results = this.centroDeAdopcionService.findAll();
+		
+		assertThat(results).hasSize(3);
+	
+	}
 	//Test findAll centros
 	@Test
 	void shouldFindAllCentros() {
