@@ -39,6 +39,7 @@ public class EventoController {
 	private static final String EVENTOS_LISTING = "eventos/listadoEventos";
 
 	private final EventoService eventoService;
+	private final DirectorService directorService;
 	private final CuidadorService cuidadorService;
 	private final DuenoAdoptivoService duenoAdoptivoService;
 	private final UserService userService;
@@ -48,6 +49,7 @@ public class EventoController {
 			DirectorService directorService, DuenoAdoptivoService duenoAdoptivoService, UserService userService) {
 		this.eventoService = eventoService;
 		this.cuidadorService = cuidadorService;
+		this.directorService = directorService;
 		this.duenoAdoptivoService = duenoAdoptivoService;
 		this.userService = userService;
 	}
