@@ -101,6 +101,6 @@ public class EnfermedadControllerTest {
 	void testListadoEnfermedadesAnimalesByCuidadorNoAutenticado() throws Exception {
 		// principal();
 		mockMvc.perform(get("/enfermedad/cuidador", TEST_ENFERMEDAD_ID)).andExpect(status().isOk())
-				.andExpect(status().isBadRequest());
+				.andExpect(view().name("exception"));
 	}
 }
