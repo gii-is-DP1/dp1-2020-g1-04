@@ -23,12 +23,14 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
+import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Evento;
 import org.springframework.samples.petclinic.model.GradoDeAtencion;
 import org.springframework.samples.petclinic.model.Peligrosidad;
@@ -38,6 +40,9 @@ import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidado
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 class AnimalServiceTests {
@@ -52,7 +57,37 @@ class AnimalServiceTests {
 	@Autowired
 	protected CentroDeAdopcionService centroDeAdopcionService;
 
-	//H12 Test Positivo
+	private Animal createAnimal() {
+		Animal animal = new Animal();
+		animal.setId(1);
+		animal.setAdoptado(false);
+		animal.setChip("sdfsd");
+		animal.setFechaNacimiento(LocalDate.now().minusWeeks(20));
+		animal.setFechaPrimeraIncorporacion(LocalDate.now().minusMonths(3));
+		animal.setFechaUltimaIncorporacion(animal.getFechaPrimeraIncorporacion());
+		animal.setFoto("http://animal.com/foto.jpg");
+		animal.setNombre("Firulais");
+		animal.getPeligrosidad().setGrado(5);
+		animal.getAtencion().setAtencion(5);
+		animal.getAtencion().setDificultad(5);
+		animal.getPeligrosidad().setLicencia(false);
+		animal.getRequisitos().setLicenciarequerida(false);
+		animal.getRequisitos().setSeguro(false);
+		animal.setNumeroRegistro(animalService.nuevoNRegistro(animal.getCategoria().toString()));
+		animal.setSexo("M");
+		animal.setTamanyo("L");
+		animal.getCategoria().setRaza("raza");
+		animal.getCategoria().setTipo(Tipo.FELINO);
+		return animal;
+	}
+
+	private void animalMock() {
+		Animal animal = createAnimal();
+
+		given(animalService.findAnimalById(1).get()).willReturn((animal));
+	}
+
+	// H12 Test Positivo
 	@Test
 	@Transactional
 	public void findAll() {
@@ -67,7 +102,6 @@ class AnimalServiceTests {
 	public void findAnimalById() {
 
 		Animal animal = animalService.findAnimalById(2).get();
-
 		assertThat(animal.getId() == 2);
 		assertThat(animal.getAdoptado() == true);
 		assertThat(animal.getAtencion().getAtencion() == 3);
@@ -130,7 +164,7 @@ class AnimalServiceTests {
 
 	@Test
 	@Transactional
-	void comprobarRatioCuidadorModifica1de15()
+	public void comprobarRatioCuidadorModifica1de15()
 			throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
 		Animal animal = animalService.findAnimalById(11).get();
 		animal.setNombre("cambia");
@@ -138,7 +172,16 @@ class AnimalServiceTests {
 		assertThat(animalService.findAllNoAdoptedByCentro(3).size()).isEqualTo(15);
 	}
 
-	
-	
-	
+	// H10
+	@Test
+	@Transactional
+	public void shouldInsertAnimal() throws AforoCentroCompletadoException {
+		
+		Animal animal=createAnimal();
+		
+		int j = animalService.findAll().size();
+		animalService.save(animal);
+		assertThat(animalService.findAll().size()).isEqualTo(j + 1);
+	}
+
 }
