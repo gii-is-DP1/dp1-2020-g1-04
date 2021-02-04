@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import java.util.Collection;
-
+import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,19 +20,18 @@ public class VisitaServiceTest {
 
 	@Autowired
 	protected VisitaService visitaService;
-	@Autowired
-	protected DuenoAdoptivoService duenoAdoptivoServiceLimpio;
+
 	@MockBean
 	protected DuenoAdoptivoService duenoAdoptivoService;
 
 	private void PrincipalMock() {
-		DuenoAdoptivo duenoAdoptivo;
-		duenoAdoptivo = duenoAdoptivoServiceLimpio.findDuenoAdoptivoById(11).get();
+		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
+		duenoAdoptivo.setId(11);
 
 		given(duenoAdoptivoService.findDuenoAdoptivoByPrincipal()).willReturn(duenoAdoptivo);
 
 	}
-/*
+
 	@Test
 	void findByPrincipal() {
 		PrincipalMock();
@@ -43,6 +40,7 @@ public class VisitaServiceTest {
 		assertThat(visitas.size()).isEqualTo(3);
 	}
 
+	//H21 
 	@Test
 	void findByPrincipalProximos() {
 		PrincipalMock();
@@ -51,6 +49,7 @@ public class VisitaServiceTest {
 		assertThat(visitas.size()).isEqualTo(1);
 	}
 
+	//H21
 	@Test
 	void findByPrincipalPasadas() {
 		PrincipalMock();
@@ -58,5 +57,5 @@ public class VisitaServiceTest {
 		Collection<Visita> visitas = visitaService.findVisitasByPrincipalPasadas();
 		assertThat(visitas.size()).isEqualTo(2);
 	}
-*/
+
 }

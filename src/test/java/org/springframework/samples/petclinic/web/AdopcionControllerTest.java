@@ -53,4 +53,12 @@ public class AdopcionControllerTest {
 				.andExpect(model().attributeExists("adopciones"))
 				.andExpect(view().name("adopcion/adopcionList"));
 	}
+	
+	//H22
+	@WithMockUser(value = "spring")
+	@Test
+	void testListadoAdopcionesByDueñoAdoptivo() throws Exception {
+		mockMvc.perform(get("/adopcion/misSolicitudesDeAdopcion")).andExpect(status().isOk())
+				.andExpect(view().name("adopcion/adopcionList2"));
+	}
 }

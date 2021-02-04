@@ -191,7 +191,7 @@ class DuenoAdoptivoControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowDuenoAdoptivo() throws Exception {
-		mockMvc.perform(get("/duenosAdoptivos/{duenoAdoptivoId}", TEST_OWNER_ID)).andExpect(status().isOk())
+		mockMvc.perform(get("/duenosAdoptivos/show/{duenoAdoptivoId}", TEST_OWNER_ID)).andExpect(status().isOk())
 				.andExpect(model().attribute("duenoAdoptivo", hasProperty("apellidos", is("Franklin"))))
 				.andExpect(model().attribute("duenoAdoptivo", hasProperty("nombre", is("George"))))
 				.andExpect(model().attribute("duenoAdoptivo", hasProperty("direccion", is("110 W. Liberty St."))))
@@ -210,5 +210,13 @@ class DuenoAdoptivoControllerTests {
 				.param("telefono", "01616291589").param("email", "test2@email.com"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/duenosAdoptivos/1"));
+	}
+	
+	//H13 Test Positivo
+	@WithMockUser(value = "spring")
+	@Test
+	void testListadoTodosDueños() throws Exception {
+		mockMvc.perform(get("/duenosAdoptivos")).andExpect(status().isOk())
+				.andExpect(view().name("duenosAdoptivos/duenosAdoptivosList"));
 	}
 }
