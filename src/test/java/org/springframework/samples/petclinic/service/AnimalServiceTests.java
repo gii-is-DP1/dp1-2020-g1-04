@@ -86,7 +86,7 @@ class AnimalServiceTests {
 	}
 
 	private void animalMock() {
-		Animal animal=createAnimal();
+		Animal animal = createAnimal();
 
 		given(animalService.findAnimalById(100).get()).willReturn((animal));
 	}
@@ -129,22 +129,6 @@ class AnimalServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldUpdateAnimalName() throws Exception {
-		Animal animal1 = animalService.findAnimalById(1).get();
-		String antiguoNombre = animal1.getNombre();
-
-		String nuevoNombre = antiguoNombre + "X";
-		animal1.setNombre(nuevoNombre);
-		this.animalService.save(animal1);
-
-		animal1 = this.animalService.findAnimalById(1).get();
-
-		assertThat(animal1.getNombre()).isEqualTo(nuevoNombre);
-
-	}
-
-	@Test
-	@Transactional
 	public void noShouldUpdateAnimalNoExist() throws Exception {
 		Optional<Animal> animal = animalService.findAnimalById(23);
 
@@ -182,29 +166,60 @@ class AnimalServiceTests {
 	public void shouldInsertAnimal() throws AforoCentroCompletadoException {
 
 		Animal animal = createAnimal();
-		CentroDeAdopcion cda=centroDeAdopcionService.findById(1);
-		Cuidador cuidador=cuidadorService.findCuidadorById(1).get();
+		CentroDeAdopcion cda = centroDeAdopcionService.findById(1);
+		Cuidador cuidador = cuidadorService.findCuidadorById(1).get();
 		animal.setCentroDeAdopcion(cda);
 		animal.setCuidador(cuidador);
-		
+
 		int j = animalService.findAll().size();
 		animalService.save(animal);
-		 assertThat(animalService.findAll().size()).isEqualTo(j + 1);
+		assertThat(animalService.findAll().size()).isEqualTo(j + 1);
 	}
-	
-	//H10 Negativo
+
+	// H10 Negativo
 	@Test
 	@Transactional
 	public void shouldNotInsertAnimalSinCuidador() throws AforoCentroCompletadoException {
 
 		Animal animal = createAnimal();
-		CentroDeAdopcion cda=centroDeAdopcionService.findById(1);
+		CentroDeAdopcion cda = centroDeAdopcionService.findById(1);
 		animal.setCentroDeAdopcion(cda);
-		
+
 		Exception exception = assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> {
 			animalService.save(animal);
 			;
 		});
+	}
+
+	// H11 Positivo
+	@Test
+	@Transactional
+	public void shouldUpdateAnimalName() throws Exception {
+		Animal animal1 = animalService.findAnimalById(1).get();
+		String antiguoNombre = animal1.getNombre();
+
+		String nuevoNombre = antiguoNombre + "X";
+		animal1.setNombre(nuevoNombre);
+		this.animalService.save(animal1);
+
+		animal1 = this.animalService.findAnimalById(1).get();
+
+		assertThat(animal1.getNombre()).isEqualTo(nuevoNombre);
+
+	}
+
+	// H11 Negativo
+	@Test
+	@Transactional
+	public void shouldNotUpdateAnimalNameNull() throws Exception {
+		Animal animal = animalService.findAnimalById(1).get();
+		animal.setCentroDeAdopcion(null);
+		Exception exception = assertThrows(java.lang.NullPointerException.class, () -> {
+		animalService.save(animal);
+		;
+		});
+		
+
 	}
 
 }

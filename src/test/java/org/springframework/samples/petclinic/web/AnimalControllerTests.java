@@ -59,8 +59,9 @@ public class AnimalControllerTests {
 
 	private Animal animal;
 
-	private Animal createAnimal() {
-		animal.setId(100);
+	private void createAnimal() {
+		animal = new Animal();
+		animal.setId(TEST_ANIMAL_ID);
 		animal.setAdoptado(false);
 		animal.setChip("sdfsd");
 		animal.setFechaNacimiento(LocalDate.now().minusWeeks(20));
@@ -85,7 +86,7 @@ public class AnimalControllerTests {
 		Categoria cat = categoriaService.findCategoriaById(1).get();
 		animal.setCategoria(cat);
 		animal.setNumeroRegistro(animalService.nuevoNRegistro(animal.getCategoria().toString()));
-		return animal;
+		given(animalService.findAnimalById(TEST_ANIMAL_ID)).willReturn(Optional.of(animal));
 	}
 
 	@BeforeEach
@@ -96,6 +97,7 @@ public class AnimalControllerTests {
 		categoria.setTipo(Tipo.CANINO);
 
 		given(categoriaService.findCategoriaById(TEST_CATEGORIA_ID)).willReturn(Optional.of(categoria));
+
 	}
 
 	// H12 Test Positivo
@@ -134,6 +136,37 @@ public class AnimalControllerTests {
 	@Test
 	void testCreateAnimalFormError() throws Exception {
 		mockMvc.perform(post("/animales/nuevo/{categoriaId}", TEST_CATEGORIA_ID).with(csrf()).param("nombre", "Joe")
+				.param("adoptado", "false").param("chip", "123Chip").param("fechaNacimiento", "25/10/2020")
+				.param("fechaPrimeraIncorporacion", "26/11/2020").param("fechaUltimaIncorporacion", "26/11/2020")
+				.param("foto", "http://animal.com/foto.jpg").param("peligrosidad.grado", "5")
+				.param("peligrosidad.licencia", "false").param("requisitos.licenciarequerida", "false")
+				.param("requisitos.seguro", "false").param("atencion.atencion", "5").param("atencion.dificultad", "5")
+				.param("sexo", "M").param("tamanyo", "L").param("cuidador.id", "1").param("centroDeAdopcion.id", "1"))
+				.andExpect(model().attributeHasFieldErrors("animal", "numeroRegistro")).andExpect(status().isOk())
+				.andExpect(view().name("animales/createOrUpdateAnimal"));
+	}
+
+	// H11 Positivo
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateAnimalFormSuccess() throws Exception {
+		createAnimal();
+		mockMvc.perform(post("/animales//edit/{animalId}", TEST_ANIMAL_ID).with(csrf()).param("nombre", "Joe")
+				.param("adoptado", "false").param("chip", "123Chip").param("fechaNacimiento", "25/10/2020")
+				.param("fechaPrimeraIncorporacion", "26/11/2020").param("fechaUltimaIncorporacion", "26/11/2020")
+				.param("foto", "http://animal.com/foto.jpg").param("peligrosidad.grado", "5")
+				.param("peligrosidad.licencia", "false").param("requisitos.licenciarequerida", "false")
+				.param("numeroRegistro", "sdfsdf").param("requisitos.seguro", "false").param("atencion.atencion", "5")
+				.param("atencion.dificultad", "5").param("sexo", "M").param("tamanyo", "L").param("cuidador.id", "1")
+				.param("centroDeAdopcion.id", "1")).andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/animales/show/null"));
+	}
+
+	// H11 Positivo
+	@WithMockUser(value = "spring")
+		@Test
+		void testProcessUpdateAnimalFormError() throws Exception {
+		mockMvc.perform(post("/animales/edit/{animal}", TEST_ANIMAL_ID).with(csrf()).param("nombre", "Joe")
 				.param("adoptado", "false").param("chip", "123Chip").param("fechaNacimiento", "25/10/2020")
 				.param("fechaPrimeraIncorporacion", "26/11/2020").param("fechaUltimaIncorporacion", "26/11/2020")
 				.param("foto", "http://animal.com/foto.jpg").param("peligrosidad.grado", "5")
