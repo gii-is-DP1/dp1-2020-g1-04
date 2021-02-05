@@ -17,11 +17,11 @@ package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -29,12 +29,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
-import org.springframework.samples.petclinic.model.Evento;
+import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.GradoDeAtencion;
 import org.springframework.samples.petclinic.model.Peligrosidad;
-import org.springframework.samples.petclinic.model.Tipo;
+import org.springframework.samples.petclinic.model.RequisitosDeAdopcion;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
-import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidadoresAsignadosException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +51,47 @@ class AnimalServiceTests {
 	@Autowired
 	protected CentroDeAdopcionService centroDeAdopcionService;
 
-	//H12 Test Positivo
+	@Autowired
+	protected CategoriaService categoriaService;
+
+	private Animal createAnimal() {
+		Animal animalAux = animalService.findAnimalById(1).get();
+		Animal animal = new Animal();
+		animal.setId(100);
+		animal.setAdoptado(false);
+		animal.setChip("sdfsd");
+		animal.setFechaNacimiento(LocalDate.now().minusWeeks(20));
+		animal.setFechaPrimeraIncorporacion(LocalDate.now().minusMonths(3));
+		animal.setFechaUltimaIncorporacion(animal.getFechaPrimeraIncorporacion());
+		animal.setFoto("http://animal.com/foto.jpg");
+		animal.setNombre("NombreTest");
+		Peligrosidad peligrosidad = new Peligrosidad();
+		peligrosidad.setGrado(5);
+		peligrosidad.setLicencia(false);
+		animal.setPeligrosidad(peligrosidad);
+		RequisitosDeAdopcion requisitos = new RequisitosDeAdopcion();
+		requisitos.setLicenciarequerida(false);
+		requisitos.setSeguro(false);
+		animal.setRequisitos(requisitos);
+		GradoDeAtencion atencion = new GradoDeAtencion();
+		atencion.setAtencion(5);
+		atencion.setDificultad(5);
+		animal.setAtencion(atencion);
+		animal.setSexo("M");
+		animal.setTamanyo("L");
+		Categoria cat = categoriaService.findCategoriaById(1).get();
+		animal.setCategoria(cat);
+		animal.setNumeroRegistro(animalService.nuevoNRegistro(animal.getCategoria().toString()));
+		return animal;
+	}
+
+	private void animalMock() {
+		Animal animal = createAnimal();
+
+		given(animalService.findAnimalById(100).get()).willReturn((animal));
+	}
+
+	// H12 Test Positivo
 	@Test
 	@Transactional
 	public void findAll() {
@@ -67,7 +106,6 @@ class AnimalServiceTests {
 	public void findAnimalById() {
 
 		Animal animal = animalService.findAnimalById(2).get();
-
 		assertThat(animal.getId() == 2);
 		assertThat(animal.getAdoptado() == true);
 		assertThat(animal.getAtencion().getAtencion() == 3);
@@ -87,22 +125,6 @@ class AnimalServiceTests {
 		assertThat(animal.getTamanyo() == "Grande");
 		assertThat(animal.getCuidador().getId() == 1);
 		assertThat(animal.getCategoria().getId() == 1);
-	}
-
-	@Test
-	@Transactional
-	public void shouldUpdateAnimalName() throws Exception {
-		Animal animal1 = animalService.findAnimalById(1).get();
-		String antiguoNombre = animal1.getNombre();
-
-		String nuevoNombre = antiguoNombre + "X";
-		animal1.setNombre(nuevoNombre);
-		this.animalService.save(animal1);
-
-		animal1 = this.animalService.findAnimalById(1).get();
-
-		assertThat(animal1.getNombre()).isEqualTo(nuevoNombre);
-
 	}
 
 	@Test
@@ -130,7 +152,7 @@ class AnimalServiceTests {
 
 	@Test
 	@Transactional
-	void comprobarRatioCuidadorModifica1de15()
+	public void comprobarRatioCuidadorModifica1de15()
 			throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
 		Animal animal = animalService.findAnimalById(11).get();
 		animal.setNombre("cambia");
@@ -138,7 +160,66 @@ class AnimalServiceTests {
 		assertThat(animalService.findAllNoAdoptedByCentro(3).size()).isEqualTo(15);
 	}
 
-	
-	
-	
+	// H10 Positivo
+	@Test
+	@Transactional
+	public void shouldInsertAnimal() throws AforoCentroCompletadoException {
+
+		Animal animal = createAnimal();
+		CentroDeAdopcion cda = centroDeAdopcionService.findById(1);
+		Cuidador cuidador = cuidadorService.findCuidadorById(1).get();
+		animal.setCentroDeAdopcion(cda);
+		animal.setCuidador(cuidador);
+
+		int j = animalService.findAll().size();
+		animalService.save(animal);
+		assertThat(animalService.findAll().size()).isEqualTo(j + 1);
+	}
+
+	// H10 Negativo
+	@Test
+	@Transactional
+	public void shouldNotInsertAnimalSinCuidador() throws AforoCentroCompletadoException {
+
+		Animal animal = createAnimal();
+		CentroDeAdopcion cda = centroDeAdopcionService.findById(1);
+		animal.setCentroDeAdopcion(cda);
+
+		Exception exception = assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> {
+			animalService.save(animal);
+			;
+		});
+	}
+
+	// H11 Positivo
+	@Test
+	@Transactional
+	public void shouldUpdateAnimalName() throws Exception {
+		Animal animal1 = animalService.findAnimalById(1).get();
+		String antiguoNombre = animal1.getNombre();
+
+		String nuevoNombre = antiguoNombre + "X";
+		animal1.setNombre(nuevoNombre);
+		this.animalService.save(animal1);
+
+		animal1 = this.animalService.findAnimalById(1).get();
+
+		assertThat(animal1.getNombre()).isEqualTo(nuevoNombre);
+
+	}
+
+	// H11 Negativo
+	@Test
+	@Transactional
+	public void shouldNotUpdateAnimalNameNull() throws Exception {
+		Animal animal = animalService.findAnimalById(1).get();
+		animal.setCentroDeAdopcion(null);
+		Exception exception = assertThrows(java.lang.NullPointerException.class, () -> {
+		animalService.save(animal);
+		;
+		});
+		
+
+	}
+
 }
