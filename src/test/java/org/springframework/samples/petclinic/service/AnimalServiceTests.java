@@ -17,13 +17,12 @@ package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,18 +30,13 @@ import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.model.Evento;
 import org.springframework.samples.petclinic.model.GradoDeAtencion;
 import org.springframework.samples.petclinic.model.Peligrosidad;
-import org.springframework.samples.petclinic.model.Tipo;
+import org.springframework.samples.petclinic.model.RequisitosDeAdopcion;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
-import org.springframework.samples.petclinic.service.exceptions.EventoSinCuidadoresAsignadosException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 class AnimalServiceTests {
@@ -57,34 +51,44 @@ class AnimalServiceTests {
 	@Autowired
 	protected CentroDeAdopcionService centroDeAdopcionService;
 
+	@Autowired
+	protected CategoriaService categoriaService;
+
 	private Animal createAnimal() {
+		Animal animalAux = animalService.findAnimalById(1).get();
 		Animal animal = new Animal();
-		animal.setId(1);
+		animal.setId(100);
 		animal.setAdoptado(false);
 		animal.setChip("sdfsd");
 		animal.setFechaNacimiento(LocalDate.now().minusWeeks(20));
 		animal.setFechaPrimeraIncorporacion(LocalDate.now().minusMonths(3));
 		animal.setFechaUltimaIncorporacion(animal.getFechaPrimeraIncorporacion());
 		animal.setFoto("http://animal.com/foto.jpg");
-		animal.setNombre("Firulais");
-		animal.getPeligrosidad().setGrado(5);
-		animal.getAtencion().setAtencion(5);
-		animal.getAtencion().setDificultad(5);
-		animal.getPeligrosidad().setLicencia(false);
-		animal.getRequisitos().setLicenciarequerida(false);
-		animal.getRequisitos().setSeguro(false);
-		animal.setNumeroRegistro(animalService.nuevoNRegistro(animal.getCategoria().toString()));
+		animal.setNombre("NombreTest");
+		Peligrosidad peligrosidad = new Peligrosidad();
+		peligrosidad.setGrado(5);
+		peligrosidad.setLicencia(false);
+		animal.setPeligrosidad(peligrosidad);
+		RequisitosDeAdopcion requisitos = new RequisitosDeAdopcion();
+		requisitos.setLicenciarequerida(false);
+		requisitos.setSeguro(false);
+		animal.setRequisitos(requisitos);
+		GradoDeAtencion atencion = new GradoDeAtencion();
+		atencion.setAtencion(5);
+		atencion.setDificultad(5);
+		animal.setAtencion(atencion);
 		animal.setSexo("M");
 		animal.setTamanyo("L");
-		animal.getCategoria().setRaza("raza");
-		animal.getCategoria().setTipo(Tipo.FELINO);
+		Categoria cat = categoriaService.findCategoriaById(1).get();
+		animal.setCategoria(cat);
+		animal.setNumeroRegistro(animalService.nuevoNRegistro(animal.getCategoria().toString()));
 		return animal;
 	}
 
 	private void animalMock() {
-		Animal animal = createAnimal();
+		Animal animal=createAnimal();
 
-		given(animalService.findAnimalById(1).get()).willReturn((animal));
+		given(animalService.findAnimalById(100).get()).willReturn((animal));
 	}
 
 	// H12 Test Positivo
@@ -172,16 +176,35 @@ class AnimalServiceTests {
 		assertThat(animalService.findAllNoAdoptedByCentro(3).size()).isEqualTo(15);
 	}
 
-	// H10
+	// H10 Positivo
 	@Test
 	@Transactional
 	public void shouldInsertAnimal() throws AforoCentroCompletadoException {
-		
-		Animal animal=createAnimal();
+
+		Animal animal = createAnimal();
+		CentroDeAdopcion cda=centroDeAdopcionService.findById(1);
+		Cuidador cuidador=cuidadorService.findCuidadorById(1).get();
+		animal.setCentroDeAdopcion(cda);
+		animal.setCuidador(cuidador);
 		
 		int j = animalService.findAll().size();
 		animalService.save(animal);
-		assertThat(animalService.findAll().size()).isEqualTo(j + 1);
+		 assertThat(animalService.findAll().size()).isEqualTo(j + 1);
+	}
+	
+	//H10 Negativo
+	@Test
+	@Transactional
+	public void shouldNotInsertAnimalSinCuidador() throws AforoCentroCompletadoException {
+
+		Animal animal = createAnimal();
+		CentroDeAdopcion cda=centroDeAdopcionService.findById(1);
+		animal.setCentroDeAdopcion(cda);
+		
+		Exception exception = assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> {
+			animalService.save(animal);
+			;
+		});
 	}
 
 }
