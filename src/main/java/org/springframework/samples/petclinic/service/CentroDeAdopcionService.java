@@ -39,5 +39,6 @@ public class CentroDeAdopcionService {
 		result = centroDeAdopcionRepository.findById(centroId);
 		return result.get();
 	}
+	
 
 }

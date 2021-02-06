@@ -31,12 +31,10 @@ import lombok.Setter;
 @Table(name = "visitas")
 public class Visita extends BaseEntity{
 	
-	@Column(name = "momento")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate momento;
 	
 	@NotBlank
-	@Column(name ="lugar")
 	private String lugar;
 	
 	@ManyToOne

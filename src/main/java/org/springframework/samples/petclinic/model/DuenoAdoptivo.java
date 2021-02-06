@@ -47,11 +47,9 @@ import lombok.Setter;
 @Table(name = "duenos")
 public class DuenoAdoptivo extends Person {
 
-	@Column(name = "direccion")
 	@NotEmpty
 	private String direccion;
 
-	@Column(name = "dni")
 	@NotEmpty
 	private String dni;
 

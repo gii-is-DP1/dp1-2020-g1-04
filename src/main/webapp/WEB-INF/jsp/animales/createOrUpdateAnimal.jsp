@@ -37,11 +37,11 @@
 		</h2>
 		
 		<form:form modelAttribute="animal" class="form-horizontal"
-				id="edit-duenoAdoptivo-form">
+				id="edit-animal-form">
 			
 			  <div class="form-group">
-       	<form:hidden path="numeroRegistro"/>	
-       	<form:hidden path="adoptado"/>
+       	<form:hidden path="numeroRegistro" />	
+       	<form:hidden path="adoptado" />
         <label class="col-sm-2 control-label">Tipo</label>
 
         <div class="col-sm-10 col-sm-offset-2">
@@ -56,7 +56,7 @@
 			</div>
 		</div>
 			
-				<petclinic:inputField label="Nombre" name="nombre"/>
+				<petclinic:inputField label="Nombre" name="nombre" />
 				<petclinic:inputField label="Imagen" name="foto"></petclinic:inputField>
 								
 				 <div class="form-group">
@@ -84,7 +84,8 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.peligrosidad.grado}">
            			 selected
-           			 </c:if>><c:out value="${item}"/></option>
+           			 </c:if>><c:out
+										value="${item}" /></option>
          		  </c:forEach>
          		
       		  </select>
@@ -136,7 +137,8 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.atencion.atencion}">
            			 selected
-           			 </c:if>><c:out value="${item}"/></option>
+           			 </c:if>><c:out
+										value="${item}" /></option>
          		  </c:forEach>
          		
       		  </select>
@@ -152,7 +154,8 @@
            			 <option value="${item}"
 									<c:if test="${item eq animal.atencion.dificultad}">
            			 selected
-           			 </c:if>><c:out value="${item}"/></option>
+           			 </c:if>><c:out
+										value="${item}" /></option>
          		  </c:forEach>
          		
       		  </select>
@@ -162,24 +165,6 @@
 				<petclinic:inputField label="Fecha de nacimiento"
 					name="fechaNacimiento" />
 				<petclinic:inputField label="Chip" name="chip" />
-				<!-- <petclinic:inputField label="Nº Registro" name="numeroRegistro" /> 
-					<div class="form-group">
-          	<label class="col-sm-2 control-label">Adoptado</label> 
-           <div class="col-sm-10">
-            <select name="adoptado" class="form-control">
-            		 <option value="true"
-								<c:if test="${animal.adoptado}">
-           			 selected
-           			 </c:if>>Si</option>
-         		  <option value="false"
-								<c:if test="${!animal.adoptado}">
-           			 selected
-           			 </c:if>>No</option>
-         		
-      		  </select>
-       </div>
-       </div>
-			-->
 				<div class="form-group">
           	<label class="col-sm-2 control-label">Tamaño</label> 
            <div class="col-sm-10">

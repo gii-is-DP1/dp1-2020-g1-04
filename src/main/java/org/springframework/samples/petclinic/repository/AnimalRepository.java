@@ -38,5 +38,11 @@ public interface AnimalRepository extends Repository<Animal, Integer> {
 	@Query("SELECT animal FROM Animal animal JOIN animal.cuidador c WHERE c.id =:cuidadorId and animal.adoptado=false and animal.categoria.tipo=3")
 	public Collection<Animal> findAnimalAsignadoAve(@Param("cuidadorId")int cuidadorId); 
 
+	@Query("SELECT COUNT(a) FROM Animal a JOIN a.centroDeAdopcion c WHERE c.id=:centroId and a.adoptado=false")
+	public int cantidadDeAnimalesActualEnCentro(@Param("centroId")int centroId);
+
+	@Query("SELECT COUNT(*) FROM Animal a WHERE a.id=:animalId and a.adoptado=false and a.centroDeAdopcion.id=:centroId")
+	public int comprobarColeccion(@Param("centroId")Integer centroId,@Param("animalId") Integer animalId);
+	
 }
 

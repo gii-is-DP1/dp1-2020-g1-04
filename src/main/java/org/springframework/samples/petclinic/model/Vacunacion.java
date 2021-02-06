@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,15 +21,11 @@ import lombok.Setter;
 public class Vacunacion extends BaseEntity {
 	
 	@NotBlank
-	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="comentario")
 	private String comentario;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "fecha")
-	@Past
 	private LocalDate fecha;
 	
 	@ManyToOne(optional=false)

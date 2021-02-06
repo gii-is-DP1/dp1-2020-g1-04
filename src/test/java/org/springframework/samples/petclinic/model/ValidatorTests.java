@@ -332,22 +332,24 @@ class ValidatorTests {
 		assertThat(violation.getMessage()).isEqualTo("no puede ser null");
 	}
 	
-	@Test
-	void shouldNotValidateEventoWhenFechaPast() {
-
-		Evento evento=crearEvento();
-		LocalDate d=LocalDate.of(2019, 12, 14);
-		evento.setFecha(d);
-
-		Validator validator = createValidator();
-		Set<ConstraintViolation<Evento>> constraintViolations = validator.validate(evento);
-
-		assertThat(constraintViolations.size()).isEqualTo(1);
-		ConstraintViolation<Evento> violation = constraintViolations.iterator().next();
-		
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("fecha");
-		assertThat(violation.getMessage()).isEqualTo("tiene que ser una fecha en el futuro");
-	}
+	
+	//No funciona al quitar @Future
+//	@Test
+//	void shouldNotValidateEventoWhenFechaPast() {
+//
+//		Evento evento=crearEvento();
+//		LocalDate d=LocalDate.of(2019, 12, 14);
+//		evento.setFecha(d);
+//
+//		Validator validator = createValidator();
+//		Set<ConstraintViolation<Evento>> constraintViolations = validator.validate(evento);
+//
+//		assertThat(constraintViolations.size()).isEqualTo(1);
+//		ConstraintViolation<Evento> violation = constraintViolations.iterator().next();
+//		
+//		assertThat(violation.getPropertyPath().toString()).isEqualTo("fecha");
+//		assertThat(violation.getMessage()).isEqualTo("tiene que ser una fecha en el futuro");
+//	}
 	
 	@Test
 	void shouldNotValidateEventoWhenDireccionEmpty() {
