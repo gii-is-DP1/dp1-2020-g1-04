@@ -136,15 +136,21 @@ class AnimalServiceTests {
 
 	}
 
-	// ReglaDeNegocioR6--1cuidadorCada15Animales-Sin Cuidador
+	// ReglaDeNegocioR6--Aforo completado
 	@Test
 	@Transactional
 	void comprobarRatioCuidador() throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
-		Animal animal = animalService.findAnimalById(1).get();
-		CentroDeAdopcion centroDeAdopcion = centroDeAdopcionService.findById(3);
+		CentroDeAdopcion centroDeAdopcion = centroDeAdopcionService.findById(2);
+		Animal animal = animalService.findAnimalById(4).get();
 		animal.setCentroDeAdopcion(centroDeAdopcion);
-		Exception exception = assertThrows(RatioAnimalesPorCuidadorSuperadoException.class, () -> {
-			animalService.comprobarRatioCuidador(animal);
+		animalService.save(animal);
+		Animal animal2 =animalService.findAnimalById(5).get();
+		animal2.setCentroDeAdopcion(centroDeAdopcion);
+		animalService.save(animal2);
+		Animal animal3 =animalService.findAnimalById(6).get();
+		animal3.setCentroDeAdopcion(centroDeAdopcion);
+		Exception exception = assertThrows(AforoCentroCompletadoException.class, () -> {
+			animalService.save(animal3);
 			;
 		});
 

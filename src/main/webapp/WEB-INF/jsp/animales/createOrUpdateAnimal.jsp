@@ -37,7 +37,7 @@
 		</h2>
 		
 		<form:form modelAttribute="animal" class="form-horizontal"
-				id="edit-duenoAdoptivo-form">
+				id="edit-animal-form">
 			
 			  <div class="form-group">
        	<form:hidden path="numeroRegistro" />	
