@@ -19,6 +19,7 @@ import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -96,81 +97,72 @@ public class AnimalController {
 	}
 
 	@PostMapping("/edit/{animalId}")
-	public ModelAndView editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
-			BindingResult binding, ModelMap model) {
-		ModelAndView mav;
-		if (binding.hasErrors()) {
+	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
+			BindingResult result, ModelMap model) {
+		//ModelAndView mav;
+		if (result.hasErrors()) {
 
-			mav = new ModelAndView(ANIMAL_FORM);
-			return mav;
+			//mav = new ModelAndView(ANIMAL_FORM);
+			return ANIMAL_FORM;
 		} else {
-			Optional<Animal> animal = animalService.findAnimalById(animalId);
-			// Optional<Cuidador> c =
-			// cuidadorService.findCuidadorById(modifiedAnimal.getCuidador().getId());
-			// CentroDeAdopcion cda =
-			// centroDeAdopcionService.findById(modifiedAnimal.getCentroDeAdopcion().getId());
-			// modifiedAnimal.setId(animalId);
-			// modifiedAnimal.setCuidador(c.get());
-			// modifiedAnimal.setCentroDeAdopcion(cda);
-			modifiedAnimal.setNumeroRegistro(animal.get().getNumeroRegistro());
-			modifiedAnimal.setCategoria(animal.get().getCategoria());
-			modifiedAnimal.setFechaPrimeraIncorporacion(animal.get().getFechaPrimeraIncorporacion());
-			modifiedAnimal.setFechaUltimaIncorporacion(animal.get().getFechaUltimaIncorporacion());
-			// animalService.save(modifiedAnimal);
+			Optional<Animal> animalOpt = animalService.findAnimalById(animalId);
+			Animal animal=animalOpt.get();
+			modifiedAnimal.setId(animalId);
+			modifiedAnimal.setAdopciones(animal.getAdopciones());
+			modifiedAnimal.setRevisiones(animal.getRevisiones());
+			modifiedAnimal.setEnfermedades(animal.getEnfermedades());
+			modifiedAnimal.setVacunaciones(animal.getVacunaciones());
+			modifiedAnimal.setVisitas(animal.getVisitas());
+			modifiedAnimal.setNumeroRegistro(animal.getNumeroRegistro());
+			modifiedAnimal.setCategoria(animal.getCategoria());
+			modifiedAnimal.setFechaPrimeraIncorporacion(animal.getFechaPrimeraIncorporacion());
+			modifiedAnimal.setFechaUltimaIncorporacion(animal.getFechaUltimaIncorporacion());
 			try {
-				animalService.comprobarRatioCuidador(modifiedAnimal);
+				animalService.save(modifiedAnimal);
 			} catch (RatioAnimalesPorCuidadorSuperadoException e) {
-				// TODO Auto-generated catch block
-
-				mav = new ModelAndView("/403");
-				mav.addObject("exceptionMessage", e.getMessage());
-				return mav;
+				result.rejectValue("centroDeAdopcion", "Aforo", "Aforo del centro al máximo");
+				return ANIMAL_FORM;
 			} catch (AforoCentroCompletadoException e) {
-				// TODO Auto-generated catch block
-				mav = new ModelAndView("/403");
-				mav.addObject("exceptionMessage", e.getMessage());
-				return mav;
+				result.rejectValue("centroDeAdopcion", "Aforo", "Aforo del centro al máximo");
+				return ANIMAL_FORM;
 			}
 			model.addAttribute("message", "Animal actualizado con exito!");
-			mav = new ModelAndView("redirect:/animales/show/" + modifiedAnimal.getId());
-			return mav;
+			//mav = new ModelAndView("redirect:/animales/show/" + modifiedAnimal.getId());
+			return "redirect:/animales/show/" + modifiedAnimal.getId();
 		}
 	}
 
 	@GetMapping("/nuevo/{categoriaId}")
 	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId, ModelMap model) {
 		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
-		Animal animal = new Animal();
-		LocalDate now = LocalDate.now();
 		Categoria categoria = categoriaService.findCategoriaById(categoriaId).get();
-		animal.setCategoria(categoria);
-		animal.setAdoptado(false);
-		animal.setFechaPrimeraIncorporacion(now);
-		animal.setFechaUltimaIncorporacion(now);
-		String nRgistro = animalService.nuevoNRegistro(categoria.getTipo().toString());
-		animal.setNumeroRegistro(nRgistro);
+		Animal animal=new Animal();
+		Animal animalModificado= animalService.inicializarAnimal(categoria, animal);
 		model.put("auxiliar", auxiliar);
-		model.put("animal", animal);
+		model.put("animal", animalModificado);
 		model.put("cuidadores", cuidadorService.findAllCuidadores());
 		model.put("centros", centroDeAdopcionService.findAllNoEstenLlenos());
 		return ANIMAL_FORM;
 	}
 
 	@PostMapping(value = "/nuevo/{categoriaId}")
-	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId, @Valid Animal animal, BindingResult result)
+	public String nuevoAnimal(@PathVariable("categoriaId") int categoriaId, @Valid Animal animal, BindingResult result, ModelMap model)
 			throws AforoCentroCompletadoException {
-		Categoria categoria = categoriaService.findCategoriaById(categoriaId).get();
-		animal.setCategoria(categoria);
-		LocalDate now = LocalDate.now();
-		// String nRgistro=animalService.nuevoNRegistro(categoria.getTipo().toString());
-		// animal.setNumeroRegistro(nRgistro);
-		animal.setFechaPrimeraIncorporacion(now);
-		animal.setFechaUltimaIncorporacion(now);
+		Categoria categoria = categoriaService.findCategoriaById(categoriaId).get();		
+		Animal animalModificado=	animalService.inicializarAnimal(categoria, animal);
 		if (result.hasErrors()) {
 			return ANIMAL_FORM;
 		} else {
-			this.animalService.save(animal);
-
+			try {
+				animalService.save(animalModificado);
+			} catch (RatioAnimalesPorCuidadorSuperadoException e) {
+				 result.rejectValue("centroDeAdopcion", "Ratio", "Supera el Ratio de Cuidadores");
+				 return ANIMAL_FORM;
+			} catch (AforoCentroCompletadoException e) {
+				result.rejectValue("centroDeAdopcion", "Aforo", "Aforo del centro al máximo");
+				return ANIMAL_FORM;
+			}
+			
 			return "redirect:/animales/show/" + animal.getId();
 		}
 	}
@@ -181,10 +173,8 @@ public class AnimalController {
 
 		Optional<Animal> animal = animalService.findAnimalById(animalId);
 		if (animal.isPresent()) {
-			animal.get().setAdoptado(false);
-			LocalDate now = LocalDate.now();
-			animal.get().setFechaUltimaIncorporacion(now);
-			animalService.comprobarRatioCuidador(animal.get());
+			Animal animalModificado=animalService.reincorporarAnimal(animal.get());
+			animalService.save(animalModificado);
 			return "redirect:/animales/show/" + animalId;
 		} else {
 			model.addAttribute("message", "No se encuentra el animal que quiere editar!");

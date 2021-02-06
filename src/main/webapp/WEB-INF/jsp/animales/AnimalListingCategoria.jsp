@@ -34,10 +34,7 @@
 						class="btn btn-primary btn-block"><c:out value="${canino.nombre }"/></a></td>
 					<td><img src="<c:out value="${animal.foto }"/>" alt="Foto de <c:out value="${canino.nombre }"/>"
 						class="foto"></td>
-					<td><a
-						href="<c:url value="/centros/show/${canino.centroDeAdopcion.id}"/>"
-						class="btn btn-primary btn-block">Centro
-							${canino.centroDeAdopcion.id}</a></td>
+					<td><c:out value="${canino.centroDeAdopcion.nombre}" /></td>
 					<td><c:out value="${canino.atencion.dificultad}" /></td>
 					<td><c:out value="${canino.atencion.atencion}" /></td>
 					<td><c:out value="${canino.peligrosidad.licencia}" /></td>
@@ -84,10 +81,7 @@
 						class="btn btn-primary btn-block"><c:out value="${felino.nombre }"/></a></td>
 					<td><img src="<c:out value="${felino.foto }"/>" alt="Foto de <c:out value="${felino.nombre }"/>"
 						class="foto"></td>
-					<td><a
-						href="<c:url value="/centros/show/${felino.centroDeAdopcion.id}"/>"
-						class="btn btn-primary btn-block">Centro
-							${felino.centroDeAdopcion.id}</a></td>
+					<td><c:out value="${felino.centroDeAdopcion.nombre}" /></td>
 					<td><c:out value="${felino.atencion.dificultad}" /></td>
 					<td><c:out value="${felino.atencion.atencion}" /></td>
 					<td><c:out value="${felino.peligrosidad.licencia}" /></td>
@@ -133,10 +127,7 @@
 						class="btn btn-primary btn-block"><c:out value="${reptil.nombre }"/></a></td>
 					<td><img src="<c:out value="${reptil.foto }"/>" alt="Foto de <c:out value="${reptil.nombre }"/>"
 						class="foto"></td>
-					<td><a
-						href="<c:url value="/centros/show/${reptil.centroDeAdopcion.id}"/>"
-						class="btn btn-primary btn-block">Centro
-							${reptil.centroDeAdopcion.id}</a></td>
+					<td><c:out value="${reptil.centroDeAdopcion.nombre}" /></td>
 					<td><c:out value="${reptil.atencion.dificultad}" /></td>
 					<td><c:out value="${reptil.atencion.atencion}" /></td>
 					<td><c:out value="${reptil.peligrosidad.licencia}" /></td>
@@ -182,10 +173,7 @@
 						class="btn btn-primary btn-block"><c:out value="${ave.nombre }"/></a></td>
 					<td><img src="<c:out value="${ave.foto }"/>" alt="Foto de <c:out value="${ave.nombre }"/>"
 						class="foto"></td>
-					<td><a
-						href="<c:url value="/centros/show/${ave.centroDeAdopcion.id}"/>"
-						class="btn btn-primary btn-block">Centro
-							${ave.centroDeAdopcion.id}</a></td>
+					<td><c:out value="${ave.centroDeAdopcion.nombre}" /></td>
 					<td><c:out value="${ave.atencion.dificultad}" /></td>
 					<td><c:out value="${ave.atencion.atencion}" /></td>
 					<td><c:out value="${ave.peligrosidad.licencia}" /></td>
