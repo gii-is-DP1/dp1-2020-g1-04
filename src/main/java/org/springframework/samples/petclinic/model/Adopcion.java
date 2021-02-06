@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,37 +23,29 @@ public class Adopcion extends BaseEntity{
 	
 	//Atributos----------------------------------------------------------------------
 	@NotNull
-	@Column(name="unidadFamiliar")
 	private Integer unidadFamiliar;
 	
 	@NotNull
-	@Column(name="mayoresDeEdad")
 	private Integer mayoresDeEdad;
 	
 	@NotNull
-	@Column(name="leidoRequisitos")
 	private boolean leidoRequisitos;
 	
 	@NotNull
-	@Column(name="permisoComunidadVecinos")
 	private boolean permisoComunidadVecinos;
 	//private Vivienda vivienda;
 	
 	@NotNull
-	@Column(name="otrosAnimales")
 	private boolean otrosAnimales;
 	
 	@NotBlank
-	@Column(name="motivo")
 	private String motivo;
 	
-	@Column(name="estado")
 	private Estado estado;
 	
-	@Column(name="motivoDecision")
 	private String motivoDecision;
 	
-	@Column(name="fechaDecision")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate fechaDecision;
 
 	//Relación Adopción-DueñoAdoptivo

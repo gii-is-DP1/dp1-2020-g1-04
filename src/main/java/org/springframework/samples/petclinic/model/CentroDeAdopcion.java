@@ -22,15 +22,12 @@ import lombok.Setter;
 public class CentroDeAdopcion extends BaseEntity {
 	
 	@NotEmpty
-	@Column(name="nombre")
 	private String nombre;
 	
 	@NotEmpty
-	@Column(name="direccion")
 	private String direccion;
 	
 	@NotEmpty
-	@Column(name="cantidadMax")
 	private Integer cantidadMax;
 	
 
@@ -53,15 +50,15 @@ public class CentroDeAdopcion extends BaseEntity {
 	////////
 	
 	
-	public int getCantidadActual(){
-		int cantidadActual=0;
-		for(Animal a:this.animales) {
-			if(a.getAdoptado()==false) {
-				cantidadActual++;
-			}
-		}
-		return cantidadActual;
-	}
+//	public int getCantidadActual(){
+//		int cantidadActual=0;
+//		for(Animal a:this.animales) {
+//			if(a.getAdoptado()==false) {
+//				cantidadActual++;
+//			}
+//		}
+//		return cantidadActual;
+//	}
 	
 
 	///////////

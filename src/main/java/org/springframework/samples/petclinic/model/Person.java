@@ -31,19 +31,15 @@ import javax.validation.constraints.NotEmpty;
 @MappedSuperclass
 public class Person extends BaseEntity {
 
-	@Column(name = "nombre")
 	@NotEmpty
 	protected String nombre;
 
-	@Column(name = "apellidos")
 	@NotEmpty
 	protected String apellidos;
 	
-	@Column(name = "telefono")
 	@NotEmpty
 	protected String telefono;
 	
-	@Column(name = "email")
 	@NotEmpty
 	@Email
 	protected String email;

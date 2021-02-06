@@ -23,24 +23,19 @@ import lombok.Setter;
 public class Enfermedad extends BaseEntity{
 
 	@NotBlank
-	@Column(name="nombre")
 	private String nombre;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "comienzo")
 	@Past
 	@NotNull
 	private LocalDate comienzo;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "fin")
 	@Past
 	private LocalDate fin;
 	
-	@Column(name= "curado")
 	private Boolean curado;
 	
-	@Column(name="comentario")
 	private String comentario;
 	
 	@ManyToOne(optional=false)

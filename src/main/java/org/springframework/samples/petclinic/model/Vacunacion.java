@@ -21,14 +21,11 @@ import lombok.Setter;
 public class Vacunacion extends BaseEntity {
 	
 	@NotBlank
-	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="comentario")
 	private String comentario;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "fecha")
 	private LocalDate fecha;
 	
 	@ManyToOne(optional=false)

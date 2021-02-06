@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Animal;
+import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.repository.AnimalRepository;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
@@ -23,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnimalService {
 
 	private final AnimalRepository animalRepository;
+
+	private static final double RATIO_CUIDADORES = 15;
+	private static final double MINIMO_CUIDADORES = 1;
 
 	@Autowired
 	public AnimalService(AnimalRepository animalRepository) {
@@ -43,37 +47,56 @@ public class AnimalService {
 	}
 
 	@Transactional
-	public void save(@Valid Animal animal) throws AforoCentroCompletadoException {
-		// categoriaService.save(animal.getCategoria());
-
-		CentroDeAdopcion c = animal.getCentroDeAdopcion();
-		if (c.getAnimales().size() > c.getCantidadMax()) {
-			throw new AforoCentroCompletadoException("Este Centro está completo y no acepta mas animales");
-		}
+	public void save(@Valid Animal animal) throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
+		comprobarRatioCuidador(animal);
 		animalRepository.save(animal);
 
 	}
 
+	public boolean comprobarAforo(CentroDeAdopcion centro) {
+		boolean res = true;
+		res = cantidadDeAnimalesActualEnCentro(centro.getId()) > centro.getCantidadMax();
+		return res;
+
+	}
+
 	@Transactional
-	public void comprobarRatioCuidador(@Valid Animal animal)
+	public void comprobarRatioCuidador(Animal animal)
 			throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
 		CentroDeAdopcion centro = animal.getCentroDeAdopcion();
 		Collection<Animal> a = findAllNoAdoptedByCentro(centro.getId());
-		Integer numeroAnimalesNoAdoptados = a.size();
-		Integer cantidadCuidadores = centro.getCuidadores().size();
-
-		if (cantidadCuidadores < 1) {
+		double numeroAnimalesNoAdoptados = a.size();
+		double cantidadCuidadores = centro.getCuidadores().size();
+		double j;
+		boolean aux;
+		boolean aux2;
+		if (cantidadCuidadores < MINIMO_CUIDADORES) {
 			throw new RatioAnimalesPorCuidadorSuperadoException("Se ha superado el ratio de Animales por Cuidadores");
 		}
-		double j = numeroAnimalesNoAdoptados / cantidadCuidadores;
-		if (!(a.contains(animal))) {
-			j++;
+		j = numeroAnimalesNoAdoptados / cantidadCuidadores;
+		aux2=comprobarColeccion(centro.getId(), animal.getId())>0;
+		if (aux2) {
+			j = (numeroAnimalesNoAdoptados - 1) / cantidadCuidadores;
 		}
-		if (j > 15 || cantidadCuidadores < 1) {
+		aux = j > RATIO_CUIDADORES;
+		if (aux) {
 			throw new RatioAnimalesPorCuidadorSuperadoException("Se ha superado el ratio de Animales por Cuidadores");
 		}
-		save(animal);
+		if (cantidadCuidadores < MINIMO_CUIDADORES) {
+			throw new RatioAnimalesPorCuidadorSuperadoException("Se ha superado el ratio de Animales por Cuidadores");
+		}
+		if (comprobarAforo(centro)) {
+			throw new AforoCentroCompletadoException("Este Centro está completo y no acepta mas animales");
+		}
 
+	}
+
+	private int comprobarColeccion(Integer centroId, Integer animalId) {
+		int result;
+		
+		result = animalRepository.comprobarColeccion(centroId,animalId);
+		
+		return result;
 	}
 
 	public Collection<Animal> findAllNoAdoptedByCentro(Integer centroId) {
@@ -126,6 +149,33 @@ public class AnimalService {
 
 		Collection<Animal> result = animalRepository.findAnimalAsignadoAve(cuidadorId);
 		return result;
+	}
+
+	public int cantidadDeAnimalesActualEnCentro(int centroId) {
+		int result;
+		result = animalRepository.cantidadDeAnimalesActualEnCentro(centroId);
+
+		return result;
+	}
+
+	public Animal inicializarAnimal(Categoria categoria, Animal animal) {
+		LocalDate now = LocalDate.now();
+		animal.setAdoptado(false);
+		animal.setFechaPrimeraIncorporacion(now);
+		animal.setFechaUltimaIncorporacion(now);
+		String nRgistro = nuevoNRegistro(categoria.getTipo().toString());
+		animal.setNumeroRegistro(nRgistro);
+		animal.setCategoria(categoria);
+
+		return animal;
+	}
+
+	public Animal reincorporarAnimal(Animal animal) {
+		animal.setAdoptado(false);
+		LocalDate now = LocalDate.now();
+		animal.setFechaUltimaIncorporacion(now);
+
+		return animal;
 	}
 
 }

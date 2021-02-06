@@ -27,25 +27,19 @@ import lombok.Setter;
 public class Evento extends BaseEntity {
 	
 	@NotBlank
-	@Column(name = "titulo")
 	private String titulo;
 	
 	@NotBlank
-	@Column(name = "direccion")
 	private String direccion;
 	
-	@Future
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "fecha")
 	private LocalDate fecha;
 	
 	@NotNull
-	@Column(name = "aforo")
 	private Integer aforo;
 	
 	@NotBlank
-	@Column(name = "descripcion")
 	private String descripcion;
 	
 	@ManyToOne(optional=false)

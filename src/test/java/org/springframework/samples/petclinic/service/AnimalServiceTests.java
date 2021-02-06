@@ -163,7 +163,7 @@ class AnimalServiceTests {
 	// H10 Positivo
 	@Test
 	@Transactional
-	public void shouldInsertAnimal() throws AforoCentroCompletadoException {
+	public void shouldInsertAnimal() throws AforoCentroCompletadoException, RatioAnimalesPorCuidadorSuperadoException {
 
 		Animal animal = createAnimal();
 		CentroDeAdopcion cda = centroDeAdopcionService.findById(1);

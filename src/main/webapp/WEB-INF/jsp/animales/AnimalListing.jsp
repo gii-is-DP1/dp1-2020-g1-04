@@ -34,10 +34,7 @@
 						class="btn btn-primary btn-block"><c:out value="${animal.nombre }"/></a></td>
 					<td><img src="<c:out value="${animal.foto }"/>" alt="Foto de <c:out value="${animal.nombre }"/>"
 						class="foto"></td>
-					<td><a
-						href="<c:url value="/centros/show/${animal.centroDeAdopcion.id}"/>"
-						class="btn btn-primary btn-block">Centro
-							${animal.centroDeAdopcion.id}</a></td>
+					<td><c:out value="${animal.centroDeAdopcion.nombre}" /></td>
 					<td><c:out value="${animal.atencion.dificultad}" /></td>
 					<td><c:out value="${animal.atencion.atencion}" /></td>
 					<td><c:out value="${animal.peligrosidad.licencia}" /></td>
