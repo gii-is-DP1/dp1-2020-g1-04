@@ -94,6 +94,7 @@ public class AnimalControllerTests {
 		animal.setCategoria(cat);
 		animal.setNumeroRegistro(animalService.nuevoNRegistro(animal.getCategoria().toString()));
 		given(animalService.findAnimalById(TEST_ANIMAL_ID)).willReturn(Optional.of(animal));
+		given(animalService.inicializarAnimal(cat, animal)).willReturn(animal);
 	}
 
 	@BeforeEach
@@ -133,8 +134,9 @@ public class AnimalControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
+		createAnimal();
 		mockMvc.perform(get("/animales/nuevo/{categoriaId}", TEST_CATEGORIA_ID)).andExpect(status().isOk())
-				.andExpect(view().name("animales/createOrUpdateAnimal")).andExpect(model().attributeExists("animal"));
+				.andExpect(view().name("animales/createOrUpdateAnimal"));
 	}
 
 	// H10 Test Positivo
@@ -180,7 +182,7 @@ public class AnimalControllerTests {
 				.param("numeroRegistro", "sdfsdf").param("requisitos.seguro", "false").param("atencion.atencion", "5")
 				.param("atencion.dificultad", "5").param("sexo", "M").param("tamanyo", "L").param("cuidador.id", "1")
 				.param("centroDeAdopcion.id", "1")).andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/animales/show/null"));
+				.andExpect(view().name("redirect:/animales/show/1"));
 	}
 
 	// H11 Positivo
