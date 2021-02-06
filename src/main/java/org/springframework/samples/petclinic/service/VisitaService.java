@@ -27,7 +27,7 @@ public class VisitaService {
 		this.duenoAdoptivoService = duenoAdoptivoService;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Visita> findVisitasByPrincipal() {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 
@@ -35,7 +35,7 @@ public class VisitaService {
 		return result;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Visita> findVisitasByPrincipalProximas() {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		LocalDate now = LocalDate.now();
@@ -43,7 +43,7 @@ public class VisitaService {
 		return result;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Visita> findVisitasByPrincipalPasadas() {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		LocalDate now = LocalDate.now();
@@ -51,6 +51,7 @@ public class VisitaService {
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Visita findVisitaById(int visitaId) {
 		Visita result;
 		result = visitaRepository.findVisitaById(visitaId);
@@ -58,7 +59,7 @@ public class VisitaService {
 		return result;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Visita> findVisitasByCuidadorPrincipalProximas() {
 		Cuidador cuidador = cuidadorService.findCuidadorByPrincipal();
 		LocalDate now = LocalDate.now();
@@ -66,7 +67,7 @@ public class VisitaService {
 		return result;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Visita> findVisitasByCuidadorPrincipalPasadas() {
 		Cuidador cuidador = cuidadorService.findCuidadorByPrincipal();
 		LocalDate now = LocalDate.now();

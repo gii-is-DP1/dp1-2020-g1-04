@@ -19,14 +19,15 @@ public class CentroDeAdopcionService {
 		this.centroDeAdopcionRepository = centroDeAdopcionRepository;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<CentroDeAdopcion> findAll() {
 		Collection<CentroDeAdopcion> result;
 		result = centroDeAdopcionRepository.findAll();
 
 		return result;
 	}
-
+	
+	@Transactional(readOnly = true)
 	public Collection<CentroDeAdopcion> findAllNoEstenLlenos() {
 		Collection<CentroDeAdopcion> result;
 		result = centroDeAdopcionRepository.findAllNoEstenLlenos();
@@ -34,6 +35,7 @@ public class CentroDeAdopcionService {
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public CentroDeAdopcion findById(int centroId) {
 		Optional<CentroDeAdopcion> result;
 		result = centroDeAdopcionRepository.findById(centroId);

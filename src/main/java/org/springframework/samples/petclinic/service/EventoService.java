@@ -49,18 +49,21 @@ public class EventoService {
 
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Evento> findEventosByDirector() {
 		Director director = directorService.findDirectorByPrincipal();
 		Collection<Evento> result = eventoRepository.findEventosByDirector(director.getId());
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Optional<Evento> findEventoById(int eventoId) {
 		Optional<Evento> result;
 		result = eventoRepository.findEventoById(eventoId);
 		return result;
 	}
 
+	@Transactional
 	public void quitarCuidadorEvento(Evento evento, Cuidador cuidador)
 			throws EventoSinCuidadoresAsignadosException, SinPermisoException {
 
@@ -84,6 +87,7 @@ public class EventoService {
 
 	}
 
+	@Transactional
 	public void añadirCuidadorEvento(Evento evento, Cuidador cuidador) throws SinPermisoException {
 
 		// User user = userService.findPrincipal();
@@ -97,7 +101,7 @@ public class EventoService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Evento> findEventosByDueno() {
 		DuenoAdoptivo duenoAdoptivo;
 		duenoAdoptivo = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
@@ -107,12 +111,14 @@ public class EventoService {
 	}
 
 	// Aquellos con fecha>=now y con algún cuidador asignado
+	@Transactional(readOnly = true)
 	public Collection<Evento> findEventosDisponibles() {
 		LocalDate now = LocalDate.now();
 		Collection<Evento> result = eventoRepository.findEventosDisponibles(now);
 		return result;
 	}
 
+	@Transactional
 	public void añadirDuenoAdoptivoEvento(Evento evento)
 			throws ExcedidoAforoEventoException, EventoSinCuidadoresAsignadosException {
 
@@ -133,6 +139,7 @@ public class EventoService {
 
 	}
 
+	@Transactional
 	public void quitarDuenoAdoptivoEvento(Evento evento) {
 		DuenoAdoptivo d = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		evento.getDuenos().remove(d);
@@ -155,7 +162,7 @@ public class EventoService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Evento> findEventosByCuidador() {
 		Cuidador cuidador;
 		cuidador = cuidadorService.findCuidadorByPrincipal();

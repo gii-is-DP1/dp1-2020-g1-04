@@ -40,7 +40,7 @@ public class DirectorService {
 		return directorRepository.findById(id);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Director findDirectorByPrincipal() {
 		Director result;
 		org.springframework.security.core.userdetails.User user;
@@ -51,7 +51,7 @@ public class DirectorService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Person findPersonByPrincipal() {
 		Person result;
 		org.springframework.security.core.userdetails.User user;
@@ -62,7 +62,7 @@ public class DirectorService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	private Director findDirectorByUserName(String directorUserName) {
 		Director result;
 		result = directorRepository.findByUserName(directorUserName);

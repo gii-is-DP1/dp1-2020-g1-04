@@ -28,7 +28,7 @@ public class CategoriaService {
 		
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Optional<Categoria> findCategoriaById(int categoriaId) {
 		Optional<Categoria> result;
 		result =categoriaRepository.findCategoriaById(categoriaId);

@@ -66,9 +66,11 @@ public class DuenoAdoptivo extends Person {
 //	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
 //	private Collection<Adopcion> adopciones;
 
+
 //	// Relación DuenoAdoptivo-Visita
 //	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
 //	private Collection<Visita> vistitas;
+
 
 //	// Relacion DuenoAdoptivo-Evento
 //	@ManyToMany(cascade = CascadeType.ALL)
@@ -115,6 +117,7 @@ public class DuenoAdoptivo extends Person {
 				.append("telefono", this.telefono).append("email", this.email).toString();
 	}
 
+
 //	public Collection<Visita> getVistitas() {
 //		return vistitas;
 //	}
@@ -130,5 +133,6 @@ public class DuenoAdoptivo extends Person {
 //	public void setEventos(Set<Evento> eventos) {
 //		this.eventos = eventos;
 //	}
+
 
 }

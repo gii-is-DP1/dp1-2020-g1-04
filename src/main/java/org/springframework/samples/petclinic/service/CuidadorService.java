@@ -29,7 +29,7 @@ public class CuidadorService {
 		this.authoritiesService = authoritiesService;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Set<Cuidador> findAllCuidadores() {
 		Set<Cuidador> result;
 		result = cuidadorRepository.findAll();
@@ -52,21 +52,21 @@ public class CuidadorService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Set<Cuidador> findAllCuidadoresPorCentro(int centroId) {
 		Set<Cuidador> result;
 		result = cuidadorRepository.findAllCuidadoresPorCentro(centroId);
 		return result;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Cuidador findCuidadorByUserName(String cuidadorUserName) {
 		Cuidador result;
 		result = cuidadorRepository.findByUserName(cuidadorUserName);
 		return result;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Cuidador findCuidadorByPrincipal() {
 		Cuidador result;
 		org.springframework.security.core.userdetails.User user;
