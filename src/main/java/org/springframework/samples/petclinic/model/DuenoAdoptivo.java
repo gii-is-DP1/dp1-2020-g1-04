@@ -70,7 +70,7 @@ public class DuenoAdoptivo extends Person {
 
 	// Relación DuenoAdoptivo-Visita
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
-	private Collection<Visita> vistitas;
+	private Collection<Visita> visitas;
 
 	// Relacion DuenoAdoptivo-Evento
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -117,12 +117,12 @@ public class DuenoAdoptivo extends Person {
 				.append("telefono", this.telefono).append("email", this.email).toString();
 	}
 
-	public Collection<Visita> getVistitas() {
-		return vistitas;
+	public Collection<Visita> getVisitas() {
+		return visitas;
 	}
 
-	public void setVistitas(Collection<Visita> vistitas) {
-		this.vistitas = vistitas;
+	public void setVisitas(Collection<Visita> visitas) {
+		this.visitas = visitas;
 	}
 
 	public Set<Evento> getEventos() {

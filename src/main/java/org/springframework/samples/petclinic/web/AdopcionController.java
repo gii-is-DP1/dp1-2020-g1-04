@@ -125,7 +125,7 @@ public class AdopcionController {
 			return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
 		} else {
 			adopcion.setId(adopcionId);
-
+			this.adopcionService.saveAdopcion(adopcion);
 			return "redirect:/adopcion/{adopcionId}";
 		}
 	}
