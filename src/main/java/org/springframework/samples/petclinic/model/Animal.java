@@ -79,20 +79,20 @@ public class Animal extends BaseEntity {
 	@JoinColumn(name = "centro_id")
 	private CentroDeAdopcion centroDeAdopcion;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
-	private Collection<Adopcion> adopciones;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
-	private Collection<Visita> visitas;
-
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+//	private Collection<Adopcion> adopciones;
+//
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+//	private Collection<Visita> visitas;
+//
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
 	private Collection<Enfermedad> enfermedades;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
-	private Collection<Revision> revisiones;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
-	private Collection<Vacunacion> vacunaciones;
+//
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+//	private Collection<Revision> revisiones;
+//
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+//	private Collection<Vacunacion> vacunaciones;
 
 	public int getEdad() {
 		LocalDate now = LocalDate.now();

@@ -108,11 +108,11 @@ public class AnimalController {
 			Optional<Animal> animalOpt = animalService.findAnimalById(animalId);
 			Animal animal=animalOpt.get();
 			modifiedAnimal.setId(animalId);
-			modifiedAnimal.setAdopciones(animal.getAdopciones());
-			modifiedAnimal.setRevisiones(animal.getRevisiones());
+//			modifiedAnimal.setAdopciones(animal.getAdopciones());
+//			modifiedAnimal.setRevisiones(animal.getRevisiones());
 			modifiedAnimal.setEnfermedades(animal.getEnfermedades());
-			modifiedAnimal.setVacunaciones(animal.getVacunaciones());
-			modifiedAnimal.setVisitas(animal.getVisitas());
+//			modifiedAnimal.setVacunaciones(animal.getVacunaciones());
+//			modifiedAnimal.setVisitas(animal.getVisitas());
 			modifiedAnimal.setNumeroRegistro(animal.getNumeroRegistro());
 			modifiedAnimal.setCategoria(animal.getCategoria());
 			modifiedAnimal.setFechaPrimeraIncorporacion(animal.getFechaPrimeraIncorporacion());

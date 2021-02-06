@@ -97,21 +97,21 @@ public class CentroDeAdopcion extends BaseEntity {
 	}
 
 
-	public Collection<Animal> getAnimales() {
-		return animales;
-	}
-	
-	public void setAnimales(Collection<Animal> animales) {
-		this.animales = animales;
-	}
-	
-	public Collection<Cuidador> getCuidadores(){
-		return cuidadores;
-	}
-	
-	public void setCuidadores(Collection<Cuidador> cuidadores) {
-		this.cuidadores = cuidadores;
-	}
+//	public Collection<Animal> getAnimales() {
+//		return animales;
+//	}
+//	
+//	public void setAnimales(Collection<Animal> animales) {
+//		this.animales = animales;
+//	}
+//	
+//	public Collection<Cuidador> getCuidadores(){
+//		return cuidadores;
+//	}
+//	
+//	public void setCuidadores(Collection<Cuidador> cuidadores) {
+//		this.cuidadores = cuidadores;
+//	}
 	
 	
 	
