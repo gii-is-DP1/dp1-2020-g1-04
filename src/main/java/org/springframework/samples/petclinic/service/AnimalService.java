@@ -38,10 +38,12 @@ public class AnimalService {
 		return animalRepository.findById(id);
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Animal> findAll() {
 		return animalRepository.findAll();
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Animal> findAllNoAdopted() {
 		return animalRepository.findAllNoAdopted();
 	}
@@ -53,6 +55,7 @@ public class AnimalService {
 
 	}
 
+	@Transactional
 	public boolean comprobarAforo(CentroDeAdopcion centro) {
 		boolean res = true;
 		res = cantidadDeAnimalesActualEnCentro(centro.getId()) > centro.getCantidadMax();
@@ -99,6 +102,7 @@ public class AnimalService {
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Animal> findAllNoAdoptedByCentro(Integer centroId) {
 		Collection<Animal> result = animalRepository.findAllNoAdoptedByCentro(centroId);
 		return result;
@@ -121,36 +125,42 @@ public class AnimalService {
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Animal> findAllNoAdoptados() {
 		Collection<Animal> result;
 		result = animalRepository.findAllNoAdopted();
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Animal> findAnimalAsignadoCanino(int cuidadorId) {
 
 		Collection<Animal> result = animalRepository.findAnimalAsignadoCanino(cuidadorId);
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Animal> findAnimalAsignadoFelino(int cuidadorId) {
 
 		Collection<Animal> result = animalRepository.findAnimalAsignadoFelino(cuidadorId);
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Animal> findAnimalAsignadoReptil(int cuidadorId) {
 
 		Collection<Animal> result = animalRepository.findAnimalAsignadoReptil(cuidadorId);
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Animal> findAnimalAsignadoAve(int cuidadorId) {
 
 		Collection<Animal> result = animalRepository.findAnimalAsignadoAve(cuidadorId);
 		return result;
 	}
 
+	@Transactional
 	public int cantidadDeAnimalesActualEnCentro(int centroId) {
 		int result;
 		result = animalRepository.cantidadDeAnimalesActualEnCentro(centroId);

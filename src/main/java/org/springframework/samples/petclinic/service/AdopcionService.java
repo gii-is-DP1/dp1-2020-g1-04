@@ -29,7 +29,7 @@ public class AdopcionService {
 		return adopcionRepository.findById(id);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Adopcion> findAll() {
 		Collection<Adopcion> result;
 		result = adopcionRepository.findAll();
@@ -43,34 +43,35 @@ public class AdopcionService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Adopcion> findAllByDuenoAdoptivo(int duenoAdoptivoId) {
 		Collection<Adopcion> result;
 		result = adopcionRepository.findAllByDuenoAdoptivo(duenoAdoptivoId);
 		return result;
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<Adopcion> findSolicitadasByDuenoAdoptivo() {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 
 		Collection<Adopcion> result = adopcionRepository.findSolicitadasByDuenoAdoptivo(dueno.getId());
 		return result;
 	}
-
+	@Transactional(readOnly = true)
 	public Collection<Adopcion> findAceptadasByDuenoAdoptivo() {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 
 		Collection<Adopcion> result = adopcionRepository.findAceptadasByDuenoAdoptivo(dueno.getId());
 		return result;
 	}
-
+	@Transactional(readOnly = true)
 	public Collection<Adopcion> findDenegadasByDuenoAdoptivo() {
 		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 
 		Collection<Adopcion> result = adopcionRepository.findDenegadasByDuenoAdoptivo(dueno.getId());
 		return result;
 	}
-
+	@Transactional(readOnly = true)
 	public Collection<Adopcion> findAllSolicitadas() {
 		Collection<Adopcion> result = adopcionRepository.findAllSolicitadas();
 		return result;

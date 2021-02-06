@@ -9,6 +9,7 @@ import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.repository.ComentarioRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ComentarioService {
@@ -34,6 +35,7 @@ public class ComentarioService {
 		this.directorService = directorService;
 	}
 
+	@Transactional
 	public void saveComentario(@Valid Comentario comentario) {
 		String authority = userService.principalAuthorityString();
 		switch (authority) {

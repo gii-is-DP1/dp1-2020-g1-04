@@ -68,7 +68,7 @@ public class DuenoAdoptivoService {
 		authoritiesService.saveAuthorities(duenoAdoptivo.getUser().getUsername(), "duenoadoptivo");
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Set<DuenoAdoptivo> findAllDuenosAdoptivos() {
 		Set<DuenoAdoptivo> result;
 		result = duenoAdoptivoRepository.findAll();
@@ -76,14 +76,14 @@ public class DuenoAdoptivoService {
 		return result;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public DuenoAdoptivo findDuenoAdoptivoByUserName(String duenoAdoptivoUserName) {
 		DuenoAdoptivo result;
 		result = duenoAdoptivoRepository.findByUserName(duenoAdoptivoUserName);
 		return result;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public DuenoAdoptivo findDuenoAdoptivoByPrincipal() {
 		DuenoAdoptivo result;
 		org.springframework.security.core.userdetails.User user;
