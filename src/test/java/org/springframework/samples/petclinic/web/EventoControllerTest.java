@@ -68,7 +68,7 @@ public class EventoControllerTest {
 		evento.setId(TEST_EVENTO_ID);
 		evento.setTitulo("Evento 1");
 		evento.setDireccion("Direccion 1");
-		evento.setFecha(LocalDate.of(2020, 01, 01));
+		evento.setFecha(LocalDate.of(2022, 01, 01));
 		evento.setAforo(14);
 		evento.setDescripcion("Descripcion");
 		Set<Cuidador> cuidadores = new HashSet<Cuidador>();
@@ -132,11 +132,11 @@ public class EventoControllerTest {
 				.param("titulo", "Evento 1")
 				.with(csrf())
 				.param("direccion","Direccion 1")
-				.param("fecha","01/01/2020")
+				.param("fecha","01/01/2022")
 				.param("aforo","14")
 				.param("descripcion","Descripcion"))
-				.andExpect(status().is3xxRedirection());
-				//.andExpect(view().name("redirect:/eventos/show/null"));
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/eventos/show/null"));
 
 	}
 	
@@ -163,7 +163,7 @@ public class EventoControllerTest {
 				.andExpect(model().attributeExists("evento"))
 				.andExpect(model().attribute("evento", hasProperty("titulo", is("Evento 1"))))
 				.andExpect(model().attribute("evento", hasProperty("direccion", is("Direccion 1"))))
-				.andExpect(model().attribute("evento", hasProperty("fecha", is(LocalDate.of(2020, 01, 01)))))
+				.andExpect(model().attribute("evento", hasProperty("fecha", is(LocalDate.of(2022, 01, 01)))))
 				.andExpect(model().attribute("evento", hasProperty("aforo", is(14))))
 				.andExpect(model().attribute("evento", hasProperty("descripcion", is("Descripcion"))))
 				.andExpect(view().name("eventos/createOrUpdateEventoForm"));
@@ -176,11 +176,11 @@ public class EventoControllerTest {
 				.with(csrf())
 				.param("titulo", "Evento 1")
 				.param("direccion","Direccion 1")
-				.param("fecha", "01/01/2010")
+				.param("fecha", "01/01/2022")
 				.param("aforo", "14")
 				.param("descripcion","Descripcion"))
 				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/eventos/show/null"));
+				.andExpect(view().name("redirect:/eventos/show/" + TEST_EVENTO_ID));
 	}
 	
 	@WithMockUser(value = "spring")
