@@ -38,8 +38,8 @@ public class Cuidador extends Person {
 	private User user;
 */
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="cuidador")
-	private Set<Animal> animales;
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy="cuidador")
+//	private Set<Animal> animales;
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name ="centro_de_adopcion_id")
@@ -50,11 +50,11 @@ public class Cuidador extends Person {
 	private Set<Evento> eventos;
 	
 	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="cuidador")
-	private Collection<Curso> cursos ;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="cuidador")
-	private Set<Visita> visitas;
+//	@OneToMany(cascade=CascadeType.ALL, mappedBy="cuidador")
+//	private Collection<Curso> cursos ;
+//	
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy="cuidador")
+//	private Set<Visita> visitas;
 	
 	//----------------------------------------------------------------------------------------------------------------
 	
@@ -75,13 +75,13 @@ public class Cuidador extends Person {
 		this.user = user;
 	}
 	*/
-	public Set<Animal> getAnimales(){
-		return this.animales;
-	}
-	
-	public void setAnimales(Set<Animal> animales) {
-		this.animales = animales;
-	}
+//	public Set<Animal> getAnimales(){
+//		return this.animales;
+//	}
+//	
+//	public void setAnimales(Set<Animal> animales) {
+//		this.animales = animales;
+//	}
 	
 	public CentroDeAdopcion getCentroDeAdopcion() {
 		return centroDeAdopcion;
@@ -99,21 +99,21 @@ public class Cuidador extends Person {
 		this.eventos = eventos;
 	}
 
-	public Collection<Curso> getCursos() {
-		return cursos;
-	}
-
-	public void setCursos(Collection<Curso> cursos) {
-		this.cursos = cursos;
-	}
-
-	public Set<Visita> getVisitas() {
-		return visitas;
-	}
-
-	public void setVisitas(Set<Visita> visitas) {
-		this.visitas = visitas;
-	}
+//	public Collection<Curso> getCursos() {
+//		return cursos;
+//	}
+//
+//	public void setCursos(Collection<Curso> cursos) {
+//		this.cursos = cursos;
+//	}
+//
+//	public Set<Visita> getVisitas() {
+//		return visitas;
+//	}
+//
+//	public void setVisitas(Set<Visita> visitas) {
+//		this.visitas = visitas;
+//	}
 	//----------------------------------------------------------------------------------------------------------------
 	
 	//ToString--------------------------------------------------------------------------------------------------------

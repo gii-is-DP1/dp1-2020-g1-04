@@ -84,31 +84,31 @@ public class Visita extends BaseEntity{
 		this.cuidador = cuidador;
 	}
 	
-	protected Set<Comentario> getComentariosInternal() {
-		if (this.comentarios == null) {
-			this.comentarios = new HashSet<>();
-		}
-		return this.comentarios;
-	}
+//	protected Set<Comentario> getComentariosInternal() {
+//		if (this.comentarios == null) {
+//			this.comentarios = new HashSet<>();
+//		}
+//		return this.comentarios;
+//	}
 
-	protected void setComentariosInternal(Set<Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
+//	protected void setComentariosInternal(Set<Comentario> comentarios) {
+//		this.comentarios = comentarios;
+//	}
 
-	public List<Comentario> getComentarios() {
-		List<Comentario> sortedComentarios = new ArrayList<>(getComentariosInternal());
-		PropertyComparator.sort(sortedComentarios, new MutableSortDefinition("date", false, false));
-		return Collections.unmodifiableList(sortedComentarios);
-	}
+//	public List<Comentario> getComentarios() {
+//		List<Comentario> sortedComentarios = new ArrayList<>(getComentariosInternal());
+//		PropertyComparator.sort(sortedComentarios, new MutableSortDefinition("date", false, false));
+//		return Collections.unmodifiableList(sortedComentarios);
+//	}
+//
+//	public void addComentario(Comentario comentario) {
+//		getComentariosInternal().add(comentario);
+//		comentario.setVisita(this);
+//	}
 
-	public void addComentario(Comentario comentario) {
-		getComentariosInternal().add(comentario);
-		comentario.setVisita(this);
-	}
-
-	public void setComentarios(Set<Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
+//	public void setComentarios(Set<Comentario> comentarios) {
+//		this.comentarios = comentarios;
+//	}
 
 	public Animal getAnimal() {
 		return animal;

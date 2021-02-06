@@ -22,24 +22,24 @@ public class Director extends Person {
 	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User	user;
 */
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="centros_director")
-	private Set<CentroDeAdopcion> centros;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	private Collection<Adopcion> adopciones;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="director")
-	private Set<Evento> eventos;
+//	@OneToMany(cascade = CascadeType.ALL)
+//	@JoinColumn(name="centros_director")
+//	private Set<CentroDeAdopcion> centros;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private Collection<Adopcion> adopciones;
+//	
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy="director")
+//	private Set<Evento> eventos;
 	
 	//HACER METODO LISTA DE CENTROS
 	
-	public Set<CentroDeAdopcion> getCentros(){
-		return centros;
-	}
-	public void setCentros(Set<CentroDeAdopcion> centros) {
-		this.centros =centros;
-	}
+//	public Set<CentroDeAdopcion> getCentros(){
+//		return centros;
+//	}
+//	public void setCentros(Set<CentroDeAdopcion> centros) {
+//		this.centros =centros;
+//	}
 	/*
 	public User getUser() {
 		return user;
@@ -49,18 +49,18 @@ public class Director extends Person {
 		this.user = user;
 	}
 	*/
-	public Set<Evento> getEventos() {
-		return eventos;
-	}
-	public void setEventos(Set<Evento> eventos) {
-		this.eventos = eventos;
-	}
-	public Collection<Adopcion> getAdopciones() {
-		return adopciones;
-	}
-	public void setAdopciones(Collection<Adopcion> adopciones) {
-		this.adopciones = adopciones;
-	}
+//	public Set<Evento> getEventos() {
+//		return eventos;
+//	}
+//	public void setEventos(Set<Evento> eventos) {
+//		this.eventos = eventos;
+//	}
+//	public Collection<Adopcion> getAdopciones() {
+//		return adopciones;
+//	}
+//	public void setAdopciones(Collection<Adopcion> adopciones) {
+//		this.adopciones = adopciones;
+//	}
 	
 
 }

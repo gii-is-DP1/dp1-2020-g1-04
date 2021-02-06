@@ -143,7 +143,7 @@ public class CuidadorController {
 			return VIEWS_CUIDADOR_CREATE_OR_UPDATE_FORM;
 		} else {
 			Optional<Cuidador> aux = cuidadorService.findCuidadorById(cuidadorId);
-			cuidador.setAnimales(aux.get().getAnimales());
+//			cuidador.setAnimales(aux.get().getAnimales());
 			cuidador.setId(cuidadorId);
 
 			this.cuidadorService.saveCuidador(cuidador);
