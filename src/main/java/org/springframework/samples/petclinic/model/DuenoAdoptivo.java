@@ -62,28 +62,30 @@ public class DuenoAdoptivo extends Person {
 	 * User user; //
 	 */
 
-	// Relacion DuenoAdoptivo-Adopcion
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
-	private Collection<Adopcion> adopciones;
+//	// Relacion DuenoAdoptivo-Adopcion
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
+//	private Collection<Adopcion> adopciones;
 
-	// Relación DuenoAdoptivo-Visita
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
-	private Collection<Visita> visitas;
 
-	// Relacion DuenoAdoptivo-Evento
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "duenos_eventos", joinColumns = @JoinColumn(name = "dueno_id"), inverseJoinColumns = @JoinColumn(name = "evento_id"))
-	private Set<Evento> eventos;
+//	// Relación DuenoAdoptivo-Visita
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
+//	private Collection<Visita> vistitas;
+
+
+//	// Relacion DuenoAdoptivo-Evento
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "duenos_eventos", joinColumns = @JoinColumn(name = "dueno_id"), inverseJoinColumns = @JoinColumn(name = "evento_id"))
+//	private Set<Evento> eventos;
 
 	// getters and setters
 
-	public Collection<Adopcion> getAdopciones() {
-		return adopciones;
-	}
-
-	public void setAdopciones(Collection<Adopcion> adopciones) {
-		this.adopciones = adopciones;
-	}
+//	public Collection<Adopcion> getAdopciones() {
+//		return adopciones;
+//	}
+//
+//	public void setAdopciones(Collection<Adopcion> adopciones) {
+//		this.adopciones = adopciones;
+//	}
 
 	public String getDireccion() {
 		return this.direccion;
@@ -115,20 +117,22 @@ public class DuenoAdoptivo extends Person {
 				.append("telefono", this.telefono).append("email", this.email).toString();
 	}
 
-	public Collection<Visita> getVisitas() {
-		return visitas;
-	}
 
-	public void setVisitas(Collection<Visita> visitas) {
-		this.visitas = visitas;
-	}
+//	public Collection<Visita> getVistitas() {
+//		return vistitas;
+//	}
+//
+//	public void setVistitas(Collection<Visita> vistitas) {
+//		this.vistitas = vistitas;
+//	}
 
-	public Set<Evento> getEventos() {
-		return eventos;
-	}
+//	public Set<Evento> getEventos() {
+//		return eventos;
+//	}
+//
+//	public void setEventos(Set<Evento> eventos) {
+//		this.eventos = eventos;
+//	}
 
-	public void setEventos(Set<Evento> eventos) {
-		this.eventos = eventos;
-	}
 
 }
