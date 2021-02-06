@@ -20,11 +20,9 @@ import lombok.Setter;
 @Table(name = "comentarios")
 public class Comentario extends BaseEntity{
 	
-	@Column(name= "comentario")
 	@NotEmpty
 	private String comentario;
 	
-	@Column(name = "momento")
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime momento;
 

@@ -28,7 +28,6 @@ import lombok.Setter;
 public class Animal extends BaseEntity {
 
 	@NotBlank
-	@Column(name = "nombre")
 	private String nombre;
 
 	@Embedded
@@ -41,26 +40,20 @@ public class Animal extends BaseEntity {
 	private RequisitosDeAdopcion requisitos;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "fechaNacimiento")
 	private LocalDate fechaNacimiento;
 
-	@Column(name = "chip")
 	private String chip;
 
 	@NotBlank
-	@Column(name = "numeroRegistro")
 	private String numeroRegistro;
 
-	@Column(name = "adoptado")
 	private Boolean adoptado;
 
 	@NotBlank
-	@Column(name = "tamanyo")
 	private String tamanyo;
 
 	
 	@NotBlank
-	@Column(name = "sexo")
 	private String sexo;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")

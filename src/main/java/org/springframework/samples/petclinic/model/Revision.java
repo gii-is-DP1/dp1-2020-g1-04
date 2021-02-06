@@ -20,13 +20,10 @@ import lombok.Setter;
 public class Revision extends BaseEntity{
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "momento")
 	private LocalDate momento;
 	
-	@Column(name="comment")
 	private String comment;
 	
-	@Column(name="estado")
 	private String estado;
 
 	@ManyToOne(optional=false)

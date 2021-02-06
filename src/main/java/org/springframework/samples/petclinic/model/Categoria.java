@@ -12,13 +12,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "categoria")
 public class Categoria extends BaseEntity {
 	
 	/* ATRIBUTOS */
 	private Tipo tipo;
 	
-	@Column(name = "raza")
 	@NotEmpty
 	private String raza;
 	

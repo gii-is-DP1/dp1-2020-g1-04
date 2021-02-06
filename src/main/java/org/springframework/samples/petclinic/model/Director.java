@@ -16,7 +16,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "director")
 public class Director extends Person {
 	/*
 	@OneToOne(cascade = CascadeType.ALL, optional = false)
