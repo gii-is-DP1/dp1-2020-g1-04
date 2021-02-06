@@ -1,7 +1,9 @@
 package org.springframework.samples.petclinic.web;
 
+
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -10,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.util.Optional;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +27,7 @@ import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.GradoDeAtencion;
 import org.springframework.samples.petclinic.model.Peligrosidad;
 import org.springframework.samples.petclinic.model.RequisitosDeAdopcion;
-import org.springframework.samples.petclinic.model.Tipo;
+
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CategoriaService;
 import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
@@ -32,8 +35,12 @@ import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.samples.petclinic.model.Tipo;
+
+
 
 @WebMvcTest(controllers = AnimalController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
+
 public class AnimalControllerTests {
 
 	private static final int TEST_ANIMAL_ID = 1;
@@ -99,13 +106,27 @@ public class AnimalControllerTests {
 		given(categoriaService.findCategoriaById(TEST_CATEGORIA_ID)).willReturn(Optional.of(categoria));
 
 	}
+=
 
 	// H12 Test Positivo
+
 	@WithMockUser(value = "spring")
 	@Test
 	void testListadoTodosAnimales() throws Exception {
 		mockMvc.perform(get("/animales/todos")).andExpect(status().isOk())
 				.andExpect(view().name("animales/AnimalListing"));
+	}
+	
+	//HU-3
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowAnimal() throws Exception{
+		createAnimal();
+		mockMvc.perform(get("/animales/show/{animalId}", TEST_ANIMAL_ID))
+				.andExpect(status().isOk())
+				.andExpect(view().name("animales/showAnimal"));
+
+		
 	}
 
 	// H10 Test Positivo

@@ -42,11 +42,9 @@ public class AdopcionControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-//	@BeforeEach
-//	void setup() {
-//		given(this.adopcionService.findAdopcionById(TEST_ADOPCION_ID)).willReturn(new Adopcion());
-//	}
 
+	
+    //HU-1
 	@WithMockUser(value = "spring")
     @Test
 	void testFindAdopciones() throws Exception {

@@ -38,13 +38,15 @@ public class CentroDeAdopcionControllerTest {
 		given(this.centroDeAdopcionService.findById(TEST_CENTRO_ID)).willReturn(new CentroDeAdopcion());
 	}
 	
+	
+	//HU-6
 	@WithMockUser(value = "spring")
       @Test
 	void testFindCentros() throws Exception {
 		mockMvc.perform(get("/centros",TEST_CENTRO_ID))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeExists("centros"))
-				.andExpect(view().name("centroDeAdopcion/centrosListing"));
+				.andExpect(view().name("centrosDeAdopcion/centrosListing"));
 	}
 
 }
