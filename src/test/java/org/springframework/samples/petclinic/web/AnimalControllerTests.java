@@ -1,9 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -32,7 +30,6 @@ import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.mockito.Mockito.verify;
 import org.springframework.samples.petclinic.model.Tipo;
 
 
@@ -124,33 +121,5 @@ public class AnimalControllerTests {
 
 		
 	}
-//	//HU-3
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testShowAnimalSuccess() throws Exception{
-//		createAnimal();
-//		mockMvc.perform(get("/animales/show/{animalId}",TEST_ANIMAL_ID))
-//				.andExpect(status().isOk())
-//				.andExpect(model().attribute("animal", hasProperty("nombre", is("NombreTest"))))
-//				.andExpect(model().attribute("animal", hasProperty("adoptado", is(false))))
-//				.andExpect(model().attribute("animal", hasProperty("chip", is("sdfsd"))))
-//				.andExpect(model().attribute("animal", hasProperty("fechaNacimiento", is(LocalDate.now().minusWeeks(20)))))
-//				.andExpect(model().attribute("animal", hasProperty("fechaPrimeraIncorporacion", is(LocalDate.now().minusMonths(3)))))
-//				.andExpect(model().attribute("animal", hasProperty("fechaUltimaIncorporacion", is(animal.getFechaPrimeraIncorporacion()))))
-//				.andExpect(model().attribute("animal", hasProperty("foto", is("http://animal.com/foto.jpg"))))
-////				.andExpect(model().attribute("animal", hasProperty("peligrosidad.grado", is("5"))))
-////				.andExpect(model().attribute("animal", hasProperty("peligrosidad.licencia", is(false))))		
-////				.andExpect(model().attribute("animal", hasProperty("requisitos.licenciarequerida", is(false))))
-//				.andExpect(model().attribute("animal", hasProperty("numeroRegistro", is(animalService.nuevoNRegistro(animal.getCategoria().toString())))))
-////				.andExpect(model().attribute("animal", hasProperty("requisitos.seguro", is(false))))
-////				.andExpect(model().attribute("animal", hasProperty("atencion.atencion", is(5))))
-////				.andExpect(model().attribute("animal", hasProperty("atencion.dificultad", is(5))))
-//				.andExpect(model().attribute("animal", hasProperty("sexo", is("M"))))
-//				.andExpect(model().attribute("animal", hasProperty("tamanyo", is("L"))))
-////				.andExpect(model().attribute("animal", hasProperty("cuidador.id", is(1))))
-////				.andExpect(model().attribute("animal", hasProperty("centroDeAdopcion.id", is(1))))
-//				.andExpect(status().is3xxRedirection())
-//				.andExpect(view().name("animales/showAnimal"));
-//	}
 
 }
