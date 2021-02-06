@@ -106,7 +106,7 @@ public class AnimalControllerTests {
 		given(categoriaService.findCategoriaById(TEST_CATEGORIA_ID)).willReturn(Optional.of(categoria));
 
 	}
-=
+
 
 	// H12 Test Positivo
 
