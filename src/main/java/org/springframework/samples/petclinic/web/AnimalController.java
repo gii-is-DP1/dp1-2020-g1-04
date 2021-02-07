@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cuidador;
+import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CategoriaService;
 import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
+import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Controller;
@@ -43,14 +45,17 @@ public class AnimalController {
 	private final CentroDeAdopcionService centroDeAdopcionService;
 
 	private final CategoriaService categoriaService;
+	
+	private final DirectorService directorService;
 
 	@Autowired
 	public AnimalController(AnimalService animalService, CuidadorService cuidadorService,
-			CentroDeAdopcionService centroDeAdopcionService, CategoriaService categoriaService) {
+			CentroDeAdopcionService centroDeAdopcionService, CategoriaService categoriaService,DirectorService directorService) {
 		this.animalService = animalService;
 		this.categoriaService = categoriaService;
 		this.centroDeAdopcionService = centroDeAdopcionService;
 		this.cuidadorService = cuidadorService;
+		this.directorService = directorService;
 	}
 
 	@InitBinder
@@ -80,6 +85,11 @@ public class AnimalController {
 	@GetMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, ModelMap model) {
 		Optional<Animal> animal = animalService.findAnimalById(animalId);
+		Director principal = directorService.findDirectorByPrincipal();
+		Integer directorCentroAnimal = animal.get().getCentroDeAdopcion().getDirector().getId();
+		if(!(principal.getId() == directorCentroAnimal)) {
+			return "error-403";
+		}
 		if (animal.isPresent()) {
 			ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
 			model.put("auxiliar", auxiliar);
@@ -98,6 +108,11 @@ public class AnimalController {
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
 			BindingResult result, ModelMap model) {
 		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
+		Director principal = directorService.findDirectorByPrincipal();
+		Integer directorCentroAnimal = modifiedAnimal.getCentroDeAdopcion().getDirector().getId();
+		if(!(principal.getId() == directorCentroAnimal)) {
+			return "error-403";
+		}
 		if (result.hasErrors()) {
 			model.put("auxiliar", auxiliar);
 			model.put("animal", modifiedAnimal);

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cuidador;
+import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Evento;
 import org.springframework.samples.petclinic.service.CuidadorService;
@@ -286,13 +287,18 @@ public class EventoController {
 	@GetMapping(value = "/delete/{eventoId}")
 	public ModelAndView eliminarEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
 		ModelAndView mav;
+		Director principal = directorService.findDirectorByPrincipal();
 		try {
 			Optional<Evento> e = eventoService.findEventoById(eventoId);
 			Boolean b = e.isPresent();
 			if (!b) {
 				throw new BusquedaVaciaException("No existe");
 			}
-			Evento evento = e.get();
+			Evento evento = e.get(); 
+			if(!(principal.getId() == evento.getDirector().getId())) {	
+				mav = new ModelAndView("redirect:/error-403");
+				return mav;
+			}
 			eventoService.deleteEvento(evento);
 		} catch (Exception ex) {
 			mav = new ModelAndView("/403");

@@ -31,7 +31,7 @@
         <c:forEach items="${adopciones}" var="adopcion">
             <tr>
             <td>
-            	<a href="/adopcion/show/ <c:out value="${adopcion.id}"/>">Ver</a>
+            	<a href="/adopcion/show/<c:out value="${adopcion.id}"/>">Ver</a>
             </td>
                 <td>
                   <c:out value="${adopcion.unidadFamiliar}"/>

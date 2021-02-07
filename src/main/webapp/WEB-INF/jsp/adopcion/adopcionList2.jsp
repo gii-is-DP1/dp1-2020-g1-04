@@ -98,7 +98,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<h2>Adopciones Aceptadas</h2>
+	<h2>Adopciones Denegadas</h2>
 	<table id="adopcionTable" class="table table-striped">
 		<thead>
 			<tr>

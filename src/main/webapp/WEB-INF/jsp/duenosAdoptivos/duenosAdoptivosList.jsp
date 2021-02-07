@@ -25,7 +25,7 @@
         <c:forEach items="${selections}" var="duenoAdoptivo">
             <tr>
                 <td>
-                    <spring:url value="/duenosAdoptivos/{duenoAdoptivoId}" var="duenoAdoptivoUrl">
+                    <spring:url value="/duenosAdoptivos/show/{duenoAdoptivoId}" var="duenoAdoptivoUrl">
                         <spring:param name="duenoAdoptivoId" value="${duenoAdoptivo.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(duenoAdoptivoUrl)}"><c:out value="${duenoAdoptivo.nombre} "/></a>

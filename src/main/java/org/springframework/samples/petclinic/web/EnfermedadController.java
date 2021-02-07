@@ -54,6 +54,10 @@ public class EnfermedadController {
 		Enfermedad enfermedad = new Enfermedad();
 		Optional<Animal> animal = animalService.findAnimalById(animalId);
 		enfermedad.setAnimal(animal.get());
+		Cuidador principal = cuidadorService.findCuidadorByPrincipal();
+		if(!(principal.getId()== animal.get().getCuidador().getId())) {
+			return "error-403";
+		}
 		model.put("enfermedad", enfermedad);
 		return VIEWS_ENFERMEDAD_CREATE_OR_UPDATE_FORM;
 	}
@@ -74,6 +78,10 @@ public class EnfermedadController {
 			}
 			Optional<Animal> animal = animalService.findAnimalById(animalId);
 			enfermedad.setAnimal(animal.get());
+			Cuidador principal = cuidadorService.findCuidadorByPrincipal();
+			if(!(principal.getId()== animal.get().getCuidador().getId())) {
+				return "error-403";
+			}
 			this.enfermedadService.saveEnfermedad(enfermedad);
 			model.put("errorFecha", errorFecha);
 			return "redirect:/enfermedad/show/" + enfermedad.getId();

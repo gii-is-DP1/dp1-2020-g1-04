@@ -10,10 +10,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adopcion;
 import org.springframework.samples.petclinic.model.Animal;
+import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.service.AdopcionService;
 import org.springframework.samples.petclinic.service.AnimalService;
+import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -39,14 +41,17 @@ public class AdopcionController {
 	private final DuenoAdoptivoService duenoAdoptivoService;
 
 	private final AnimalService animalService;
+	
+	private final DirectorService directorService;
 
 	@Autowired
 	public AdopcionController(AdopcionService adopcionService, UserService userService,
-			DuenoAdoptivoService duenoAdoptivoService, AnimalService animalService) {
+			DuenoAdoptivoService duenoAdoptivoService, AnimalService animalService,DirectorService directorService) {
 		this.adopcionService = adopcionService;
 		this.userService = userService;
 		this.duenoAdoptivoService = duenoAdoptivoService;
 		this.animalService = animalService;
+		this.directorService = directorService;
 	}
 
 	@InitBinder
@@ -135,6 +140,11 @@ public class AdopcionController {
 	public String findAll(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId, Map<String, Object> model) {
 		Collection<Adopcion> results;
 		results = adopcionService.findAllByDuenoAdoptivo(duenoAdoptivoId);
+		DuenoAdoptivo principal = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		if(!(principal.getId() == duenoAdoptivoId)) {
+			return "error-403";
+		}
+		
 		model.put("adopciones", results);
 		return "adopcion/adopcionList";
 	}
@@ -165,9 +175,12 @@ public class AdopcionController {
 	public String showAdopcion(@PathVariable("adopcionId") int adopcionId, Map<String, Object> model) {
 		Optional<Adopcion> adopcionOpt = adopcionService.findAdopcionById(adopcionId);
 			Adopcion adopcion= adopcionOpt.get();
-			DuenoAdoptivo principal=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-			if(!(adopcion.getDueno().getId()==principal.getId())) {
-			return "error-403";
+			String authority= userService.principalAuthorityString();
+			if(!(authority.contains("director"))) {
+				DuenoAdoptivo principal=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+				if(!(adopcion.getDueno().getId()==principal.getId())) {
+					return "error-403";
+			  }
 			}
 			model.put("adopcion", adopcion);
 			return "adopcion/showAdopcion";		
