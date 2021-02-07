@@ -14,6 +14,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
+import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.repository.AnimalRepository;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
@@ -159,6 +160,13 @@ public class AnimalService {
 		Collection<Animal> result = animalRepository.findAnimalAsignadoAve(cuidadorId);
 		return result;
 	}
+	@Transactional(readOnly = true)
+	public Collection<Animal> findAnimalAsignadoTipo(Tipo tipo, int cuidadorId) {
+
+		Collection<Animal> result = animalRepository.findAnimalAsignadoTipo(tipo, cuidadorId);
+		return result;
+	}
+	
 
 	@Transactional
 	public int cantidadDeAnimalesActualEnCentro(int centroId) {
