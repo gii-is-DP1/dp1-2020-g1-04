@@ -295,10 +295,8 @@ public class EventoController {
 				throw new BusquedaVaciaException("No existe");
 			}
 			Evento evento = e.get(); 
-			if(!(principal.getId() == evento.getDirector().getId())) {
-				Exception excepcion = new Exception();
-				mav = new ModelAndView("/403");
-				mav.addObject("exceptionMessage", excepcion.getMessage());
+			if(!(principal.getId() == evento.getDirector().getId())) {	
+				mav = new ModelAndView("redirect:/error-403");
 				return mav;
 			}
 			eventoService.deleteEvento(evento);

@@ -202,6 +202,24 @@ INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
 	VALUES (2, 'centroNuevo', '2019-09-07', 2, 1, 11);
 	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
 	VALUES (3, 'centroNuevo', '2110-09-07', 1, 2, 11);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (4, 'centroNuevo', '2110-09-07', 4, 2, 2);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (5, 'centroNuevo', '2110-09-07', 4, 4, 2);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (6, 'centroNuevo', '2110-09-07', 5, 4, 3);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (7, 'centroNuevo', '2110-09-07', 6, 5, 3);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (8, 'centroNuevo', '2110-09-07', 7, 3, 4);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (9, 'centroNuevo', '2110-09-07', 8, 3, 4);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (10, 'centroNuevo', '2110-09-07', 9, 3, 5);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (11, 'centroNuevo', '2110-09-07', 8, 5, 11);
+	INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)
+	VALUES (12, 'centroNuevo', '2110-09-07', 6, 4, 11);
 	
 --Añadir Eventos	
 INSERT INTO eventos(id, titulo, direccion, fecha, aforo, descripcion, DIRECTOR_ID)
