@@ -32,6 +32,7 @@ import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CategoriaService;
 import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
+import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -54,6 +55,8 @@ public class AnimalControllerTests {
 
 	@MockBean
 	private CuidadorService cuidadorService;
+	@MockBean
+	private DirectorService directorService;
 
 	@MockBean
 	private CentroDeAdopcionService centroDeAdopcionService;
