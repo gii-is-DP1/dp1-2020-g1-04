@@ -60,8 +60,7 @@ public class EnfermedadController {
 
 	@PostMapping(value = "/nuevo/{animalId}")
 	public String processCreationForm(@Valid Enfermedad enfermedad, BindingResult result,
-			@PathVariable("animalId") int animalId, Map<String, Object> model)
-			throws FechaFinAntesQueDeInicioException {
+			@PathVariable("animalId") int animalId, Map<String, Object> model) {
 		String errorFecha = "";
 		if (result.hasErrors()) {
 			return VIEWS_ENFERMEDAD_CREATE_OR_UPDATE_FORM;

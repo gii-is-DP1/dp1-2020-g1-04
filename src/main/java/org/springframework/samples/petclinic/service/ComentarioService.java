@@ -36,7 +36,7 @@ public class ComentarioService {
 	}
 
 	@Transactional
-	public void saveComentario(@Valid Comentario comentario) {
+	public void saveComentario(Comentario comentario) {
 		String authority = userService.principalAuthorityString();
 		switch (authority) {
 		case "duenoadoptivo":

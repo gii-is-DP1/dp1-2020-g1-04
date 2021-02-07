@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.web;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -19,7 +18,6 @@ import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -99,20 +97,18 @@ public class AnimalController {
 	@PostMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
 			BindingResult result, ModelMap model) {
-		//ModelAndView mav;
+		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
 		if (result.hasErrors()) {
-
-			//mav = new ModelAndView(ANIMAL_FORM);
+			model.put("auxiliar", auxiliar);
+			model.put("animal", modifiedAnimal);
+			model.put("cuidadores", cuidadorService.findAllCuidadores());
+			model.put("centros", centroDeAdopcionService.findAllNoEstenLlenos());
 			return ANIMAL_FORM;
 		} else {
 			Optional<Animal> animalOpt = animalService.findAnimalById(animalId);
 			Animal animal=animalOpt.get();
 			modifiedAnimal.setId(animalId);
-//			modifiedAnimal.setAdopciones(animal.getAdopciones());
-//			modifiedAnimal.setRevisiones(animal.getRevisiones());
 			modifiedAnimal.setEnfermedades(animal.getEnfermedades());
-//			modifiedAnimal.setVacunaciones(animal.getVacunaciones());
-//			modifiedAnimal.setVisitas(animal.getVisitas());
 			modifiedAnimal.setNumeroRegistro(animal.getNumeroRegistro());
 			modifiedAnimal.setCategoria(animal.getCategoria());
 			modifiedAnimal.setFechaPrimeraIncorporacion(animal.getFechaPrimeraIncorporacion());
@@ -150,7 +146,12 @@ public class AnimalController {
 			throws AforoCentroCompletadoException {
 		Categoria categoria = categoriaService.findCategoriaById(categoriaId).get();		
 		Animal animalModificado=	animalService.inicializarAnimal(categoria, animal);
+		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
 		if (result.hasErrors()) {
+			model.put("auxiliar", auxiliar);
+			model.put("animal", animalModificado);
+			model.put("cuidadores", cuidadorService.findAllCuidadores());
+			model.put("centros", centroDeAdopcionService.findAllNoEstenLlenos());
 			return ANIMAL_FORM;
 		} else {
 			try {
@@ -190,10 +191,10 @@ public class AnimalController {
 		Collection<Animal> animalesFelino;
 		Collection<Animal> animalesReptil;
 		Collection<Animal> animalesAve;
-		animalesCanino = animalService.findAnimalAsignadoCanino(cuidadorId);
-		animalesFelino = animalService.findAnimalAsignadoFelino(cuidadorId);
-		animalesReptil = animalService.findAnimalAsignadoReptil(cuidadorId);
-		animalesAve = animalService.findAnimalAsignadoAve(cuidadorId);
+		animalesCanino = animalService.findAnimalAsignadoTipo(Tipo.CANINO, cuidadorId);
+		animalesFelino = animalService.findAnimalAsignadoTipo(Tipo.FELINO, cuidadorId);
+		animalesReptil = animalService.findAnimalAsignadoTipo(Tipo.REPTIL, cuidadorId);
+		animalesAve = animalService.findAnimalAsignadoTipo(Tipo.AVE, cuidadorId);
 		model.addAttribute("animalesCanino", animalesCanino);
 		model.addAttribute("animalesFelino", animalesFelino);
 		model.addAttribute("animalesReptil", animalesReptil);

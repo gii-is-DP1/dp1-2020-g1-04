@@ -53,7 +53,7 @@
 		</tr>
 		<tr>
 			<th>Animal</th>
-			<td><b><a href="/animal/show/${adopcion.animal.id }">${adopcion.animal.nombre}</a></b></td>
+			<td><b><a href="/animales/show/${adopcion.animal.id }">${adopcion.animal.nombre}</a></b></td>
 		</tr>
 
 		<sec:authorize access="hasAuthority('director')">

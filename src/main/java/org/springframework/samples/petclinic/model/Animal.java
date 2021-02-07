@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,6 +41,8 @@ public class Animal extends BaseEntity {
 	@Embedded
 	private RequisitosDeAdopcion requisitos;
 
+	@Past
+	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate fechaNacimiento;
 

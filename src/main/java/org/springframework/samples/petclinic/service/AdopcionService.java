@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Adopcion;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
+import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.repository.AdopcionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,29 +52,13 @@ public class AdopcionService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Adopcion> findSolicitadasByDuenoAdoptivo() {
-		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-
-		Collection<Adopcion> result = adopcionRepository.findSolicitadasByDuenoAdoptivo(dueno.getId());
-		return result;
-	}
-	@Transactional(readOnly = true)
-	public Collection<Adopcion> findAceptadasByDuenoAdoptivo() {
-		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-
-		Collection<Adopcion> result = adopcionRepository.findAceptadasByDuenoAdoptivo(dueno.getId());
-		return result;
-	}
-	@Transactional(readOnly = true)
-	public Collection<Adopcion> findDenegadasByDuenoAdoptivo() {
-		DuenoAdoptivo dueno = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-
-		Collection<Adopcion> result = adopcionRepository.findDenegadasByDuenoAdoptivo(dueno.getId());
-		return result;
-	}
-	@Transactional(readOnly = true)
 	public Collection<Adopcion> findAllSolicitadas() {
 		Collection<Adopcion> result = adopcionRepository.findAllSolicitadas();
+		return result;
+	}
+	@Transactional(readOnly = true)
+	public Collection<Adopcion> findAdopcionEstadoByDuenoAdoptivo(Estado estado, Integer duenoId) {
+		Collection<Adopcion> result = adopcionRepository.findAdopcionEstadoByDuenoAdoptivo(estado,duenoId);
 		return result;
 	}
 

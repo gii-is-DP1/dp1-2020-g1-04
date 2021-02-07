@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Animal;
+import org.springframework.samples.petclinic.model.Tipo;
 
 public interface AnimalRepository extends Repository<Animal, Integer> {
 	
@@ -43,6 +44,9 @@ public interface AnimalRepository extends Repository<Animal, Integer> {
 
 	@Query("SELECT COUNT(*) FROM Animal a WHERE a.id=:animalId and a.adoptado=false and a.centroDeAdopcion.id=:centroId")
 	public int comprobarColeccion(@Param("centroId")Integer centroId,@Param("animalId") Integer animalId);
+
+	@Query("SELECT animal FROM Animal animal JOIN animal.cuidador c WHERE c.id =:cuidadorId and animal.adoptado=false and animal.categoria.tipo=:tipo")
+	public Collection<Animal> findAnimalAsignadoTipo(@Param("tipo")Tipo tipo,@Param("cuidadorId") int cuidadorId);
 	
 }
 

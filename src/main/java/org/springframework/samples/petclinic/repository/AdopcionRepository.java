@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Adopcion;
+import org.springframework.samples.petclinic.model.Estado;
 
 public interface AdopcionRepository extends Repository<Adopcion, Integer>{
 	
@@ -40,5 +41,8 @@ public interface AdopcionRepository extends Repository<Adopcion, Integer>{
 	
 	@Query("SELECT adopcion FROM  Adopcion adopcion WHERE adopcion.estado=0")
 	public Collection<Adopcion>findAllSolicitadas();
+	
+	@Query("SELECT adopcion FROM  Adopcion adopcion WHERE adopcion.dueno.id=:duenoId and adopcion.estado=:estado")
+	public Collection<Adopcion> findAdopcionEstadoByDuenoAdoptivo(@Param("estado")Estado estado, @Param("duenoId")Integer duenoId);
 	
 }
