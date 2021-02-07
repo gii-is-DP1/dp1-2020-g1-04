@@ -163,10 +163,14 @@ public class AdopcionController {
 
 	@GetMapping(value = "/adopcion/show/{adopcionId}")
 	public String showAdopcion(@PathVariable("adopcionId") int adopcionId, Map<String, Object> model) {
-		Optional<Adopcion> adopcion = adopcionService.findAdopcionById(adopcionId);
-		model.put("adopcion", adopcion.get());
-		return "adopcion/showAdopcion";
-
+		Optional<Adopcion> adopcionOpt = adopcionService.findAdopcionById(adopcionId);
+			Adopcion adopcion= adopcionOpt.get();
+			DuenoAdoptivo principal=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+			if(!(adopcion.getDueno().getId()==principal.getId())) {
+			return "error-403";
+			}
+			model.put("adopcion", adopcion);
+			return "adopcion/showAdopcion";		
 	}
 
 	// Actualizar adopcion
