@@ -44,6 +44,7 @@ public class ComentarioService {
 
 	}
 
+	@Transactional
 	public Comentario inicializarComentario(Visita visita) {
 	Comentario comentario =new Comentario();
 	comentario.setVisita(visita);

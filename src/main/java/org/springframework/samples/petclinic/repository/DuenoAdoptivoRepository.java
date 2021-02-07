@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.repository;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
@@ -59,6 +60,10 @@ public interface DuenoAdoptivoRepository extends Repository<DuenoAdoptivo, Integ
 	public Set<DuenoAdoptivo> findAll();
 
 	@Query("SELECT d FROM DuenoAdoptivo d WHERE d.user.username=:duenoAdoptivoUserName")
-	DuenoAdoptivo findByUserName(@Param("duenoAdoptivoUserName") String duenoAdoptivoUserName);
+	public DuenoAdoptivo findByUserName(@Param("duenoAdoptivoUserName") String duenoAdoptivoUserName);
+
+	@Query("SELECT COUNT(*) FROM DuenoAdoptivo d WHERE d.user.username=:username")
+	public Integer CoprobarUserName(@Param("username")String username);
+
 
 }

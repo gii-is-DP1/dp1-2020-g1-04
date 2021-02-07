@@ -20,8 +20,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedUserNameException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -65,9 +67,12 @@ public class UserController {
 			return VIEWS_DUENOADOPTIVO_CREATE_FORM;
 		} else {
 			// creating duenoAdoptivo, user, and authority
-			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
+			
+				this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
+			
+			}
 			return "redirect:/";
 		}
-	}
+	
 
 }

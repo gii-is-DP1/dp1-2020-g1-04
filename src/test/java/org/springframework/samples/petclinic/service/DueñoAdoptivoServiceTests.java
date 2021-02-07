@@ -33,7 +33,7 @@ import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedUserNameException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
@@ -87,7 +87,7 @@ class DuenoAdoptivoServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldInsertDuenoAdoptivo() {
+	public void shouldInsertDuenoAdoptivo() throws DataAccessException, DuplicatedUserNameException {
 		Collection<DuenoAdoptivo> duenosAdoptivos = this.duenoAdoptivoService.findDuenoAdoptivoByApellidos("Durán");
 		int found = duenosAdoptivos.size();
 
@@ -114,7 +114,7 @@ class DuenoAdoptivoServiceTests {
 	//H13 Test Positivo
 	@Test
 	@Transactional
-	public void findAll() {
+	public void findAll() throws DataAccessException, DuplicatedUserNameException {
 		Collection<DuenoAdoptivo> duenosAdoptivos = this.duenoAdoptivoService.findAllDuenosAdoptivos();
 		int found = duenosAdoptivos.size();
 

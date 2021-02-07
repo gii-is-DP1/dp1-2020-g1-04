@@ -69,7 +69,7 @@ public class AnimalService {
 
 	}
 
-	@Transactional
+	@Transactional(rollbackFor={RatioAnimalesPorCuidadorSuperadoException.class, AforoCentroCompletadoException.class})
 	public void comprobarRatioCuidador(Animal animal)
 			throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
 		CentroDeAdopcion centro = animal.getCentroDeAdopcion();
