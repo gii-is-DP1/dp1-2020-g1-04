@@ -94,7 +94,8 @@ public class EventoController {
 
 	@GetMapping(value = "/director/misEventos")
 	public String listadoEventosDirector(ModelMap model) {
-		Collection<Evento> eventos = eventoService.findEventosByDirector();
+		Director director=directorService.findDirectorByPrincipal();
+		Collection<Evento> eventos = eventoService.findEventosByDirector(director.getId());
 		model.addAttribute("eventos", eventos);
 		return EVENTOS_LISTING;
 	}
@@ -168,6 +169,11 @@ public class EventoController {
 	@GetMapping(value = "/{eventoId}/quitarCuidador/{cuidadorId}")
 	public String quitarCuidadorEvento(@PathVariable("eventoId") int eventoId,
 			@PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
+		String role = userService.principalAuthorityString();
+		Boolean be = role.contains("director");
+		if (!be) {
+			return "redirect:/error-403";
+		}
 		try {
 			Optional<Evento> even = eventoService.findEventoById(eventoId);
 			Boolean b = even.isPresent();
@@ -184,8 +190,7 @@ public class EventoController {
 			Cuidador cuidador = c.get();
 			eventoService.quitarCuidadorEvento(evento, cuidador);
 		} catch (BusquedaVaciaException | EventoSinCuidadoresAsignadosException | SinPermisoException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			return "redirect:/error-403";
 		}
 		return "redirect:/eventos/show/" + eventoId;
 	}
@@ -194,6 +199,10 @@ public class EventoController {
 	@GetMapping(value = "/{eventoId}/añadirCuidador/{cuidadorId}")
 	public String añadirCuidadorEvento(@PathVariable("eventoId") int eventoId,
 			@PathVariable("cuidadorId") int cuidadorId, ModelMap model) {
+		String role = userService.principalAuthorityString();
+		if (!role.contains("director")) {
+			return "redirect:/error-403";
+		}
 		try {
 			Optional<Evento> even = eventoService.findEventoById(eventoId);
 			Boolean b = even.isPresent();
@@ -209,8 +218,7 @@ public class EventoController {
 			Cuidador cuidador = c.get();
 			eventoService.añadirCuidadorEvento(evento, cuidador);
 		} catch (SinPermisoException | BusquedaVaciaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return "redirect:/error-403";
 		}
 		return "redirect:/eventos/show/" + eventoId;
 	}
@@ -218,14 +226,16 @@ public class EventoController {
 	// Carga los eventos del principal(duenoAdoptivo)
 	@GetMapping(value = "/misEventos")
 	public String listadoEventosDueno(ModelMap model) {
-		Collection<Evento> eventos = eventoService.findEventosByDueno();
+		DuenoAdoptivo dueno=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		Collection<Evento> eventos = eventoService.findEventosByDueno(dueno.getId());
 		model.addAttribute("eventos", eventos);
 		return EVENTOS_LISTING;
 	}
 
 	@GetMapping(value = "/cuidador/misEventos")
 	public String listadoEventosCuidador(ModelMap model) {
-		Collection<Evento> eventos = eventoService.findEventosByCuidador();
+		Cuidador cuidador=cuidadorService.findCuidadorByPrincipal();
+		Collection<Evento> eventos = eventoService.findEventosByCuidador(cuidador.getId());
 		model.addAttribute("eventos", eventos);
 		return EVENTOS_LISTING;
 	}
@@ -243,6 +253,7 @@ public class EventoController {
 	public ModelAndView añadirDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId, ModelMap model)
 			throws ExcedidoAforoEventoException, EventoSinCuidadoresAsignadosException, BusquedaVaciaException {
 		ModelAndView mav;
+		DuenoAdoptivo d=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		try {
 			Optional<Evento> e = eventoService.findEventoById(eventoId);
 			// Comprueba que existe un evento con esa id
@@ -251,7 +262,7 @@ public class EventoController {
 				throw new BusquedaVaciaException("No existe");
 			}
 			Evento evento = e.get();
-			eventoService.añadirDuenoAdoptivoEvento(evento);
+			eventoService.añadirDuenoAdoptivoEvento(evento,d);
 
 		} catch (Exception ex) {
 			mav = new ModelAndView("/403");
@@ -269,6 +280,7 @@ public class EventoController {
 	@GetMapping(value = "/{eventoId}/borrarse")
 	public ModelAndView quitarDuenoAdoptivoEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
 		ModelAndView mav;
+		DuenoAdoptivo d=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 		try {
 			Optional<Evento> e = eventoService.findEventoById(eventoId);
 			Boolean b = e.isPresent();
@@ -276,7 +288,7 @@ public class EventoController {
 				throw new BusquedaVaciaException("No existe");
 			}
 			Evento evento = e.get();
-			eventoService.quitarDuenoAdoptivoEvento(evento);
+			eventoService.quitarDuenoAdoptivoEvento(evento,d);
 		} catch (Exception ex) {
 			mav = new ModelAndView("/403");
 			mav.addObject("exceptionMessage", ex.getMessage());
@@ -289,8 +301,13 @@ public class EventoController {
 
 	// Eliminar evento
 	@GetMapping(value = "/delete/{eventoId}")
-	public ModelAndView eliminarEvento(@PathVariable("eventoId") int eventoId, ModelMap model) {
+	public ModelAndView eliminarEvento(@PathVariable("eventoId") int eventoId, ModelMap model){
 		ModelAndView mav;
+		String role = userService.principalAuthorityString();
+		Boolean be = role.contains("director");
+		if (!be) {
+			return new ModelAndView("redirect:/error-403");
+		}
 		Director principal = directorService.findDirectorByPrincipal();
 		try {
 			Optional<Evento> e = eventoService.findEventoById(eventoId);

@@ -4,11 +4,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Evento;
 import org.springframework.samples.petclinic.repository.EventoRepository;
@@ -23,22 +20,12 @@ public class EventoService {
 
 	private final EventoRepository eventoRepository;
 
-	private final DirectorService directorService;
 
-	private final DuenoAdoptivoService duenoAdoptivoService;
-
-	private final UserService userService;
-
-	private final CuidadorService cuidadorService;
 
 	@Autowired
-	public EventoService(EventoRepository eventoRepository, DirectorService directorService,
-			DuenoAdoptivoService duenoAdoptivoService, UserService userService, CuidadorService cuidadorService) {
+	public EventoService(EventoRepository eventoRepository) {
 		this.eventoRepository = eventoRepository;
-		this.directorService=directorService;
-		this.duenoAdoptivoService=duenoAdoptivoService;
-		this.userService=userService;
-		this.cuidadorService=cuidadorService;
+		
 	}
 
 	@Transactional
@@ -48,9 +35,8 @@ public class EventoService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Evento> findEventosByDirector() {
-		Director director = directorService.findDirectorByPrincipal();
-		Collection<Evento> result = eventoRepository.findEventosByDirector(director.getId());
+	public Collection<Evento> findEventosByDirector(Integer directorId) {
+		Collection<Evento> result = eventoRepository.findEventosByDirector(directorId);
 		return result;
 	}
 
@@ -75,11 +61,6 @@ public class EventoService {
 		// User user = userService.findPrincipal();
 		// org.springframework.samples.petclinic.model.User user= p.getUser();
 		// String role = user.getAuthorities().toString();
-		String role = userService.principalAuthorityString();
-		Boolean b = role.contains("director");
-		if (!b) {
-			throw new SinPermisoException("Terreno del Director");
-		}
 		evento.getCuidadores().remove(cuidador);
 		eventoRepository.save(evento);
 
@@ -90,20 +71,13 @@ public class EventoService {
 
 		// User user = userService.findPrincipal();
 		// String role = user.getAuthorities().toString();
-		String role = userService.principalAuthorityString();
-		if (!role.contains("director")) {
-			throw new SinPermisoException("Terreno del Director");
-		}
 		evento.getCuidadores().add(cuidador);
 		eventoRepository.save(evento);
 
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Evento> findEventosByDueno() {
-		DuenoAdoptivo duenoAdoptivo;
-		duenoAdoptivo = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
-		int i = duenoAdoptivo.getId();
+	public Collection<Evento> findEventosByDueno(Integer i) {
 		Collection<Evento> result = eventoRepository.findEventosByDuenoAdoptivo(i);
 		return result;
 	}
@@ -117,7 +91,7 @@ public class EventoService {
 	}
 
 	@Transactional
-	public void añadirDuenoAdoptivoEvento(Evento evento)
+	public void añadirDuenoAdoptivoEvento(Evento evento, DuenoAdoptivo d)
 			throws ExcedidoAforoEventoException, EventoSinCuidadoresAsignadosException {
 
 		// Comrpueba que el evento tiene algún Cuidador asignado
@@ -130,7 +104,6 @@ public class EventoService {
 			throw new ExcedidoAforoEventoException("Aforo Completo");
 		}
 		// assertTrue("Aforo Completo", e.getAforo()>e.getDuenos().size());
-		DuenoAdoptivo d = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 
 		evento.getDuenos().add(d);
 		eventoRepository.save(evento);
@@ -138,8 +111,7 @@ public class EventoService {
 	}
 
 	@Transactional
-	public void quitarDuenoAdoptivoEvento(Evento evento) {
-		DuenoAdoptivo d = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+	public void quitarDuenoAdoptivoEvento(Evento evento, DuenoAdoptivo d) {
 		evento.getDuenos().remove(d);
 		eventoRepository.save(evento);
 
@@ -147,12 +119,6 @@ public class EventoService {
 
 	@Transactional
 	public void deleteEvento(Evento evento) throws SinPermisoException {
-
-		String role = userService.principalAuthorityString();
-		Boolean b = role.contains("director");
-		if (!b) {
-			throw new SinPermisoException("Terreno del Director");
-		}
 		evento.setCuidadores(null);
 		evento.setDuenos(null);
 		eventoRepository.save(evento);
@@ -161,11 +127,8 @@ public class EventoService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Evento> findEventosByCuidador() {
-		Cuidador cuidador;
-		cuidador = cuidadorService.findCuidadorByPrincipal();
-		int i = cuidador.getId();
-		Collection<Evento> result = eventoRepository.findEventosByCuidador(i);
+	public Collection<Evento> findEventosByCuidador(Integer cuidadorId) {
+		Collection<Evento> result = eventoRepository.findEventosByCuidador(cuidadorId);
 		return result;
 	}
 

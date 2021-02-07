@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Animal;

@@ -2,8 +2,6 @@ package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDateTime;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Comentario;
 import org.springframework.samples.petclinic.model.Cuidador;

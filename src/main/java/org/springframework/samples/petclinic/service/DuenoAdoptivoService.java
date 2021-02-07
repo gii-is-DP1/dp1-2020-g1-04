@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.service;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,9 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.repository.DuenoAdoptivoRepository;
-import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedUserNameException;
-import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
