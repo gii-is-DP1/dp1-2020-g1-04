@@ -23,7 +23,7 @@ public class EnfermedadService {
 	}
 	
 	@Transactional
-	public void saveEnfermedad(@Valid Enfermedad enfermedad) {
+	public void saveEnfermedad(Enfermedad enfermedad) {
 		
 		enfermedadRepository.save(enfermedad);
 	}

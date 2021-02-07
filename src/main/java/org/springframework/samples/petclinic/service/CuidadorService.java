@@ -42,7 +42,7 @@ public class CuidadorService {
 	}
 
 	@Transactional
-	public void saveCuidador(@Valid Cuidador cuidador) throws DataAccessException {
+	public void saveCuidador(Cuidador cuidador) throws DataAccessException {
 		// creating duenoAdoptivo
 		cuidadorRepository.save(cuidador);
 		// creating user

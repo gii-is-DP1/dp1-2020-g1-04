@@ -3,7 +3,11 @@ package org.springframework.samples.petclinic.web;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Cuidador;
+import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Visita;
+import org.springframework.samples.petclinic.service.CuidadorService;
+import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.VisitaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,10 +26,14 @@ public class VisitaController {
 	private static final String VISITAS_DETALLES = "/visitas/showVisita";
 
 	private final VisitaService visitaService;
+	private final DuenoAdoptivoService duenoAdoptivoService;
+	private final CuidadorService cuidadorService;
 
 	@Autowired
-	public VisitaController(VisitaService visitaService) {
+	public VisitaController(VisitaService visitaService, DuenoAdoptivoService duenoAdoptivoService,CuidadorService cuidadorService) {
 		this.visitaService = visitaService;
+		this.duenoAdoptivoService=duenoAdoptivoService;
+		this.cuidadorService=cuidadorService;
 	}
 
 	@InitBinder
@@ -35,8 +43,9 @@ public class VisitaController {
 
 	@GetMapping(value = "/misVisitas")
 	public String listadoVisistasByPrincipal(ModelMap model) {
-		Collection<Visita> visitas = visitaService.findVisitasByPrincipalProximas();
-		Collection<Visita> visitasPasadas = visitaService.findVisitasByPrincipalPasadas();
+		DuenoAdoptivo principal=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+		Collection<Visita> visitas = visitaService.findVisitasByPrincipalProximas(principal.getId());
+		Collection<Visita> visitasPasadas = visitaService.findVisitasByPrincipalPasadas(principal.getId());
 		model.addAttribute("visitas", visitas);
 		model.addAttribute("visitasPasadas", visitasPasadas);
 		return VISITAS_LISTING;
@@ -44,8 +53,9 @@ public class VisitaController {
 
 	@GetMapping(value = "/cuidador/misVisitas")
 	public String listadoVisistasByPrincipalCuidador(ModelMap model) {
-		Collection<Visita> visitas = visitaService.findVisitasByCuidadorPrincipalProximas();
-		Collection<Visita> visitasPasadas = visitaService.findVisitasByCuidadorPrincipalPasadas();
+		Cuidador principal=cuidadorService.findCuidadorByPrincipal();
+		Collection<Visita> visitas = visitaService.findVisitasByCuidadorPrincipalProximas(principal.getId());
+		Collection<Visita> visitasPasadas = visitaService.findVisitasByCuidadorPrincipalPasadas(principal.getId());
 		model.addAttribute("visitas", visitas);
 		model.addAttribute("visitasPasadas", visitasPasadas);
 		return VISITAS_LISTING;

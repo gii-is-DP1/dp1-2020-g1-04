@@ -66,6 +66,8 @@ public class EventoController {
 	@GetMapping(value = "/nuevo")
 	public String initCreationForm(Map<String, Object> model) {
 		Evento evento = new Evento();
+		Director director = directorService.findDirectorByPrincipal();
+		evento.setDirector(director);
 		Collection<Cuidador> cuidadores;
 		cuidadores = cuidadorService.findAllCuidadores();
 		model.put("evento", evento);
@@ -82,6 +84,8 @@ public class EventoController {
 				result.rejectValue("fecha", "Futuro", "La Fecha debe ser futuro");
 				return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
 			}
+			Director director = directorService.findDirectorByPrincipal();
+			evento.setDirector(director);
 			this.eventoService.saveEvento(evento);
 
 			return "redirect:/eventos/show/" + evento.getId();
