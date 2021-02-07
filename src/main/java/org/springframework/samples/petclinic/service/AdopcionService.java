@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -40,6 +41,10 @@ public class AdopcionService {
 	@Transactional
 	public void saveAdopcion(Adopcion adopcion) throws DataAccessException {
 
+		if(adopcion.getEstado()==Estado.ACEPTADA|| adopcion.getEstado()==Estado.DENEGADA) {
+			adopcion.setFechaDecision(LocalDate.now());
+		}
+		
 		adopcionRepository.save(adopcion);
 
 	}

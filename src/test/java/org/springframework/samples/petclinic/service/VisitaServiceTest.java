@@ -36,7 +36,7 @@ public class VisitaServiceTest {
 	void findByPrincipal() {
 		PrincipalMock();
 
-		Collection<Visita> visitas = visitaService.findVisitasByPrincipal();
+		Collection<Visita> visitas = visitaService.findVisitasByPrincipal(11);
 		assertThat(visitas.size()).isEqualTo(3);
 	}
 
@@ -45,7 +45,7 @@ public class VisitaServiceTest {
 	void findByPrincipalProximos() {
 		PrincipalMock();
 
-		Collection<Visita> visitas = visitaService.findVisitasByPrincipalProximas();
+		Collection<Visita> visitas = visitaService.findVisitasByPrincipalProximas(11);
 		assertThat(visitas.size()).isEqualTo(1);
 	}
 
@@ -54,7 +54,7 @@ public class VisitaServiceTest {
 	void findByPrincipalPasadas() {
 		PrincipalMock();
 
-		Collection<Visita> visitas = visitaService.findVisitasByPrincipalPasadas();
+		Collection<Visita> visitas = visitaService.findVisitasByPrincipalPasadas(11);
 		assertThat(visitas.size()).isEqualTo(2);
 	}
 

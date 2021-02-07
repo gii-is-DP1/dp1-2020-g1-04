@@ -119,7 +119,7 @@ public class AdopcionController {
 		Optional<Adopcion> adopcion = this.adopcionService.findAdopcionById(adopcionId);
 		model.addAttribute(adopcion.get());
 		if (!userService.findPrincipal().getAuthorities().toString().contentEquals("director")) {
-			return "redirect: /403";
+			return "redirect:/error-403";
 		}
 		return VIEWS_ADOPCION_CREATE_OR_UPDATE_FORM;
 	}
@@ -205,7 +205,6 @@ public class AdopcionController {
 		Adopcion aux = adopcionAux.get();
 		adopcion.setAnimal(aux.getAnimal());
 		adopcion.setDueno(aux.getDueno());
-		adopcion.setFechaDecision(LocalDate.now());
 		adopcion.setLeidoRequisitos(aux.getLeidoRequisitos());
 		adopcion.setMayoresDeEdad(aux.getMayoresDeEdad());
 		adopcion.setMotivo(aux.getMotivo());
