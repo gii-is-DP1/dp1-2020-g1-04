@@ -202,7 +202,7 @@ public class AdopcionController {
 		if (result.hasErrors()) {
 			return VIEWS_ADOPCION_ACTUALIZAR_ESTADO_FORM;
 		} else {
-			if(adopcion.getAnimal().getAdoptado()) {
+			if(adopcion.getAnimal().getAdoptado() && adopcion.getEstado() == Estado.ACEPTADA) {
 				model.addAttribute("estados", Estado.values()); 
 				result.rejectValue("motivoDecision", "Adoptado", "Este animal ya ha sido adoptado");
 				 return VIEWS_ADOPCION_ACTUALIZAR_ESTADO_FORM;
