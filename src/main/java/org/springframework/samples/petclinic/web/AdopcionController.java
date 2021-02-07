@@ -180,7 +180,7 @@ public class AdopcionController {
 				DuenoAdoptivo principal=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 				if(!(adopcion.getDueno().getId()==principal.getId())) {
 					return "error-403";
-			}
+			  }
 			}
 			model.put("adopcion", adopcion);
 			return "adopcion/showAdopcion";		
