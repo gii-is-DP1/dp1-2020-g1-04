@@ -137,7 +137,7 @@ class AdopcionServiceTests {
 	@Transactional
 	public void findSolicitadasByDuenoAdoptivo() throws Exception {
 		PrincipalMock();
-		Collection<Adopcion> adopciones = adopcionService.findSolicitadasByDuenoAdoptivo();
+		Collection<Adopcion> adopciones = adopcionService.findAdopcionEstadoByDuenoAdoptivo(Estado.PENDIENTE, 11);
 		assertThat(adopciones.size()).isEqualTo(1);
 	}
 	// H22
@@ -145,7 +145,7 @@ class AdopcionServiceTests {
 	@Transactional
 	public void findAceptadasByDuenoAdoptivo() throws Exception {
 		PrincipalMock();
-		Collection<Adopcion> adopciones = adopcionService.findAceptadasByDuenoAdoptivo();
+		Collection<Adopcion> adopciones = adopcionService.findAdopcionEstadoByDuenoAdoptivo(Estado.ACEPTADA, 11);
 		assertThat(adopciones.size()).isEqualTo(0);
 	}
 	// H22
@@ -153,7 +153,7 @@ class AdopcionServiceTests {
 	@Transactional
 	public void findDenegadasByDuenoAdoptivo() throws Exception {
 		PrincipalMock();
-		Collection<Adopcion> adopciones = adopcionService.findDenegadasByDuenoAdoptivo();
+		Collection<Adopcion> adopciones = adopcionService.findAdopcionEstadoByDuenoAdoptivo(Estado.DENEGADA, 11);
 		assertThat(adopciones.size()).isEqualTo(0);
 	}
 }

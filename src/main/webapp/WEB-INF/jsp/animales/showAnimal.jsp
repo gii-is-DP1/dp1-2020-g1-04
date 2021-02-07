@@ -12,7 +12,7 @@
 
 
 
-	<h2>${animal.nombre}al detalle</h2>
+	<h2><c:out value="${animal.nombre}"/> al detalle</h2>
 	<a href="/animales/show/<c:out value="${animal.id }"/>"><img
 		src="<c:out value="${animal.foto}"/>"
 		alt="<c:out value="${animal.nombre}"/>" class="foto"></a>

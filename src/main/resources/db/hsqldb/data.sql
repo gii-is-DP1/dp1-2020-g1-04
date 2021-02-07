@@ -192,8 +192,8 @@ INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, p
 	VALUES(1, 4, 3, true, true, true, 'Motivo 1', 1, 'MotivoDecision 1', '2019-09-01',1,2);
 INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, estado, motivo_decision, fecha_decision,dueno_id, animal_id) 
 	VALUES(2, 3, 2, false, false, false, 'Motivo 2', 2, 'MotivoDecision 2','2019-10-01',2,2);
-INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, estado, motivo_decision, fecha_decision, dueno_id, animal_id ) 
-	VALUES(3, 2, 2, true, true, false, 'Motivo 3', 0, 'MotivoDecision 3', '2020-09-01',11,3);
+INSERT INTO adopciones(id, unidad_familiar, mayores_de_edad, leido_requisitos, permiso_comunidad_vecinos, otros_animales, motivo, estado, dueno_id, animal_id ) 
+	VALUES(3, 2, 2, true, true, false, 'Motivo 3', 0, 11,3);
 
 --Añadir Visitas
 INSERT INTO visitas(id, lugar, momento, animal_id, cuidador_id, dueno_id)

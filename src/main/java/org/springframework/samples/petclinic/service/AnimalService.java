@@ -55,6 +55,11 @@ public class AnimalService {
 		animalRepository.save(animal);
 
 	}
+	@Transactional
+	public void saveAdoptado(Animal animal) {
+		animalRepository.save(animal);
+
+	}
 
 	@Transactional
 	public boolean comprobarAforo(CentroDeAdopcion centro) {
@@ -194,6 +199,12 @@ public class AnimalService {
 		animal.setFechaUltimaIncorporacion(now);
 
 		return animal;
+	}
+
+	public void adoptado(Animal animal) {
+		animal.setAdoptado(true);
+		saveAdoptado(animal);
+		
 	}
 
 }
