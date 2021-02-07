@@ -42,7 +42,7 @@ public class EventoService {
 	}
 
 	@Transactional
-	public void saveEvento(@Valid Evento evento) {
+	public void saveEvento(Evento evento) {
 		Director director = directorService.findDirectorByPrincipal();
 		evento.setDirector(director);
 		eventoRepository.save(evento);

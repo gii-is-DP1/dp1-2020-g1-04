@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -43,6 +44,8 @@ public class EventoController {
 	private final CuidadorService cuidadorService;
 	private final DuenoAdoptivoService duenoAdoptivoService;
 	private final UserService userService;
+	
+	private final static LocalDate FECHA_HOY=LocalDate.now();
 
 	@Autowired
 	public EventoController(EventoService eventoService, CuidadorService cuidadorService,
@@ -74,6 +77,10 @@ public class EventoController {
 		if (result.hasErrors()) {
 			return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
 		} else {
+			if(evento.getFecha().isBefore(FECHA_HOY) || evento.getFecha().isEqual(FECHA_HOY)) {
+				result.rejectValue("fecha", "Futuro", "La Fecha debe ser futuro");
+				return VIEWS_EVENTO_CREATE_OR_UPDATE_FORM;
+			}
 			this.eventoService.saveEvento(evento);
 
 			return "redirect:/eventos/show/" + evento.getId();
@@ -133,15 +140,23 @@ public class EventoController {
 			mav = new ModelAndView(VIEWS_EVENTO_CREATE_OR_UPDATE_FORM);
 			return mav;
 		} else {
+			
+			if(modifiedEvento.getFecha().isBefore(FECHA_HOY) || modifiedEvento.getFecha().isEqual(FECHA_HOY)) {
+				binding.rejectValue("fecha", "Futuro", "La Fecha debe ser futuro");
+				return new ModelAndView(VIEWS_EVENTO_CREATE_OR_UPDATE_FORM);
+			}else {
 			Optional<Evento> evento = eventoService.findEventoById(eventoId);
 			modifiedEvento.setId(eventoId);
 			modifiedEvento.setCuidadores(evento.get().getCuidadores());
+			modifiedEvento.setDirector(evento.get().getDirector());
 			modifiedEvento.setDuenos(evento.get().getDuenos());
 			eventoService.saveEvento(modifiedEvento);
 			model.addAttribute("message", "Evento actualizado con éxito");
 			mav = new ModelAndView("redirect:/eventos/show/" + modifiedEvento.getId());
+			
 			return mav;
-		}
+			}
+			}
 	}
 
 	// Quita un cuidador x al evento y

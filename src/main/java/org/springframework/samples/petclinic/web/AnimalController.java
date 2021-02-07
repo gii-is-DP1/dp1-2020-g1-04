@@ -99,9 +99,12 @@ public class AnimalController {
 	@PostMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
 			BindingResult result, ModelMap model) {
-		//ModelAndView mav;
+		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
 		if (result.hasErrors()) {
-
+			model.put("auxiliar", auxiliar);
+			model.put("animal", modifiedAnimal);
+			model.put("cuidadores", cuidadorService.findAllCuidadores());
+			model.put("centros", centroDeAdopcionService.findAllNoEstenLlenos());
 			//mav = new ModelAndView(ANIMAL_FORM);
 			return ANIMAL_FORM;
 		} else {
@@ -150,7 +153,12 @@ public class AnimalController {
 			throws AforoCentroCompletadoException {
 		Categoria categoria = categoriaService.findCategoriaById(categoriaId).get();		
 		Animal animalModificado=	animalService.inicializarAnimal(categoria, animal);
+		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
 		if (result.hasErrors()) {
+			model.put("auxiliar", auxiliar);
+			model.put("animal", animalModificado);
+			model.put("cuidadores", cuidadorService.findAllCuidadores());
+			model.put("centros", centroDeAdopcionService.findAllNoEstenLlenos());
 			return ANIMAL_FORM;
 		} else {
 			try {

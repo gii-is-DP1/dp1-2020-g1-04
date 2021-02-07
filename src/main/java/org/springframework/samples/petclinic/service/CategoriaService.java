@@ -23,7 +23,7 @@ public class CategoriaService {
 	}
 	
 	@Transactional
-	public void saveCategoria(@Valid Categoria categoria) {
+	public void saveCategoria(Categoria categoria) {
 		categoriaRepository.save(categoria);
 		
 	}

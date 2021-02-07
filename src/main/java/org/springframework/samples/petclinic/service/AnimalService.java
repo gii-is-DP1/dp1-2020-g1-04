@@ -49,7 +49,7 @@ public class AnimalService {
 	}
 
 	@Transactional
-	public void save(@Valid Animal animal) throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
+	public void save(Animal animal) throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
 		comprobarRatioCuidador(animal);
 		animalRepository.save(animal);
 
