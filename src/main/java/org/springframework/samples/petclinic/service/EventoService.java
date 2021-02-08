@@ -118,7 +118,7 @@ public class EventoService {
 	}
 
 	@Transactional
-	public void deleteEvento(Evento evento) throws SinPermisoException {
+	public void deleteEvento(Evento evento) {
 		evento.setCuidadores(null);
 		evento.setDuenos(null);
 		eventoRepository.save(evento);

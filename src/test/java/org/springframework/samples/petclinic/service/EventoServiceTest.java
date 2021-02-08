@@ -221,15 +221,16 @@ public class EventoServiceTest {
 		});
 	}
 
-	@Test
-	void quitarCuidadorSinSerDirector() {
-		duenoStringMock();
-		Exception exception = assertThrows(SinPermisoException.class, () -> {
-			Evento evento = eventoService.findEventoById(1).get();
-			Cuidador cuidador = cuidadorService.findCuidadorById(1).get();
-			eventoService.quitarCuidadorEvento(evento, cuidador);
-		});
-	}
+	//queda sin valor al cambiar las comprobaciones al controlador
+//	@Test
+//	void quitarCuidadorSinSerDirector() {
+//		duenoStringMock();
+//		Exception exception = assertThrows(SinPermisoException.class, () -> {
+//			Evento evento = eventoService.findEventoById(1).get();
+//			Cuidador cuidador = cuidadorService.findCuidadorById(1).get();
+//			eventoService.quitarCuidadorEvento(evento, cuidador);
+//		});
+//	}
 
 	// AñadirCuidadorEvento
 
@@ -247,16 +248,17 @@ public class EventoServiceTest {
 
 	}
 
-	@Test
-	@Transactional
-	void añadirCuidadorEventoSinSerDirector() {
-		duenoStringMock();
-		Exception exception = assertThrows(SinPermisoException.class, () -> {
-			Evento evento = eventoService.findEventoById(1).get();
-			Cuidador cuidador = cuidadorService.findCuidadorById(3).get();
-			eventoService.añadirCuidadorEvento(evento, cuidador);
-		});
-	}
+	//queda sin valor al cambiar las comprobaciones al controlador
+//	@Test
+//	@Transactional
+//	void añadirCuidadorEventoSinSerDirector() {
+//		duenoStringMock();
+//		Exception exception = assertThrows(SinPermisoException.class, () -> {
+//			Evento evento = eventoService.findEventoById(1).get();
+//			Cuidador cuidador = cuidadorService.findCuidadorById(3).get();
+//			eventoService.añadirCuidadorEvento(evento, cuidador);
+//		});
+//	}
 
 	// quitarDuenoAdoptivoEvento
 	@Test
@@ -295,17 +297,19 @@ public class EventoServiceTest {
 
 	}
 
-	// deleteEventoNegative
-	@Test
-	@Transactional
-	void deleteEventoSiendoDueno() throws SinPermisoException {
-		duenoStringMock();
-		Evento evento = eventoService.findEventoById(1).get();
-		Exception exception = assertThrows(SinPermisoException.class, () -> {
-			eventoService.deleteEvento(evento);
-		});
-
-	}
+	
+	//queda sin valor al cambiar las comprobaciones al controlador
+//	// deleteEventoNegative
+//	@Test
+//	@Transactional
+//	void deleteEventoSiendoDueno() throws SinPermisoException {
+//		duenoStringMock();
+//		Evento evento = eventoService.findEventoById(1).get();
+//		Exception exception = assertThrows(SinPermisoException.class, () -> {
+//			eventoService.deleteEvento(evento);
+//		});
+//
+//	}
 
 	// findEventosByDirector
 	@Test
@@ -324,6 +328,7 @@ public class EventoServiceTest {
 		Director director=directorNuevo();
 		Evento evento = eventoNuevo();
 		evento.setDuenos(null);
+		evento.setDirector(director);
 	int i= eventoService.findEventosByDirector(director.getId()).size();
 		eventoService.saveEvento(evento);
 		int j= eventoService.findEventosByDirector(director.getId()).size();
