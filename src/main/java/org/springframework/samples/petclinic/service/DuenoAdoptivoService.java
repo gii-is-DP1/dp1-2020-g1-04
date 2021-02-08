@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.repository.DuenoAdoptivoRepository;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedUserNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,8 @@ public class DuenoAdoptivoService {
 	private final UserService userService;
 
 	private final AuthoritiesService authoritiesService;
+	
+	private static final Integer CERO=0;
 
 	@Autowired
 	public DuenoAdoptivoService(DuenoAdoptivoRepository duenoAdoptivoRepository, UserService userService,
@@ -59,8 +62,8 @@ public class DuenoAdoptivoService {
 	}
 
 	@Transactional
-	public void saveDuenoAdoptivo(DuenoAdoptivo duenoAdoptivo) throws DataAccessException {
-		// creating duenoAdoptivo
+	public void saveDuenoAdoptivo(DuenoAdoptivo duenoAdoptivo) throws DataAccessException{
+		
 		duenoAdoptivoRepository.save(duenoAdoptivo);
 		// creating user
 		userService.saveUser(duenoAdoptivo.getUser());
@@ -92,6 +95,15 @@ public class DuenoAdoptivoService {
 
 		return result;
 
+	}
+	@Transactional
+	public void ComprobarUsername(String username) throws DuplicatedUserNameException {
+		Integer  d=duenoAdoptivoRepository.CoprobarUserName(username);
+		// creating duenoAdoptivo
+		if(d>CERO) {
+			throw new DuplicatedUserNameException();
+		}
+		
 	}
 
 }

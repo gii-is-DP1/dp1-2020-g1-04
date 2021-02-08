@@ -1,12 +1,13 @@
 package org.springframework.samples.petclinic.service;
 
-import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Comentario;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
+import org.springframework.samples.petclinic.model.Visita;
 import org.springframework.samples.petclinic.repository.ComentarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,16 @@ public class ComentarioService {
 
 	@Transactional
 	public void saveComentario(Comentario comentario) {
+		comentarioRepository.save(comentario);
+
+	}
+
+	@Transactional
+	public Comentario inicializarComentario(Visita visita) {
+	Comentario comentario =new Comentario();
+	comentario.setVisita(visita);
+	LocalDateTime now = LocalDateTime.now();
+	comentario.setMomento(now);
 		String authority = userService.principalAuthorityString();
 		switch (authority) {
 		case "duenoadoptivo":
@@ -55,9 +66,8 @@ public class ComentarioService {
 			authority = "null";
 			break;
 		}
-
-		comentarioRepository.save(comentario);
-
+		
+		return comentario;
 	}
 
 }

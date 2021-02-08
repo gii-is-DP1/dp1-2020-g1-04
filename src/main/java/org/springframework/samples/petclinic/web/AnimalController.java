@@ -85,11 +85,11 @@ public class AnimalController {
 	@GetMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, ModelMap model) {
 		Optional<Animal> animal = animalService.findAnimalById(animalId);
-		Director principal = directorService.findDirectorByPrincipal();
-		Integer directorCentroAnimal = animal.get().getCentroDeAdopcion().getDirector().getId();
-		if(!(principal.getId() == directorCentroAnimal)) {
-			return "error-403";
-		}
+//		Director principal = directorService.findDirectorByPrincipal();
+//		Integer directorCentroAnimal = animal.get().getCentroDeAdopcion().getDirector().getId();
+//		if(!(principal.getId() == directorCentroAnimal)) {
+//			return "error-403";
+//		}
 		if (animal.isPresent()) {
 			ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
 			model.put("auxiliar", auxiliar);
@@ -108,11 +108,11 @@ public class AnimalController {
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
 			BindingResult result, ModelMap model) {
 		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
-		Director principal = directorService.findDirectorByPrincipal();
-		Integer directorCentroAnimal = modifiedAnimal.getCentroDeAdopcion().getDirector().getId();
-		if(!(principal.getId() == directorCentroAnimal)) {
-			return "error-403";
-		}
+//		Director principal = directorService.findDirectorByPrincipal();
+//		Integer directorCentroAnimal = modifiedAnimal.getCentroDeAdopcion().getDirector().getId();
+//		if(!(principal.getId() == directorCentroAnimal)) {
+//			return "error-403";
+//		}
 		if (result.hasErrors()) {
 			model.put("auxiliar", auxiliar);
 			model.put("animal", modifiedAnimal);
@@ -148,7 +148,8 @@ public class AnimalController {
 		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
 		Categoria categoria = categoriaService.findCategoriaById(categoriaId).get();
 		Animal animal=new Animal();
-		Animal animalModificado= animalService.inicializarAnimal(categoria, animal);
+		Animal animalModificado= animal;
+		animalModificado=animalService.inicializarAnimal(categoria, animal);
 		model.put("auxiliar", auxiliar);
 		model.put("animal", animalModificado);
 		model.put("cuidadores", cuidadorService.findAllCuidadores());

@@ -1,12 +1,12 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Adopcion;
-import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.repository.AdopcionRepository;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,8 @@ public class AdopcionService {
 
 	private final AdopcionRepository adopcionRepository;
 
-	private final DuenoAdoptivoService duenoAdoptivoService;
-
 	@Autowired
-	public AdopcionService(AdopcionRepository adopcionRepository, DuenoAdoptivoService duenoAdoptivoService) {
-		this.duenoAdoptivoService = duenoAdoptivoService;
+	public AdopcionService(AdopcionRepository adopcionRepository) {
 		this.adopcionRepository = adopcionRepository;
 	}
 
@@ -40,6 +37,10 @@ public class AdopcionService {
 	@Transactional
 	public void saveAdopcion(Adopcion adopcion) throws DataAccessException {
 
+		if (adopcion.getEstado() == Estado.ACEPTADA || adopcion.getEstado() == Estado.DENEGADA) {
+			adopcion.setFechaDecision(LocalDate.now());
+		}
+
 		adopcionRepository.save(adopcion);
 
 	}
@@ -56,9 +57,10 @@ public class AdopcionService {
 		Collection<Adopcion> result = adopcionRepository.findAllSolicitadas();
 		return result;
 	}
+
 	@Transactional(readOnly = true)
 	public Collection<Adopcion> findAdopcionEstadoByDuenoAdoptivo(Estado estado, Integer duenoId) {
-		Collection<Adopcion> result = adopcionRepository.findAdopcionEstadoByDuenoAdoptivo(estado,duenoId);
+		Collection<Adopcion> result = adopcionRepository.findAdopcionEstadoByDuenoAdoptivo(estado, duenoId);
 		return result;
 	}
 

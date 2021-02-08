@@ -138,12 +138,14 @@ public class CuidadorController {
 
 	@PostMapping(value = "/cuidadores/{cuidadorId}/directorEdit")
 	public String processUpdateCuidadorForm(@Valid Cuidador cuidador, BindingResult result,
-			@PathVariable("cuidadorId") int cuidadorId) {
+			@PathVariable("cuidadorId") int cuidadorId, Model model) {
 		if (result.hasErrors()) {
+			Collection<CentroDeAdopcion> centros = centroDeAdopcionService.findAll();
+			model.addAttribute("centros", centros);
 			return VIEWS_CUIDADOR_CREATE_OR_UPDATE_FORM;
 		} else {
 			Optional<Cuidador> aux = cuidadorService.findCuidadorById(cuidadorId);
-//			cuidador.setAnimales(aux.get().getAnimales());
+			cuidador.setEventos(aux.get().getEventos());
 			cuidador.setId(cuidadorId);
 
 			this.cuidadorService.saveCuidador(cuidador);

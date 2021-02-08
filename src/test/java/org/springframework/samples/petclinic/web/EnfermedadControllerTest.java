@@ -20,6 +20,7 @@ import org.springframework.samples.petclinic.configuration.SecurityConfiguration
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.Enfermedad;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.EnfermedadService;
@@ -55,6 +56,25 @@ public class EnfermedadControllerTest {
 
 	}
 
+	void cuidador() {
+		Cuidador cuidador = new Cuidador();
+		cuidador.setNombre("Sam");
+		cuidador.setApellidos("Durán");
+		cuidador.setDni("Wollongong");
+		cuidador.setTelefono("4444444444");
+		cuidador.setEmail("prueba@gmail.com");
+		cuidador.setId(1);
+		User user = new User();
+		user.setUsername("Sam");
+		user.setPassword("supersecretpassword");
+		user.setEnabled(true);
+		cuidador.setUser(user);
+		Animal animal=new Animal();
+		animal.setCuidador(cuidador);
+		given(this.animalService.findAnimalById(3)).willReturn(Optional.of(animal));
+		given(this.cuidadorService.findCuidadorByPrincipal()).willReturn(cuidador);
+	}
+
 	void mockAnimal() {
 		Animal animal = mock(Animal.class);
 		given(this.animalService.findAnimalById(3)).willReturn(Optional.of(animal));
@@ -65,6 +85,7 @@ public class EnfermedadControllerTest {
 	@Test
 	void testCreateEnfermedadFormSuccess() throws Exception {
 		mockAnimal();
+		cuidador();
 		mockMvc.perform(post("/enfermedad/nuevo/{animalId}", 3).with(csrf()).param("nombre", "Rabia")
 				.param("comienzo", "10/11/2020").param("curado", "true").param("fin", "10/12/2020")
 				.param("comentario", "cumple requisitos")).andExpect(status().is3xxRedirection())

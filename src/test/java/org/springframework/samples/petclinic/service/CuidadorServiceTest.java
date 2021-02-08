@@ -39,7 +39,7 @@ import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.CentroDeAdopcion;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedUserNameException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.UserDetails;

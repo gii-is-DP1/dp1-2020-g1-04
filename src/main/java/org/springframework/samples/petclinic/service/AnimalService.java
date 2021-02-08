@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Animal;
@@ -69,7 +67,7 @@ public class AnimalService {
 
 	}
 
-	@Transactional
+	@Transactional(rollbackFor={RatioAnimalesPorCuidadorSuperadoException.class, AforoCentroCompletadoException.class})
 	public void comprobarRatioCuidador(Animal animal)
 			throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException {
 		CentroDeAdopcion centro = animal.getCentroDeAdopcion();

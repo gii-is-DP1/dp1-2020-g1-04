@@ -3,8 +3,6 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Enfermedad;
 import org.springframework.samples.petclinic.repository.EnfermedadRepository;
@@ -23,7 +21,7 @@ public class EnfermedadService {
 	}
 	
 	@Transactional
-	public void saveEnfermedad(@Valid Enfermedad enfermedad) {
+	public void saveEnfermedad(Enfermedad enfermedad) {
 		
 		enfermedadRepository.save(enfermedad);
 	}

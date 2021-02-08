@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -84,6 +85,11 @@ class DuenoAdoptivoControllerTests {
 		george.setDni("24324324G");
 		george.setTelefono("6085551023");
 		george.setEmail("test@email.com");
+		User user = new User();
+		user.setUsername("Sam");
+		user.setPassword("supersecretpassword");
+		user.setEnabled(true);
+		george.setUser(user);
 		given(this.duenoAdoptivoService.findDuenoAdoptivoByPrincipal()).willReturn(george);
 
 	}
@@ -169,11 +175,12 @@ class DuenoAdoptivoControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateDuenoAdoptivoFormSuccess() throws Exception {
+		principal();
 		mockMvc.perform(post("/duenosAdoptivos/edit/{duenoAdoptivoId}", TEST_OWNER_ID).with(csrf())
 				.param("nombre", "Joe").param("apellidos", "Bloggs").param("direccion", "123 Caramel Street")
-				.param("dni", "45556667G").param("telefono", "01616291589").param("email", "test2@email.com"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/duenosAdoptivos/{duenoAdoptivoId}"));
+				.param("dni", "45556667G").param("telefono", "01616291589").param("email", "test2@email.com")
+				.param("user.username", "Sam")).andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/duenosAdoptivos/show"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -208,11 +215,10 @@ class DuenoAdoptivoControllerTests {
 		mockMvc.perform(post("/duenosAdoptivos/editByName", TEST_OWNER_ID).with(csrf()).param("nombre", "Joe")
 				.param("apellidos", "Bloggs").param("direccion", "123 Caramel Street").param("dni", "45556667G")
 				.param("telefono", "01616291589").param("email", "test2@email.com"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/duenosAdoptivos/1"));
+				.andExpect(status().is3xxRedirection()).andExpect(view().name("redirect:/duenosAdoptivos/1"));
 	}
-	
-	//H13 Test Positivo
+
+	// H13 Test Positivo
 	@WithMockUser(value = "spring")
 	@Test
 	void testListadoTodosDueños() throws Exception {

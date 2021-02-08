@@ -41,11 +41,8 @@ public class ComentarioController {
 
 	@GetMapping(value = "/new/{visitaId}")
 	public String crearComentarioDueno(Map<String, Object> model, @PathVariable("visitaId") int visitaId) {
-		Comentario comentario = new Comentario();
 		Visita visita = visitaService.findVisitaById(visitaId);
-		comentario.setVisita(visita);
-		LocalDateTime now = LocalDateTime.now();
-		comentario.setMomento(now);
+		Comentario comentario=comentarioService.inicializarComentario(visita);
 		model.put("comentario", comentario);
 		return VIEWS_COMENTARIO_CREATE_OR_UPDATE_FORM;
 	}
@@ -57,9 +54,12 @@ public class ComentarioController {
 			return VIEWS_COMENTARIO_CREATE_OR_UPDATE_FORM;
 		} else {
 			Visita visita = visitaService.findVisitaById(visitaId);
-			comentario.setVisita(visita);
-			LocalDateTime now = LocalDateTime.now();
-			comentario.setMomento(now);
+			Comentario comentarioAux=comentarioService.inicializarComentario(visita);
+			comentario.setVisita(comentarioAux.getVisita());
+			comentario.setMomento(comentarioAux.getMomento());
+			comentario.setCuidador(comentarioAux.getCuidador());
+			comentario.setDirector(comentarioAux.getDirector());
+			comentario.setDueno(comentarioAux.getDueno());
 			this.comentarioService.saveComentario(comentario);
 
 			return "redirect:/visitas/show/" + visita.getId();

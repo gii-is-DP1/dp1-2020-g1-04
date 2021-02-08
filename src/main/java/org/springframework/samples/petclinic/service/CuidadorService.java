@@ -3,8 +3,6 @@ package org.springframework.samples.petclinic.service;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Cuidador;
@@ -42,7 +40,7 @@ public class CuidadorService {
 	}
 
 	@Transactional
-	public void saveCuidador(@Valid Cuidador cuidador) throws DataAccessException {
+	public void saveCuidador(Cuidador cuidador) throws DataAccessException {
 		// creating duenoAdoptivo
 		cuidadorRepository.save(cuidador);
 		// creating user

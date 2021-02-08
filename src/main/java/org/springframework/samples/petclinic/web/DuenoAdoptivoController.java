@@ -23,8 +23,10 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedUserNameException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,10 +73,12 @@ public class DuenoAdoptivoController {
 			return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 		} else {
 			// creating duenoAdoptivo, user and authorities
-			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
+			
+				this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
+		}
 
 			return "redirect:/duenosAdoptivos/" + duenoAdoptivo.getId();
-		}
+		
 	}
 
 	@GetMapping(value = "/duenosAdoptivos/find")
@@ -120,6 +124,10 @@ public class DuenoAdoptivoController {
 	@GetMapping(value = "/duenosAdoptivos/edit/{duenoAdoptivoId}")
 	public String initUpdateDuenoAdoptivoForm(@PathVariable("duenoAdoptivoId") int duenoAdoptivoId, Model model) {
 		Optional<DuenoAdoptivo> duenoAdoptivo = this.duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
+		DuenoAdoptivo principal=duenoAdoptivo.get();
+		if(!(principal.getId() == duenoAdoptivoId)) {
+			return "error-403";
+		}
 		model.addAttribute("duenoAdoptivo", duenoAdoptivo.get());
 		return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 	}
@@ -130,12 +138,21 @@ public class DuenoAdoptivoController {
 		if (result.hasErrors()) {
 			return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
 		} else {
+			DuenoAdoptivo d=duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
+			if(!(duenoAdoptivo.getUser().getUsername().equals(d.getUser().getUsername()))) {
+				try {
+					duenoAdoptivoService.ComprobarUsername(d.getUser().getUsername());
+				} catch (DuplicatedUserNameException e) {
+					result.rejectValue("user.username", "Duplicado", "Ese Username ya está en uso");
+					return VIEWS_DUENOADOPTIVO_CREATE_OR_UPDATE_FORM;
+				}
+			}else {
 			duenoAdoptivo.setId(duenoAdoptivoId);
-			// Optional<DuenoAdoptivo> aux =
-			// duenoAdoptivoService.findDuenoAdoptivoById(duenoAdoptivoId);
-			// duenoAdoptivo.getUser().setAuthorities(aux.get().getUser().getAuthorities());
 			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
-			return "redirect:/duenosAdoptivos/{duenoAdoptivoId}";
+			
+			}	
+			return "redirect:/duenosAdoptivos/show";
+		
 		}
 	}
 
@@ -177,10 +194,12 @@ public class DuenoAdoptivoController {
 			DuenoAdoptivo aux = duenoAdoptivoService.findDuenoAdoptivoByPrincipal();
 			duenoAdoptivo.setId(aux.getId());
 			// duenoAdoptivo.getUser().setAuthorities(aux.getUser().getAuthorities());
-			this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
+			
+				this.duenoAdoptivoService.saveDuenoAdoptivo(duenoAdoptivo);
+			}
 			int duenoAdoptivoId = duenoAdoptivo.getId();
 			return "redirect:/duenosAdoptivos/" + duenoAdoptivoId;
 		}
-	}
+	
 
 }

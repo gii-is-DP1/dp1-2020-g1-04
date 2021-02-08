@@ -23,9 +23,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Cuidador;
+import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Evento;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
@@ -35,33 +38,31 @@ import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(controllers=EventoController.class,
-excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
-excludeAutoConfiguration= SecurityConfiguration.class)
+@WebMvcTest(controllers = EventoController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 public class EventoControllerTest {
-	
+
 	private static final int TEST_EVENTO_ID = 1;
-	
+
 	@MockBean
 	private EventoService eventoService;
-	
+
 	@MockBean
 	private CuidadorService cuidadorService;
-	
+
 	@MockBean
 	private DuenoAdoptivoService duenoAdoptivoService;
-	
+
 	@MockBean
 	private UserService userService;
-	
+
 	@MockBean
 	private DirectorService directorService;
-	
+
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	private Evento evento;
-	
+
 	@BeforeEach
 	void setup() {
 		evento = new Evento();
@@ -87,79 +88,101 @@ public class EventoControllerTest {
 		duenos.add(dueno2);
 		duenos.add(dueno3);
 		evento.setDuenos(duenos);
-		
+
 		given(this.eventoService.findEventoById(TEST_EVENTO_ID)).willReturn(Optional.of(evento));
 	}
-	
-	
-	//HU-3
-	@WithMockUser(value = "spring")
-    @Test
-    void testListadoEventosDirector() throws Exception{
-		mockMvc.perform(get("/eventos/director/misEventos", TEST_EVENTO_ID))
-				.andExpect(status().isOk())
-				.andExpect(model().attributeExists("eventos"))
-				.andExpect(view().name("eventos/listadoEventos"));
-				
-	}
-	
 
-	@WithMockUser(value = "spring")
-    @Test
-    void testListadoEventosDueno() throws Exception{
-		mockMvc.perform(get("/eventos/misEventos", TEST_EVENTO_ID))
-				.andExpect(status().isOk())
-				.andExpect(model().attributeExists("eventos"))
-				.andExpect(view().name("eventos/listadoEventos"));
-				
+	private void duenoAdoptivo() {
+		DuenoAdoptivo duenoAdoptivo = new DuenoAdoptivo();
+		duenoAdoptivo.setNombre("Jose Manuel");
+		duenoAdoptivo.setApellidos("Durán");
+		duenoAdoptivo.setDireccion("calle falsa");
+		duenoAdoptivo.setDni("1234567H");
+		duenoAdoptivo.setTelefono("666777888");
+		duenoAdoptivo.setEmail("fsfd@dfs.com");
+		User user = new User();
+		user.setUsername("Sam");
+		user.setPassword("supersecretpassword");
+		user.setEnabled(true);
+		duenoAdoptivo.setUser(user);
+		duenoAdoptivo.setId(11);
+		given(this.duenoAdoptivoService.findDuenoAdoptivoByPrincipal()).willReturn(duenoAdoptivo);
 	}
-	
-	
-	//HU-4
+
+	private void director() {
+		Director director = new Director();
+		director.setNombre("Juan");
+		director.setApellidos("perez");
+		director.setTelefono("666777888");
+		director.setEmail("fsfd@dfs.com");
+		director.setId(13);
+		User user = new User();
+		user.setUsername("Sam");
+		user.setPassword("supersecretpassword");
+		user.setEnabled(true);
+		Authorities authorities = new Authorities();
+		authorities.setAuthority("director");
+		Set<Authorities> a = new HashSet<Authorities>();
+		a.add(authorities);
+		user.setAuthorities(a);
+		director.setUser(user);
+		given(this.directorService.findDirectorByPrincipal()).willReturn(director);
+	}
+
+	// HU-3
 	@WithMockUser(value = "spring")
 	@Test
-	void testInitCreationForm() throws Exception{
-		mockMvc.perform(get("/eventos/nuevo", TEST_EVENTO_ID))
-				.andExpect(status().isOk())
+	void testListadoEventosDirector() throws Exception {
+		director();
+		mockMvc.perform(get("/eventos/director/misEventos", TEST_EVENTO_ID)).andExpect(status().isOk())
+				.andExpect(view().name("eventos/listadoEventos"));
+
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testListadoEventosDueno() throws Exception {
+		duenoAdoptivo();
+		mockMvc.perform(get("/eventos/misEventos", TEST_EVENTO_ID)).andExpect(status().isOk())
+				.andExpect(view().name("eventos/listadoEventos"));
+
+	}
+
+	// HU-4
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitCreationForm() throws Exception {
+		mockMvc.perform(get("/eventos/nuevo", TEST_EVENTO_ID)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("evento"))
 				.andExpect(view().name("eventos/createOrUpdateEventoForm"));
 	}
-	
+
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessCreationFormSuccess() throws Exception{
-		mockMvc.perform(post("/eventos/nuevo")
-				.param("titulo", "Evento 1")
-				.with(csrf())
-				.param("direccion","Direccion 1")
-				.param("fecha","01/01/2022")
-				.param("aforo","14")
-				.param("descripcion","Descripcion"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/eventos/show/null"));
+	void testProcessCreationFormSuccess() throws Exception {
+		mockMvc.perform(
+				post("/eventos/nuevo").param("titulo", "Evento 1").with(csrf()).param("direccion", "Direccion 1")
+						.param("fecha", "01/01/2022").param("aforo", "14").param("descripcion", "Descripcion"))
+				.andExpect(status().is3xxRedirection()).andExpect(view().name("redirect:/eventos/show/null"));
 
 	}
-	
+
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessCreationFormHasErrors() throws Exception{
-		mockMvc.perform(post("/eventos/nuevo", TEST_EVENTO_ID)
-				.param("titulo", "NuevoEvento")
-				.with(csrf())
-				.param("direccion","direccion1"))
-				.andExpect(model().attributeHasFieldErrors("evento","fecha"))
-				.andExpect(model().attributeHasFieldErrors("evento","aforo"))
-				.andExpect(model().attributeHasFieldErrors("evento","descripcion"))
+	void testProcessCreationFormHasErrors() throws Exception {
+		mockMvc.perform(post("/eventos/nuevo", TEST_EVENTO_ID).param("titulo", "NuevoEvento").with(csrf())
+				.param("direccion", "direccion1")).andExpect(model().attributeHasFieldErrors("evento", "fecha"))
+				.andExpect(model().attributeHasFieldErrors("evento", "aforo"))
+				.andExpect(model().attributeHasFieldErrors("evento", "descripcion"))
 				.andExpect(view().name("eventos/createOrUpdateEventoForm"));
 	}
-	
-	//HU-5
+
+	// HU-5
 
 	@WithMockUser(value = "spring")
 	@Test
-	void testEditEventoSuccess() throws Exception{
-		mockMvc.perform(get("/eventos/edit/{eventoId}", TEST_EVENTO_ID))
-				.andExpect(status().isOk())
+	void testEditEventoSuccess() throws Exception {
+		mockMvc.perform(get("/eventos/edit/{eventoId}", TEST_EVENTO_ID)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("evento"))
 				.andExpect(model().attribute("evento", hasProperty("titulo", is("Evento 1"))))
 				.andExpect(model().attribute("evento", hasProperty("direccion", is("Direccion 1"))))
@@ -168,33 +191,24 @@ public class EventoControllerTest {
 				.andExpect(model().attribute("evento", hasProperty("descripcion", is("Descripcion"))))
 				.andExpect(view().name("eventos/createOrUpdateEventoForm"));
 	}
-	
+
 	@WithMockUser(value = "spring")
 	@Test
-	void testEditEventoProcessSuccess() throws Exception{
-		mockMvc.perform(post("/eventos/edit/{eventoId}", TEST_EVENTO_ID)
-				.with(csrf())
-				.param("titulo", "Evento 1")
-				.param("direccion","Direccion 1")
-				.param("fecha", "01/01/2022")
-				.param("aforo", "14")
-				.param("descripcion","Descripcion"))
-				.andExpect(status().is3xxRedirection())
+	void testEditEventoProcessSuccess() throws Exception {
+		mockMvc.perform(post("/eventos/edit/{eventoId}", TEST_EVENTO_ID).with(csrf()).param("titulo", "Evento 1")
+				.param("direccion", "Direccion 1").param("fecha", "01/01/2022").param("aforo", "14")
+				.param("descripcion", "Descripcion")).andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/eventos/show/" + TEST_EVENTO_ID));
 	}
-	
+
 	@WithMockUser(value = "spring")
 	@Test
-	void testEditEventoProcessHasErrors() throws Exception{
-		mockMvc.perform(post("/eventos/edit/{eventoId}", TEST_EVENTO_ID)
-			.with(csrf())
-			.param("titulo", "Evento 1")
-			.param("direccion","Direccion 1")
-			.param("descripcion","Descripcion"))
-			.andExpect(status().isOk())
-			.andExpect(model().attributeHasErrors("evento"))
-			.andExpect(model().attributeHasFieldErrors("evento", "fecha"))
-			.andExpect(model().attributeHasFieldErrors("evento", "aforo"))
-			.andExpect(view().name("eventos/createOrUpdateEventoForm"));
+	void testEditEventoProcessHasErrors() throws Exception {
+		mockMvc.perform(post("/eventos/edit/{eventoId}", TEST_EVENTO_ID).with(csrf()).param("titulo", "Evento 1")
+				.param("direccion", "Direccion 1").param("descripcion", "Descripcion")).andExpect(status().isOk())
+				.andExpect(model().attributeHasErrors("evento"))
+				.andExpect(model().attributeHasFieldErrors("evento", "fecha"))
+				.andExpect(model().attributeHasFieldErrors("evento", "aforo"))
+				.andExpect(view().name("eventos/createOrUpdateEventoForm"));
 	}
 }
