@@ -98,7 +98,7 @@ public class DuenoAdoptivoService {
 	}
 	@Transactional
 	public void ComprobarUsername(String username) throws DuplicatedUserNameException {
-		Integer  d=duenoAdoptivoRepository.CoprobarUserName(username);
+		Integer  d=duenoAdoptivoRepository.comprobarUserName(username);
 		// creating duenoAdoptivo
 		if(d>CERO) {
 			throw new DuplicatedUserNameException();

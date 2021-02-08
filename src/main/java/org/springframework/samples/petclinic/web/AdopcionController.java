@@ -1,6 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
-import java.time.LocalDate;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -10,12 +10,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adopcion;
 import org.springframework.samples.petclinic.model.Animal;
-import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.DuenoAdoptivo;
 import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.service.AdopcionService;
 import org.springframework.samples.petclinic.service.AnimalService;
-import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -42,16 +40,15 @@ public class AdopcionController {
 
 	private final AnimalService animalService;
 	
-	private final DirectorService directorService;
+
 
 	@Autowired
 	public AdopcionController(AdopcionService adopcionService, UserService userService,
-			DuenoAdoptivoService duenoAdoptivoService, AnimalService animalService,DirectorService directorService) {
+			DuenoAdoptivoService duenoAdoptivoService, AnimalService animalService) {
 		this.adopcionService = adopcionService;
 		this.userService = userService;
 		this.duenoAdoptivoService = duenoAdoptivoService;
 		this.animalService = animalService;
-		this.directorService = directorService;
 	}
 
 	@InitBinder

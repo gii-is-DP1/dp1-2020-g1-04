@@ -10,13 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Animal;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cuidador;
-import org.springframework.samples.petclinic.model.Director;
 import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CategoriaService;
 import org.springframework.samples.petclinic.service.CentroDeAdopcionService;
 import org.springframework.samples.petclinic.service.CuidadorService;
-import org.springframework.samples.petclinic.service.DirectorService;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Controller;
@@ -46,16 +44,13 @@ public class AnimalController {
 
 	private final CategoriaService categoriaService;
 	
-	private final DirectorService directorService;
-
 	@Autowired
 	public AnimalController(AnimalService animalService, CuidadorService cuidadorService,
-			CentroDeAdopcionService centroDeAdopcionService, CategoriaService categoriaService,DirectorService directorService) {
+			CentroDeAdopcionService centroDeAdopcionService, CategoriaService categoriaService) {
 		this.animalService = animalService;
 		this.categoriaService = categoriaService;
 		this.centroDeAdopcionService = centroDeAdopcionService;
 		this.cuidadorService = cuidadorService;
-		this.directorService = directorService;
 	}
 
 	@InitBinder
