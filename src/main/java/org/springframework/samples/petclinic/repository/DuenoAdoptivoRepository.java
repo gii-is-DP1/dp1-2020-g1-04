@@ -63,7 +63,7 @@ public interface DuenoAdoptivoRepository extends Repository<DuenoAdoptivo, Integ
 	public DuenoAdoptivo findByUserName(@Param("duenoAdoptivoUserName") String duenoAdoptivoUserName);
 
 	@Query("SELECT COUNT(*) FROM DuenoAdoptivo d WHERE d.user.username=:username")
-	public Integer CoprobarUserName(@Param("username")String username);
+	public Integer comprobarUserName(@Param("username")String username);
 
 
 }
