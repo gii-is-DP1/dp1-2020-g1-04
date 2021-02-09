@@ -22,6 +22,10 @@ import static org.mockito.Mockito.mock;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Random;
+
+import javax.validation.ConstraintViolationException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -33,10 +37,13 @@ import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.GradoDeAtencion;
 import org.springframework.samples.petclinic.model.Peligrosidad;
 import org.springframework.samples.petclinic.model.RequisitosDeAdopcion;
+import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import junit.framework.AssertionFailedError;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 class AnimalServiceTests {
@@ -156,6 +163,7 @@ class AnimalServiceTests {
 
 	}
 
+	//Regla de Negocio 3 - RatioCuidadores
 	@Test
 	@Transactional
 	public void comprobarRatioCuidadorModifica1de15()
@@ -165,6 +173,44 @@ class AnimalServiceTests {
 		animalService.comprobarRatioCuidador(animal);
 		assertThat(animalService.findAllNoAdoptedByCentro(3).size()).isEqualTo(15);
 	}
+	
+	//Regla de Negocio 8 - Patrón de numer de registro
+	@Test
+	@Transactional
+	public void comprobarPatronNumRegistro() throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException{
+		Animal animal = animalService.findAnimalById(1).get();
+		String tipoAnimal = animal.getCategoria().getTipo().toString();
+		String patronAnimal = nuevoNRegistro(tipoAnimal);
+		animal.setNumeroRegistro(patronAnimal);
+		animalService.save(animal);
+		
+
+		assertThat(animalService.findAnimalById(1).get().getNumeroRegistro().
+				equals(patronAnimal));
+		
+	}
+	
+	@Test
+	@Transactional
+	public void comprobarPatronNumRegistroHasErrors() throws Exception{
+		Animal animal = animalService.findAnimalById(1).get();
+		
+		animal.setNumeroRegistro("");
+		
+		assertThrows(ConstraintViolationException.class,
+				() -> animalService.save(animal));
+		
+	}
+	
+	private String nuevoNRegistro(String categoria) {
+		String result;
+		String codigo;
+		Random rand = new Random();
+		codigo = rand.nextInt(900) + 1000 + "";
+		result = LocalDate.now().getYear() + "-" + categoria.substring(0, 2) + "-" + codigo;
+		return result;
+	}
+	
 
 	// H10 Positivo
 	@Test
