@@ -1,37 +1,35 @@
 package org.springframework.samples.petclinic.web;
 
-import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.DuenoAdoptivo;
-import org.springframework.samples.petclinic.model.User;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.DuenoAdoptivo;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.DuenoAdoptivoService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.samples.petclinic.service.exceptions.BusquedaVaciaException;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import java.util.Optional;
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Test class for {@link DuenoAdoptivoController}
@@ -122,42 +120,7 @@ class DuenoAdoptivoControllerTests {
 				.andExpect(view().name("duenosAdoptivos/createOrUpdateduenoAdoptivoForm"));
 	}
 
-	/*
-	 * @WithMockUser(value = "spring")
-	 * 
-	 * @Test void testInitFindForm() throws Exception {
-	 * mockMvc.perform(get("/owners/find")).andExpect(status().isOk()).andExpect(
-	 * model().attributeExists("owner"))
-	 * .andExpect(view().name("owners/findOwners")); }
-	 * 
-	 * @WithMockUser(value = "spring")
-	 * 
-	 * @Test void testProcessFindFormSuccess() throws Exception {
-	 * given(this.clinicService.findDuenoAdoptivoByApellidos("")).willReturn(Lists.
-	 * newArrayList(george, new DuenoAdoptivo()));
-	 * 
-	 * mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().
-	 * name("owners/ownersList")); }
-	 * 
-	 * @WithMockUser(value = "spring")
-	 * 
-	 * @Test void testProcessFindFormByApellidos() throws Exception {
-	 * given(this.clinicService.findDuenoAdoptivoByApellidos(george.getApellidos()))
-	 * .willReturn(Lists.newArrayList(george));
-	 * 
-	 * mockMvc.perform(get("/owners").param("lastName",
-	 * "Franklin")).andExpect(status().is3xxRedirection())
-	 * .andExpect(view().name("redirect:/owners/" + TEST_OWNER_ID)); }
-	 * 
-	 * @WithMockUser(value = "spring")
-	 * 
-	 * @Test void testProcessFindFormNoOwnersFound() throws Exception {
-	 * mockMvc.perform(get("/owners").param("lastName",
-	 * "Unknown Surname")).andExpect(status().isOk())
-	 * .andExpect(model().attributeHasFieldErrors("owner", "lastName"))
-	 * .andExpect(model().attributeHasFieldErrorCode("owner", "lastName",
-	 * "notFound")) .andExpect(view().name("owners/findOwners")); }
-	 */
+	
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitUpdateDuenoAdoptivoForm() throws Exception {

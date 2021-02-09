@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -79,14 +78,6 @@ public class EnfermedadServiceTest {
 		given(animalServiceMock.findAnimalById(1).get()).willReturn((animal));
 	}
 
-//	@Test
-//	@Transactional
-//	public void addCustomerWithDummyTest() {
-//		Animal dummy = Mock(Animal.class);
-//		Enfermedad enfermedad = createEnfermedad();
-//		enfermedad.setAnimal(dummy);
-//		enfermedadService.saveEnfermedad(enfermedad);
-//	}
 
 	// H19 Test Positivo
 	@Test

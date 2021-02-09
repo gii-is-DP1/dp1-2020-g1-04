@@ -62,10 +62,6 @@ public class EventoServiceTest {
 		result.setTelefono("666777888");
 		result.setEmail("fsfd@dfs.com");
 		result.setId(1);
-		Set<Evento> eventos = new HashSet<Evento>();
-		// Evento evento= eventoNuevo();
-		// eventos.add(evento);
-		// result.setEventos(eventos);
 		User user = new User();
 		user.setUsername("Sam");
 		user.setPassword("supersecretpassword");
@@ -128,13 +124,12 @@ public class EventoServiceTest {
 		return given(duenoAdoptivoService.findDuenoAdoptivoByPrincipal()).willReturn(duenoAdoptivo);
 	}
 
-	
-	  private BDDMyOngoingStubbing<Director> directorMock() { Director director =
-	  directorNuevo();
-	  
-	  return given(directorService.findDirectorByPrincipal()).willReturn(director);
-	  }
-	 
+	private BDDMyOngoingStubbing<Director> directorMock() {
+		Director director = directorNuevo();
+
+		return given(directorService.findDirectorByPrincipal()).willReturn(director);
+	}
+
 	private BDDMyOngoingStubbing<String> directorStringMock() {
 
 		return given(userService.principalAuthorityString()).willReturn("director");
@@ -163,7 +158,7 @@ public class EventoServiceTest {
 	// Test negativo
 	@Test
 	void añadirDuenoAdoptivoEventoSinCuidadoresAsignados() {
-		DuenoAdoptivo dueno=duenoNuevo();
+		DuenoAdoptivo dueno = duenoNuevo();
 		Exception exception = assertThrows(EventoSinCuidadoresAsignadosException.class, () -> {
 			Evento evento = eventoService.findEventoById(2).get();
 			eventoService.añadirDuenoAdoptivoEvento(evento, dueno);
@@ -179,10 +174,10 @@ public class EventoServiceTest {
 	// Test negativo
 	@Test
 	void añadirDuenoAdoptivoEventoAforoLleno() {
-		DuenoAdoptivo dueno=duenoNuevo();
+		DuenoAdoptivo dueno = duenoNuevo();
 		Exception exception = assertThrows(ExcedidoAforoEventoException.class, () -> {
 			Evento evento = eventoService.findEventoById(3).get();
-			eventoService.añadirDuenoAdoptivoEvento(evento,dueno);
+			eventoService.añadirDuenoAdoptivoEvento(evento, dueno);
 		});
 
 	}
@@ -191,9 +186,9 @@ public class EventoServiceTest {
 	void añadirDuenoAdoptivoEvento()
 			throws ExcedidoAforoEventoException, EventoSinCuidadoresAsignadosException, BusquedaVaciaException {
 		duenoAdoptivoMock();
-		DuenoAdoptivo dueno=duenoNuevo();
+		DuenoAdoptivo dueno = duenoNuevo();
 		Evento evento = eventoService.findEventoById(1).get();
-		eventoService.añadirDuenoAdoptivoEvento(evento,dueno);
+		eventoService.añadirDuenoAdoptivoEvento(evento, dueno);
 
 		assertThat(eventoService.findEventoById(1).get().getDuenos().size()).isEqualTo(1);
 	}
@@ -221,7 +216,7 @@ public class EventoServiceTest {
 		});
 	}
 
-	//queda sin valor al cambiar las comprobaciones al controlador
+	// queda sin valor al cambiar las comprobaciones al controlador
 //	@Test
 //	void quitarCuidadorSinSerDirector() {
 //		duenoStringMock();
@@ -248,7 +243,7 @@ public class EventoServiceTest {
 
 	}
 
-	//queda sin valor al cambiar las comprobaciones al controlador
+	// queda sin valor al cambiar las comprobaciones al controlador
 //	@Test
 //	@Transactional
 //	void añadirCuidadorEventoSinSerDirector() {
@@ -269,7 +264,7 @@ public class EventoServiceTest {
 		evento.getDuenos().add(dueno);
 		// eventoService.saveEvento(evento);
 
-		eventoService.quitarDuenoAdoptivoEvento(evento,dueno);
+		eventoService.quitarDuenoAdoptivoEvento(evento, dueno);
 		// al estar creado el MockBean de duenoAdoptivo, no es capaz de recuperar un
 		// duenoAdoptivo del repositorio ni creando otro duenoAdoptivoService
 	}
@@ -279,7 +274,7 @@ public class EventoServiceTest {
 	@Transactional
 	void findAllByPrincipalDueno() {
 		duenoAdoptivoMock();
-		DuenoAdoptivo dueno=duenoNuevo();
+		DuenoAdoptivo dueno = duenoNuevo();
 		assertThat(eventoService.findEventosByDueno(dueno.getId()).size()).isEqualTo(1);
 	}
 
@@ -297,8 +292,7 @@ public class EventoServiceTest {
 
 	}
 
-	
-	//queda sin valor al cambiar las comprobaciones al controlador
+	// queda sin valor al cambiar las comprobaciones al controlador
 //	// deleteEventoNegative
 //	@Test
 //	@Transactional
@@ -316,23 +310,23 @@ public class EventoServiceTest {
 	@Transactional
 	void findEventosByDirector() {
 		directorMock();
-		Director director=directorNuevo();
+		Director director = directorNuevo();
 		assertThat(eventoService.findEventosByDirector(director.getId()).size()).isEqualTo(3);
 	}
-	
-	//save
+
+	// save
 	@Test
 	@Transactional
 	void saveEvento() {
 		directorMock();
-		Director director=directorNuevo();
+		Director director = directorNuevo();
 		Evento evento = eventoNuevo();
 		evento.setDuenos(null);
 		evento.setDirector(director);
-	int i= eventoService.findEventosByDirector(director.getId()).size();
+		int i = eventoService.findEventosByDirector(director.getId()).size();
 		eventoService.saveEvento(evento);
-		int j= eventoService.findEventosByDirector(director.getId()).size();
-		Boolean b=i+1==j;
+		int j = eventoService.findEventosByDirector(director.getId()).size();
+		Boolean b = i + 1 == j;
 		assertThat(b).isEqualTo(true);
 	}
 
