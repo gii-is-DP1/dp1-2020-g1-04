@@ -16,7 +16,6 @@
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
@@ -76,11 +75,10 @@ public class Person extends BaseEntity {
 		this.email = email;
 	}
 	
-	//
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
-	//
+	
 	
 	public User getUser() {
 		return user;

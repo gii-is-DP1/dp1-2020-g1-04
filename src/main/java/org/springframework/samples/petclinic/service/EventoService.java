@@ -20,12 +20,10 @@ public class EventoService {
 
 	private final EventoRepository eventoRepository;
 
-
-
 	@Autowired
 	public EventoService(EventoRepository eventoRepository) {
 		this.eventoRepository = eventoRepository;
-		
+
 	}
 
 	@Transactional
@@ -57,10 +55,6 @@ public class EventoService {
 			throw new EventoSinCuidadoresAsignadosException(
 					"Un evento con asistentes no se puede quedar sin cuidadores");
 		}
-		// Person p = directorService.findPersonByPrincipal();
-		// User user = userService.findPrincipal();
-		// org.springframework.samples.petclinic.model.User user= p.getUser();
-		// String role = user.getAuthorities().toString();
 		evento.getCuidadores().remove(cuidador);
 		eventoRepository.save(evento);
 
@@ -69,8 +63,6 @@ public class EventoService {
 	@Transactional
 	public void añadirCuidadorEvento(Evento evento, Cuidador cuidador) throws SinPermisoException {
 
-		// User user = userService.findPrincipal();
-		// String role = user.getAuthorities().toString();
 		evento.getCuidadores().add(cuidador);
 		eventoRepository.save(evento);
 
@@ -98,12 +90,10 @@ public class EventoService {
 		if (evento.getCuidadores().size() == 0) {
 			throw new EventoSinCuidadoresAsignadosException("Sin cuidadores Asignados");
 		}
-		// assertFalse("Sin cuidadores Asignados",e.getCuidadores().size()==0);
 		// Comprueba que el aforo no está completo
 		if (evento.getAforo() <= evento.getDuenos().size()) {
 			throw new ExcedidoAforoEventoException("Aforo Completo");
 		}
-		// assertTrue("Aforo Completo", e.getAforo()>e.getDuenos().size());
 
 		evento.getDuenos().add(d);
 		eventoRepository.save(evento);

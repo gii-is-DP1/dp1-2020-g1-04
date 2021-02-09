@@ -15,16 +15,7 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import java.util.Collection;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -53,49 +44,10 @@ public class DuenoAdoptivo extends Person {
 	@NotEmpty
 	private String dni;
 
-	/*
-	 * //
-	 * 
-	 * @OneToOne(cascade = CascadeType.ALL)
-	 * 
-	 * @JoinColumn(name = "username", referencedColumnName = "username") private
-	 * User user; //
-	 */
-
-//	// Relacion DuenoAdoptivo-Adopcion
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
-//	private Collection<Adopcion> adopciones;
-
-
-//	// Relación DuenoAdoptivo-Visita
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dueno")
-//	private Collection<Visita> vistitas;
-
-
-//	// Relacion DuenoAdoptivo-Evento
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(name = "duenos_eventos", joinColumns = @JoinColumn(name = "dueno_id"), inverseJoinColumns = @JoinColumn(name = "evento_id"))
-//	private Set<Evento> eventos;
-
-	// getters and setters
-
-//	public Collection<Adopcion> getAdopciones() {
-//		return adopciones;
-//	}
-//
-//	public void setAdopciones(Collection<Adopcion> adopciones) {
-//		this.adopciones = adopciones;
-//	}
-
 	public String getDireccion() {
 		return this.direccion;
 	}
 
-	/*
-	 * public User getUser() { return user; }
-	 * 
-	 * public void setUser(User user) { this.user = user; }
-	 */
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
@@ -116,23 +68,5 @@ public class DuenoAdoptivo extends Person {
 				.append("apellidos", this.getApellidos()).append("direccion", this.direccion).append("dni", this.dni)
 				.append("telefono", this.telefono).append("email", this.email).toString();
 	}
-
-
-//	public Collection<Visita> getVistitas() {
-//		return vistitas;
-//	}
-//
-//	public void setVistitas(Collection<Visita> vistitas) {
-//		this.vistitas = vistitas;
-//	}
-
-//	public Set<Evento> getEventos() {
-//		return eventos;
-//	}
-//
-//	public void setEventos(Set<Evento> eventos) {
-//		this.eventos = eventos;
-//	}
-
 
 }
