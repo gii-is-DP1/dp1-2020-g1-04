@@ -13,7 +13,6 @@ import org.springframework.samples.petclinic.model.Enfermedad;
 import org.springframework.samples.petclinic.service.AnimalService;
 import org.springframework.samples.petclinic.service.CuidadorService;
 import org.springframework.samples.petclinic.service.EnfermedadService;
-import org.springframework.samples.petclinic.service.exceptions.FechaFinAntesQueDeInicioException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
