@@ -120,12 +120,13 @@ public class AnimalService {
 		return result;
 	}
 
-	public String nuevoNRegistro(String categoria) {
+	public String nuevoNRegistro(Categoria categoria) {
+		String tipo=categoria.getTipo().toString();
 		String result;
 		String codigo;
 		Random rand = new Random();
 		codigo = rand.nextInt(900) + 1000 + "";
-		result = LocalDate.now().getYear() + "-" + categoria.substring(0, 2) + "-" + codigo;
+		result = LocalDate.now().getYear() + "-" + tipo.substring(0, 2) + "-" + codigo;
 		return result;
 	}
 
@@ -184,7 +185,7 @@ public class AnimalService {
 		animal.setAdoptado(false);
 		animal.setFechaPrimeraIncorporacion(now);
 		animal.setFechaUltimaIncorporacion(now);
-		String nRgistro = nuevoNRegistro(categoria.getTipo().toString());
+		String nRgistro = nuevoNRegistro(categoria);
 		animal.setNumeroRegistro(nRgistro);
 		animal.setCategoria(categoria);
 

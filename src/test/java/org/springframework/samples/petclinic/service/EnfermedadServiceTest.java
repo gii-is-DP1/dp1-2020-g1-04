@@ -52,7 +52,7 @@ public class EnfermedadServiceTest {
 		animal.getCategoria().setRaza("raza");
 		animal.getCategoria().setTipo(Tipo.FELINO);
 		animal.setChip("sdfsd");
-		animal.setNumeroRegistro(animalService.nuevoNRegistro(animal.getCategoria().toString()));
+		animal.setNumeroRegistro(animalService.nuevoNRegistro(animal.getCategoria()));
 		animal.setFechaNacimiento(LocalDate.now().minusWeeks(20));
 		animal.setFechaPrimeraIncorporacion(LocalDate.now().minusMonths(3));
 		animal.setFechaUltimaIncorporacion(animal.getFechaPrimeraIncorporacion());
