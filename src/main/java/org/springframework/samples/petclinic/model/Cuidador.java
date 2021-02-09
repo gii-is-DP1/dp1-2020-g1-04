@@ -1,16 +1,11 @@
 package org.springframework.samples.petclinic.model;
 
-import java.util.Collection;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.core.style.ToStringCreator;
@@ -26,7 +21,9 @@ public class Cuidador extends Person {
 	// Atributos-------------------------------------------------------------------------------------------------------
 	@NotEmpty
 	private String dni;
-	// ----------------------------------------------------------------------------------------------------------------
+	
+
+	// Relaciones------------------------------------------------------------------------------------------------------
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "centro_de_adopcion_id")
@@ -44,6 +41,6 @@ public class Cuidador extends Person {
 				.append("nombre", this.getNombre()).append("dni", this.dni).append("", this.getUser().getAuthorities())
 				.toString();
 	}
-	// -----------------------------------------------------------------------------------------------------------------
+	
 
 }

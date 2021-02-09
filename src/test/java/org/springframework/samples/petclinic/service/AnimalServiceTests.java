@@ -237,7 +237,7 @@ class AnimalServiceTests {
 	// H10 Negativo
 	@Test
 	@Transactional
-	public void shouldNotInsertAnimalSinCuidador() throws AforoCentroCompletadoException {
+	public void shouldNotInsertAnimalSinCuidador() {
 
 		Animal animal = createAnimal();
 		CentroDeAdopcion cda = centroDeAdopcionService.findById(1);
