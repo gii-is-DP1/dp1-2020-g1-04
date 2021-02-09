@@ -174,43 +174,52 @@ class AnimalServiceTests {
 		assertThat(animalService.findAllNoAdoptedByCentro(3).size()).isEqualTo(15);
 	}
 	
-	//Regla de Negocio 8 - Patrón de numer de registro
-	@Test
-	@Transactional
-	public void comprobarPatronNumRegistro() throws RatioAnimalesPorCuidadorSuperadoException, AforoCentroCompletadoException{
-		Animal animal = animalService.findAnimalById(1).get();
-		String tipoAnimal = animal.getCategoria().getTipo().toString();
-		String patronAnimal = nuevoNRegistro(tipoAnimal);
-		animal.setNumeroRegistro(patronAnimal);
-		animalService.save(animal);
-		
-		assertThat(animalService.nuevoNRegistro(tipoAnimal).equals(patronAnimal));
+	// Regla de Negocio 8 - Patrón de numero de registro
+		@Test
+		@Transactional
+		public void comprobarPatronNumRegistro(){
+			Categoria cat = new Categoria();
+			cat.setTipo(Tipo.CANINO);
+			cat.setRaza("raza");
+			String numeroRegistro = animalService.nuevoNRegistro(cat);
+			Pattern pat = Pattern.compile("\\d{4}-CA-\\d{4}");
+			Matcher m = pat.matcher(numeroRegistro);
+			Boolean b = m.find();
+			assertThat(b).isTrue();
+			cat.setTipo(Tipo.FELINO);
+			numeroRegistro = animalService.nuevoNRegistro(cat);
+			pat = Pattern.compile("\\d{4}-FE-\\d{4}");
+			m = pat.matcher(numeroRegistro);
+			b = m.find();
+			assertThat(b).isTrue();
+			cat.setTipo(Tipo.REPTIL);
+			numeroRegistro = animalService.nuevoNRegistro(cat);
+			pat = Pattern.compile("\\d{4}-RE-\\d{4}");
+			m = pat.matcher(numeroRegistro);
+			b = m.find();
+			assertThat(b).isTrue();
+			pat = Pattern.compile("\\d{4}-AV-\\d{4}");
+			cat.setTipo(Tipo.AVE);
+			numeroRegistro = animalService.nuevoNRegistro(cat);
+			m = pat.matcher(numeroRegistro);
+			b = m.find();
+			assertThat(b).isTrue();
+		}
 
-//		assertThat(animalService.findAnimalById(1).get().getNumeroRegistro().
-//				equals(patronAnimal));
-//		
-	}
-	
-	@Test
-	@Transactional
-	public void comprobarPatronNumRegistroHasErrors() throws Exception{
-		Animal animal = animalService.findAnimalById(1).get();
-		
-		animal.setNumeroRegistro("");
-		
-		assertThrows(ConstraintViolationException.class,
-				() -> animalService.save(animal));
-		
-	}
-	
-	private String nuevoNRegistro(String categoria) {
-		String result;
-		String codigo;
-		Random rand = new Random();
-		codigo = rand.nextInt(900) + 1000 + "";
-		result = LocalDate.now().getYear() + "-" + categoria.substring(0, 2) + "-" + codigo;
-		return result;
-	}
+		@Test
+		@Transactional
+		public void comprobarPatronNumRegistroHasErrors() throws Exception {
+			Exception exception = assertThrows(java.lang.NullPointerException.class, () -> {
+			Categoria cat = new Categoria();
+			String numeroRegistro = animalService.nuevoNRegistro(cat);
+			Pattern pat = Pattern.compile("\\d{4}-[A-Z]{2}-\\d{4}");
+			Matcher m = pat.matcher(numeroRegistro);
+			Boolean b = m.find();
+			assertThat(b).isTrue();
+			;
+			});
+
+		}
 	
 
 	// H10 Positivo

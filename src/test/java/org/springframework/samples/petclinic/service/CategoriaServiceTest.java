@@ -69,39 +69,55 @@ public class CategoriaServiceTest {
 		
 	}
 	
-	
+	//Test Positivo con Tipo.valueOf("x")
 	@Test
 	@Transactional
-	public void tiposCategoriaHasErrors() throws NullPointerException{
+	public void tiposCategoriaNoError(){
 	
 		Categoria categoria=new Categoria();
 		Optional<Categoria> aux = categoriaService.findCategoriaById(1);
-		categoria = aux.get();
-		categoria.setTipo(null);
+		categoria.setRaza(aux.get().getRaza());
+		categoria.setTipo(Tipo.valueOf("FELINO"));
+		categoria.setTipo(Tipo.valueOf("CANINO"));
+		categoria.setTipo(Tipo.valueOf("REPTIL"));
+		categoria.setTipo(Tipo.valueOf("AVE"));
 		categoriaService.saveCategoria(categoria);
-		
-//		assertThrows(NullPointerException.class, 
-//				() -> categoriaService.saveCategoria(categoria));
 
 	}
-//		
-//		//categoria CANINO
-//		categoria.setTipo(Tipo.AVE);
-//		categoriaService.saveCategoria(categoria);
-//		aux=categoriaService.findCategoriaById(2).get();
-//		assertThat(aux.getTipo().equals(Tipo.AVE));
-//		
-//		//categoria REPTIL
-//		categoria.setTipo(Tipo.REPTIL);
-//		categoriaService.saveCategoria(categoria);
-//		aux=categoriaService.findCategoriaById(2).get();
-//		assertThat(aux.getTipo().equals(Tipo.REPTIL));
-//		
-//		//categoria FELINO
-//		categoria.setTipo(Tipo.FELINO);
-//		categoriaService.saveCategoria(categoria);
-//		aux=categoriaService.findCategoriaById(2).get();
-//		assertThat(aux.getTipo().equals(Tipo.FELINO));	
+	
+	@Test
+	@Transactional
+	public void tiposCategoriaHasErrors(){
+	
+		Categoria categoria=new Categoria();
+		categoria.setRaza("Caniche");
+		
+		assertThrows(javax.validation.ConstraintViolationException.class, () -> {
+			categoriaService.saveCategoria(categoria);
+			;
+		});
+
+	}
+	
+	//Test Negativo con Tipo.valueOf("x") x= otro valor diferente a CANINO,FELINO,REPTIL,AVE
+	@Test
+	@Transactional
+	public void tiposCategoriaHasErrorsOtro(){
+	
+		Categoria categoria=new Categoria();
+		Optional<Categoria> aux = categoriaService.findCategoriaById(1);
+		categoria.setRaza(aux.get().getRaza());
+		assertThrows(java.lang.IllegalArgumentException.class, () -> {
+			categoria.setTipo(Tipo.valueOf("FELINO"));
+			categoria.setTipo(Tipo.valueOf("CANINO"));
+			categoria.setTipo(Tipo.valueOf("REPTIL"));
+			categoria.setTipo(Tipo.valueOf("AVE"));
+			categoria.setTipo(Tipo.valueOf("EQUINO"));
+			categoriaService.saveCategoria(categoria);
+			;
+		});
+
+	}
 
 	
 }
