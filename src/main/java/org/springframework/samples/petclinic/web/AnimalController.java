@@ -80,6 +80,10 @@ public class AnimalController {
 	@GetMapping("/edit/{animalId}")
 	public String editAnimal(@PathVariable("animalId") int animalId, ModelMap model) {
 		Optional<Animal> animal = animalService.findAnimalById(animalId);
+		
+//		Las siguientes lineas de codigo las dejamos comentadas ya que cualquier director
+//		(aunque en el sistema solo hay 1) podría realizar estas modificaciones
+//		
 //		Director principal = directorService.findDirectorByPrincipal();
 //		Integer directorCentroAnimal = animal.get().getCentroDeAdopcion().getDirector().getId();
 //		if(!(principal.getId() == directorCentroAnimal)) {
@@ -103,6 +107,9 @@ public class AnimalController {
 	public String editAnimal(@PathVariable("animalId") int animalId, @Valid Animal modifiedAnimal,
 			BindingResult result, ModelMap model) {
 		ArrayList<Integer> auxiliar = animalService.listaAuxiliar();
+//		Las siguientes lineas de codigo las dejamos comentadas ya que cualquier director
+//		(aunque en el sistema solo hay 1) podría realizar estas modificaciones
+//		
 //		Director principal = directorService.findDirectorByPrincipal();
 //		Integer directorCentroAnimal = modifiedAnimal.getCentroDeAdopcion().getDirector().getId();
 //		if(!(principal.getId() == directorCentroAnimal)) {

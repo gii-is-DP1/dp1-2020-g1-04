@@ -22,6 +22,10 @@ import static org.mockito.Mockito.mock;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Random;
+
+import javax.validation.ConstraintViolationException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -33,10 +37,13 @@ import org.springframework.samples.petclinic.model.Cuidador;
 import org.springframework.samples.petclinic.model.GradoDeAtencion;
 import org.springframework.samples.petclinic.model.Peligrosidad;
 import org.springframework.samples.petclinic.model.RequisitosDeAdopcion;
+import org.springframework.samples.petclinic.model.Tipo;
 import org.springframework.samples.petclinic.service.exceptions.AforoCentroCompletadoException;
 import org.springframework.samples.petclinic.service.exceptions.RatioAnimalesPorCuidadorSuperadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import junit.framework.AssertionFailedError;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 class AnimalServiceTests {
@@ -156,6 +163,7 @@ class AnimalServiceTests {
 
 	}
 
+	//Regla de Negocio 3 - RatioCuidadores
 	@Test
 	@Transactional
 	public void comprobarRatioCuidadorModifica1de15()
@@ -165,6 +173,54 @@ class AnimalServiceTests {
 		animalService.comprobarRatioCuidador(animal);
 		assertThat(animalService.findAllNoAdoptedByCentro(3).size()).isEqualTo(15);
 	}
+	
+	// Regla de Negocio 8 - Patrón de numero de registro
+		@Test
+		@Transactional
+		public void comprobarPatronNumRegistro(){
+			Categoria cat = new Categoria();
+			cat.setTipo(Tipo.CANINO);
+			cat.setRaza("raza");
+			String numeroRegistro = animalService.nuevoNRegistro(cat);
+			Pattern pat = Pattern.compile("\\d{4}-CA-\\d{4}");
+			Matcher m = pat.matcher(numeroRegistro);
+			Boolean b = m.find();
+			assertThat(b).isTrue();
+			cat.setTipo(Tipo.FELINO);
+			numeroRegistro = animalService.nuevoNRegistro(cat);
+			pat = Pattern.compile("\\d{4}-FE-\\d{4}");
+			m = pat.matcher(numeroRegistro);
+			b = m.find();
+			assertThat(b).isTrue();
+			cat.setTipo(Tipo.REPTIL);
+			numeroRegistro = animalService.nuevoNRegistro(cat);
+			pat = Pattern.compile("\\d{4}-RE-\\d{4}");
+			m = pat.matcher(numeroRegistro);
+			b = m.find();
+			assertThat(b).isTrue();
+			pat = Pattern.compile("\\d{4}-AV-\\d{4}");
+			cat.setTipo(Tipo.AVE);
+			numeroRegistro = animalService.nuevoNRegistro(cat);
+			m = pat.matcher(numeroRegistro);
+			b = m.find();
+			assertThat(b).isTrue();
+		}
+
+		@Test
+		@Transactional
+		public void comprobarPatronNumRegistroHasErrors() throws Exception {
+			Exception exception = assertThrows(java.lang.NullPointerException.class, () -> {
+			Categoria cat = new Categoria();
+			String numeroRegistro = animalService.nuevoNRegistro(cat);
+			Pattern pat = Pattern.compile("\\d{4}-[A-Z]{2}-\\d{4}");
+			Matcher m = pat.matcher(numeroRegistro);
+			Boolean b = m.find();
+			assertThat(b).isTrue();
+			;
+			});
+
+		}
+	
 
 	// H10 Positivo
 	@Test
