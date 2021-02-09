@@ -184,10 +184,11 @@ class AnimalServiceTests {
 		animal.setNumeroRegistro(patronAnimal);
 		animalService.save(animal);
 		
+		assertThat(animalService.nuevoNRegistro(tipoAnimal).equals(patronAnimal));
 
-		assertThat(animalService.findAnimalById(1).get().getNumeroRegistro().
-				equals(patronAnimal));
-		
+//		assertThat(animalService.findAnimalById(1).get().getNumeroRegistro().
+//				equals(patronAnimal));
+//		
 	}
 	
 	@Test
